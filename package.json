@@ -1,7 +1,10 @@
 {
   "name": "peat-moss",
   "version": "0.0.0",
-  "scripts": {},
+  "scripts": {
+    "dev": "nexus dev",
+    "build": "nexus build"
+  },
   "dependencies": {
     "nexus": "^0.26.1"
   }
