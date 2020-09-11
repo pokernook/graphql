@@ -1,4 +1,16 @@
-import { use } from "nexus";
+import { settings, use } from "nexus";
 import { prisma } from "nexus-plugin-prisma";
 
-use(prisma({ features: { crud: true } }));
+settings.change({
+  schema: {
+    generateGraphQLSDLFile: "api/schema.graphql",
+  },
+});
+
+use(
+  prisma({
+    features: {
+      crud: true,
+    },
+  })
+);
