@@ -6,6 +6,7 @@
     "build": "nexus build"
   },
   "dependencies": {
-    "nexus": "^0.26.1"
+    "nexus": "^0.26.1",
+    "nexus-plugin-prisma": "^0.18.2"
   }
 }
