@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "nexus dev",
-    "build": "nexus build"
+    "build": "nexus build",
+    "migrate:save": "prisma migrate save --experimental",
+    "migrate:up": "prisma migrate up --experimental"
   },
   "dependencies": {
-    "nexus": "^0.26.1"
+    "nexus": "^0.26.1",
+    "nexus-plugin-prisma": "^0.18.2"
   }
 }
