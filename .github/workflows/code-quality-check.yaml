@@ -1,0 +1,37 @@
+name: Quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  inspect-code:
+    name: Inspect Code
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Checkout PR Head
+        if: ${{ github.event_name == 'pull_request' }}
+        run: git checkout HEAD^2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm ci
+
+      - name: Lint & Format
+        uses: wearerequired/lint-action@v1.6.0
+        with:
+          github_token: ${{ secrets.github_token }}
+          auto_fix: true
+          eslint: true
+          prettier: true
+          eslint_extensions: ts

@@ -1,0 +1,8 @@
+# Build output
+/.nexus
+
+# GraphQL SDL
+*.graphql
+
+# Database migrations
+*/migrations
