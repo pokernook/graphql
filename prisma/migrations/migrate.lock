@@ -1,3 +1,4 @@
 # Prisma Migrate lockfile v1
 
 20200911004931-create-user
+20200911010643-update-user-id
