@@ -1,3 +1,6 @@
+# Build output
+/.nexus
+
 # Dependencies
 /node_modules
 
@@ -16,4 +19,4 @@ lerna-debug.log*
 *.env
 
 # IDE - VSCode
-.vscode/*
+/.vscode
