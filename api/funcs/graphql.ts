@@ -3,8 +3,7 @@ import { createServer, proxy } from "aws-serverless-express";
 import { Server } from "http";
 import app from "nexus";
 import "../app";
-// TODO: Improve schema import syntax
-import "../graphql/user";
+import "../graphql";
 
 let cachedServer: Server;
 
