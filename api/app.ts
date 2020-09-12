@@ -3,6 +3,7 @@ import { prisma } from "nexus-plugin-prisma";
 
 use(
   prisma({
+    paginationStrategy: "prisma",
     features: {
       crud: true,
     },
