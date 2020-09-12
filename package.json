@@ -15,6 +15,7 @@
     "nexus-plugin-prisma": "^0.18.2"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.62",
     "@types/aws-serverless-express": "^3.3.3",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
