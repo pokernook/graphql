@@ -5,7 +5,9 @@ provider:
   name: aws
   runtime: nodejs12.x
 
+# TODO: Stop requiring the use of two separate .env files
 plugins:
+  - serverless-dotenv-plugin
   - serverless-offline
 
 functions:
