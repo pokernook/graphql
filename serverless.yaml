@@ -1,0 +1,18 @@
+service:
+  name: peat-moss
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+plugins:
+  - serverless-offline
+
+functions:
+  graphql:
+    # TODO: Add hot reload support in development
+    handler: .nexus/build/api/funcs/graphql.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
