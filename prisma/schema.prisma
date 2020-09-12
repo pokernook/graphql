@@ -1,3 +1,4 @@
+// TODO: Provide DATABASE_URL in a serverless environment
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
