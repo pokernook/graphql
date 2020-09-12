@@ -1,0 +1,39 @@
+name: GraphQL
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  generate-schema:
+    name: Generate Schema
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Checkout PR Head
+        if: ${{ github.event_name == 'pull_request' }}
+        run: git checkout HEAD^2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm ci
+
+      - name: Build App
+        run: npm run build
+
+      - name: Commit Schema
+        uses: EndBug/add-and-commit@v4.4.0
+        with:
+          add: api/schema.graphql
+          message: "Generate schema"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
