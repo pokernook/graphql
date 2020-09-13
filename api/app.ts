@@ -1,7 +1,7 @@
-import { use } from "nexus";
+import app, { use } from "nexus";
 import { prisma } from "nexus-plugin-prisma";
-
-// TODO: Don't generate GraphQL schema when deployed
+import serverless from "serverless-http";
+import "./graphql"; // Force injection of schema into app bundle
 
 use(
   prisma({
@@ -11,3 +11,7 @@ use(
     },
   })
 );
+
+app.assemble();
+
+export const graphqlFunc = serverless(app.server.express);
