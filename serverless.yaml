@@ -13,7 +13,7 @@ plugins:
 functions:
   graphql:
     # TODO: Add hot reload support in development
-    handler: .nexus/build/api/funcs/graphql.handler
+    handler: .nexus/build/api/app.graphqlFunc
     events:
       - http:
           path: /{proxy+}
