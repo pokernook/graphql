@@ -10,13 +10,11 @@
     "migrate:up": "prisma migrate up --experimental"
   },
   "dependencies": {
-    "aws-serverless-express": "^3.3.8",
     "nexus": "^0.26.1",
-    "nexus-plugin-prisma": "^0.18.2"
+    "nexus-plugin-prisma": "^0.18.2",
+    "serverless-http": "^2.5.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.62",
-    "@types/aws-serverless-express": "^3.3.3",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
     "eslint": "^7.8.1",
