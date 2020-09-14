@@ -33,9 +33,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: |
-          npm ci
-          npm run build
+      - name: Build App
+        run: npm ci && npm run build
 
       - name: Deploy Preview
         run: npx serverless deploy --stage preview
