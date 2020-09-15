@@ -11,6 +11,7 @@ env:
 
 # TODO: Add deployment cleanup job, conditional on PR status
 # TODO: Determine deploy stage based on PR branch
+# TODO: Run DB migrations & seeding after deployment
 
 jobs:
   manage-function:
