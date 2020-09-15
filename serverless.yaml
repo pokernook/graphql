@@ -14,10 +14,8 @@ custom:
     basePath: prisma/
 
 package:
-  exclude:
-    - "**"
-  include:
-    - .nexus/**
+  exclude: ["**"]
+  include: [.nexus/**]
 
 functions:
   graphql:
