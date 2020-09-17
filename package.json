@@ -1,5 +1,5 @@
 {
-  "name": "peat-moss",
+  "name": "graphql",
   "version": "0.0.0",
   "scripts": {
     "lint": "eslint --fix --ext .ts .",
