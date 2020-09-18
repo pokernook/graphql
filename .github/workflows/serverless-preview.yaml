@@ -38,6 +38,7 @@ jobs:
 
       - name: Deploy Function
         if: ${{ github.event.action != 'closed' }}
+        # TODO: Deterministic database seeds should be applied after migration
         run: |
           npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
           npm run migrate:up
