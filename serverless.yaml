@@ -4,6 +4,8 @@ service:
 provider:
   name: aws
   runtime: nodejs12.x
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
 
 plugins:
   - serverless-dotenv-plugin
