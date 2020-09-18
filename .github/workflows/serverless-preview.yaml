@@ -1,7 +1,6 @@
 name: Serverless Preview
 
 on:
-  push: # TODO: Remove before PR
   pull_request:
     types: [opened, synchronize, reopened, closed]
 
