@@ -1,14 +1,14 @@
 name: Serverless Preview
 
 on:
+  push: # TODO: Remove before PR
   pull_request:
     types: [opened, synchronize, reopened, closed]
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-# TODO: Run DB migrations & seeding after deployment
+  DATABASE_URL: ${{ secrets.DATABASE_PREVIEW_URL }}
 
 jobs:
   manage-function:
@@ -39,7 +39,9 @@ jobs:
 
       - name: Deploy Function
         if: ${{ github.event.action != 'closed' }}
-        run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
+        run: |
+          npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
+          npm run migrate:up
 
       - name: Remove Function
         if: ${{ github.event.action == 'closed' }}
