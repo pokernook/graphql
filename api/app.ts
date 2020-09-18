@@ -1,7 +1,7 @@
 import app, { settings, use } from "nexus";
 import { prisma } from "nexus-plugin-prisma";
 import serverless from "serverless-http";
-import "./graphql"; // Force injection of schema into app bundle
+import "./schema"; // Force injection of schema into app bundle
 
 settings.change({
   schema: {
