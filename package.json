@@ -7,7 +7,10 @@
     "dev": "nexus dev",
     "build": "nexus build",
     "migrate:save": "prisma migrate save --experimental",
-    "migrate:up": "prisma migrate up --experimental"
+    "migrate:up": "prisma migrate up --experimental",
+    "seed": "npx ts-node prisma/seeds/seed",
+    "db:up": "docker-compose up -d && npm run migrate:up && npm run seed",
+    "db:down": "docker-compose down"
   },
   "dependencies": {
     "nexus": "^0.26.1",
