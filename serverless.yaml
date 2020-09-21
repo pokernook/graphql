@@ -1,0 +1,23 @@
+service:
+  name: pokernook
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+
+plugins:
+  - serverless-offline
+
+package:
+  exclude: ["**"]
+  include: [.nexus/**]
+
+functions:
+  graphql:
+    handler: .nexus/build/api/app.graphqlFunc
+    events:
+      - http:
+          path: /{proxy+}
+          method: any

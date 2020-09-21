@@ -1,0 +1,48 @@
+name: Serverless Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  DATABASE_URL: ${{ secrets.DATABASE_PREVIEW_URL }}
+
+jobs:
+  manage-function:
+    name: Manage Function
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Checkout PR Head
+        if: ${{ github.event_name == 'pull_request' }}
+        run: git checkout HEAD^2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build App
+        run: npm ci && npm run build
+
+      - name: Set Stage
+        run: echo ::set-env name=DEPLOY_STAGE::$(HEAD_REF=${{ github.head_ref }} && echo pr-${HEAD_REF##*/} | tr -dc '[:alnum:]-\n\r' | head -c 25)
+
+      - name: Deploy Function
+        if: ${{ github.event.action != 'closed' }}
+        run: |
+          npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
+          npm run migrate:up
+          npm run seed
+
+      - name: Remove Function
+        if: ${{ github.event.action == 'closed' }}
+        run: npx serverless remove --stage ${{ env.DEPLOY_STAGE }}
