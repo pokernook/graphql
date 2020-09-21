@@ -5,11 +5,11 @@ const users: UserCreateInput[] = [
   { id: "2", email: "cowbell@email.com" },
 ];
 
-// TODO: Seeding should be skip over duplicate records, instead of reporting an error
 export const seedUser = async (prisma: PrismaClient): Promise<void> => {
   try {
     await Promise.all(users.map((user) => prisma.user.create({ data: user })));
+    console.info(`✅ User (${users.length})`);
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
   }
 };
