@@ -12,9 +12,7 @@ settings.change({
 use(
   prisma({
     paginationStrategy: "prisma",
-    features: {
-      crud: true,
-    },
+    features: { crud: true },
   })
 );
 
