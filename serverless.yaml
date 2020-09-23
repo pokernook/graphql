@@ -6,6 +6,7 @@ provider:
   runtime: nodejs12.x
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
+    NODE_ENV: ${env:NODE_ENV, 'preview'}
 
 plugins:
   - serverless-offline
