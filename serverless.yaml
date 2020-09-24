@@ -4,6 +4,7 @@ service:
 provider:
   name: aws
   runtime: nodejs12.x
+  versionFunctions: false
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
     NODE_ENV: ${env:NODE_ENV, 'preview'}
