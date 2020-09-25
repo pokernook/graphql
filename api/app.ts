@@ -1,4 +1,5 @@
 import app, { settings, use } from "nexus";
+import { auth } from "nexus-plugin-jwt-auth";
 import { prisma } from "nexus-plugin-prisma";
 import serverless from "serverless-http";
 import "./schema"; // Force injection of schema into app bundle
@@ -15,6 +16,9 @@ use(
     features: { crud: true },
   })
 );
+
+// TODO: appSecret should be populated externally
+use(auth({ appSecret: "" }));
 
 app.assemble();
 
