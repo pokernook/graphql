@@ -22,10 +22,6 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Checkout PR Head
-        if: ${{ github.event_name == 'pull_request' }}
-        run: git checkout HEAD^2
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2.1.1
         with:

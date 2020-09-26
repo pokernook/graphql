@@ -1,2 +1,1 @@
-import "./query";
-import "./models/user";
+import "./User";
