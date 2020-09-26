@@ -1,5 +1,6 @@
 version: "3"
 
+# TODO: Sometimes the db isn't ready when migrations start
 services:
   database:
     image: postgres:12-alpine
