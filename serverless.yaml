@@ -6,11 +6,17 @@ provider:
   runtime: nodejs12.x
   versionFunctions: false
   environment:
+    APP_SECRET: ${env:APP_SECRET}
     DATABASE_URL: ${env:DATABASE_URL}
     NODE_ENV: ${env:NODE_ENV, 'preview'}
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-offline
+
+custom:
+  dotenv:
+    basePath: prisma/
 
 package:
   exclude: ["**"]
