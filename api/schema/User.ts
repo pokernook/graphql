@@ -1,5 +1,7 @@
 import { hash, argon2id } from "argon2";
+import { sign } from "jsonwebtoken";
 import { schema } from "nexus";
+import { config } from "../config";
 
 schema.objectType({
   name: "User",
@@ -35,8 +37,14 @@ schema.extendType({
         password: schema.stringArg({ required: true }),
       },
       resolve: async (_root, { email, password }, ctx) => {
-        const hashedPassword = await hash(password, { type: argon2id });
-        return null;
+        const passwordHash = await hash(password, { type: argon2id });
+        const user = await ctx.db.user.create({
+          data: { email, passwordHash },
+        });
+        return {
+          token: sign({ userId: user.id }, config.appSecret),
+          user,
+        };
       },
     });
   },
