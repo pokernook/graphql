@@ -1,5 +1,6 @@
 import { PrismaClient, UserCreateInput } from "nexus-plugin-prisma/client";
 
+// TODO: Users should somehow be seeded with a password hash that allows for test logins
 const users: UserCreateInput[] = [
   { id: "1", email: "test@email.com" },
   { id: "2", email: "cowbell@email.com" },
