@@ -15,6 +15,7 @@
     "db:down": "docker-compose down"
   },
   "dependencies": {
+    "argon2": "^0.27.0",
     "nexus": "^0.26.1",
     "nexus-plugin-jwt-auth": "^1.4.0",
     "nexus-plugin-prisma": "^0.19.0",
