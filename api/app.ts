@@ -4,6 +4,8 @@ import { prisma } from "nexus-plugin-prisma";
 import serverless from "serverless-http";
 import "./schema"; // Force injection of schema into app bundle
 
+const { APP_SECRET } = process.env;
+
 settings.change({
   schema: {
     generateGraphQLSDLFile: "api/api.graphql",
@@ -17,8 +19,7 @@ use(
   })
 );
 
-// TODO: appSecret should be populated externally
-use(auth({ appSecret: "" }));
+use(auth({ appSecret: APP_SECRET }));
 
 app.assemble();
 
