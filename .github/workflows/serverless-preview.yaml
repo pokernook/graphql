@@ -39,6 +39,16 @@ jobs:
           npm run migrate:up
           npm run seed
 
+      - name: Get Deployment Info
+        run: echo ::set-env name=SLS_INFO::$(npx serverless info --stage ${{ env.DEPLOY_STAGE }})
+
+      - name: Comment PR
+        if: ${{ github.event.action != 'closed' }}
+        uses: thollander/actions-comment-pull-request@1.0.0
+        with:
+          message: ${{ env.SLS_INFO }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Remove Function
         if: ${{ github.event.action == 'closed' }}
         run: npx serverless remove --stage ${{ env.DEPLOY_STAGE }}
