@@ -7,3 +7,11 @@ schema.objectType({
     t.model.email();
   },
 });
+
+schema.extendType({
+  type: "Query",
+  definition(t) {
+    t.crud.user();
+    t.crud.users();
+  },
+});
