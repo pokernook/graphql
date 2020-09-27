@@ -1,0 +1,105 @@
+name: Serverless
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  APP_SECRET: ${{ secrets.APP_SECRET }}
+
+jobs:
+  deploy-preview:
+    name: Deploy Preview
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_PREVIEW_URL }}
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build App
+        run: npm ci && npm run build
+
+      - name: Set Stage
+        run: echo ::set-env name=DEPLOY_STAGE::$(HEAD_REF=${{ github.head_ref }} && echo pr-${HEAD_REF##*/} | tr -dc '[:alnum:]-\n\r' | head -c 25)
+
+      - name: Deploy Function
+        run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
+
+      - name: Migrate & Seed
+        run: npm run migrate:up && npm run seed
+
+      - name: Get Deployment Info
+        run: echo ::set-env name=SLS_INFO::$(npx serverless info --stage ${{ env.DEPLOY_STAGE }} | grep http)
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@1.0.0
+        with:
+          message: |
+            **Endpoints:**
+            ```bash
+            ${{ env.SLS_INFO }}
+            ```
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  remove-preview:
+    name: Remove Preview
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Set Stage
+        run: echo ::set-env name=DEPLOY_STAGE::$(HEAD_REF=${{ github.head_ref }} && echo pr-${HEAD_REF##*/} | tr -dc '[:alnum:]-\n\r' | head -c 25)
+
+      - name: Remove Function
+        run: npx serverless remove --stage ${{ env.DEPLOY_STAGE }}
+
+  deploy-prod:
+    name: Deploy Prod
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build App
+        run: npm ci && npm run build
+
+      - name: Deploy Function
+        env:
+          NODE_ENV: production
+        run: npx serverless deploy --stage prod
+
+      - name: Migrate
+        run: npm run migrate:up
