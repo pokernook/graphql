@@ -1,6 +1,8 @@
 import app, { settings, use } from "nexus";
+import { auth } from "nexus-plugin-jwt-auth";
 import { prisma } from "nexus-plugin-prisma";
 import serverless from "serverless-http";
+import { config } from "./config";
 import "./schema"; // Force injection of schema into app bundle
 
 settings.change({
@@ -15,6 +17,8 @@ use(
     features: { crud: true },
   })
 );
+
+use(auth({ appSecret: config.appSecret }));
 
 app.assemble();
 
