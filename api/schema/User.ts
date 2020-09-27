@@ -27,6 +27,7 @@ schema.extendType({
   },
 });
 
+// TODO: Maybe auth token signing should be in a utility function?
 schema.extendType({
   type: "Mutation",
   definition(t) {
