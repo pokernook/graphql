@@ -27,7 +27,6 @@ schema.extendType({
   },
 });
 
-// TODO: Email should be checked for validity somewhere
 schema.extendType({
   type: "Mutation",
   definition(t) {
