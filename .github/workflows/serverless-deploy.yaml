@@ -9,7 +9,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   APP_SECRET: ${{ secrets.APP_SECRET }}
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  NODE_ENV: production
 
 jobs:
   rollout-function:
@@ -30,6 +29,8 @@ jobs:
         run: npm ci && npm run build
 
       - name: Deploy Function
+        env:
+          NODE_ENV: production
         run: |
           npx serverless deploy --stage prod
           npm run migrate:up
