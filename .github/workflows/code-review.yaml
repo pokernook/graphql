@@ -1,12 +1,12 @@
-name: Quality
+name: Code Review
 
 on:
   push:
-  pull_request:
+  pull_request: # TODO: Remove before merging
 
 jobs:
-  inspect-code:
-    name: Inspect Code
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,9 +25,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
-      - name: Lint & Format
+      - name: Run Linters & Formatters
         uses: wearerequired/lint-action@v1.6.0
         with:
           github_token: ${{ secrets.github_token }}
