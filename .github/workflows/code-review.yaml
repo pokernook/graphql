@@ -2,7 +2,6 @@ name: Code Review
 
 on:
   push:
-  pull_request: # TODO: Remove before merging
 
 jobs:
   lint:
@@ -13,12 +12,6 @@ jobs:
         node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
-
-      # TODO: Remove before merging
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2.1.1
