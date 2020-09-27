@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import { config } from "../config";
 
 export const signToken = (userId: string): string =>
-  jwt.sign({ userId }, config.appSecret);
+  sign({ userId }, config.appSecret);
