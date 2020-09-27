@@ -30,6 +30,7 @@ jobs:
       - name: Build App
         run: npm ci && npm run build
 
+      # TODO: Put this logic in a separate script
       - name: Set Stage
         run: echo ::set-env name=DEPLOY_STAGE::$(HEAD_REF=${{ github.head_ref }} && echo pr-${HEAD_REF##*/} | tr -dc '[:alnum:]-\n\r' | head -c 25)
 
