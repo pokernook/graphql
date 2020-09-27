@@ -1,7 +1,6 @@
 import { argon2id, hash, verify } from "argon2";
-import { sign } from "jsonwebtoken";
 import { schema } from "nexus";
-import { config } from "../config";
+import { signToken } from "../toolkit/auth";
 
 schema.objectType({
   name: "User",
@@ -27,7 +26,6 @@ schema.extendType({
   },
 });
 
-// TODO: Maybe auth token signing should be in a utility function/separate module?
 schema.extendType({
   type: "Mutation",
   definition(t) {
@@ -43,7 +41,7 @@ schema.extendType({
           data: { email, passwordHash },
         });
         return {
-          token: sign({ userId: user.id }, config.appSecret),
+          token: signToken(user.id),
           user,
         };
       },
@@ -65,7 +63,7 @@ schema.extendType({
           throw new Error("Invalid password");
         }
         return {
-          token: sign({ userId: user.id }, config.appSecret),
+          token: signToken(user.id),
           user,
         };
       },
