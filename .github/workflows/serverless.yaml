@@ -31,7 +31,7 @@ jobs:
         run: npm ci && npm run build
 
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(sh ./scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
+        run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
 
       - name: Deploy Function
         run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
@@ -71,7 +71,7 @@ jobs:
         run: npm ci
 
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(sh ./scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
+        run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
 
       - name: Remove Function
         run: npx serverless remove --stage ${{ env.DEPLOY_STAGE }}
