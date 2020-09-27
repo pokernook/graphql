@@ -1,4 +1,4 @@
-import { hash, argon2id } from "argon2";
+import { argon2id, hash, verify } from "argon2";
 import { sign } from "jsonwebtoken";
 import { schema } from "nexus";
 import { config } from "../config";
@@ -42,6 +42,28 @@ schema.extendType({
         const user = await ctx.db.user.create({
           data: { email, passwordHash },
         });
+        return {
+          token: sign({ userId: user.id }, config.appSecret),
+          user,
+        };
+      },
+    });
+
+    t.field("signIn", {
+      type: "AuthPayload",
+      args: {
+        email: schema.stringArg({ required: true }),
+        password: schema.stringArg({ required: true }),
+      },
+      resolve: async (_root, { email, password }, ctx) => {
+        const user = await ctx.db.user.findOne({ where: { email } });
+        if (!user) {
+          throw new Error(`No such user: ${email}`);
+        }
+        const validPassword = await verify(user.passwordHash, password);
+        if (!validPassword) {
+          throw new Error("Invalid password");
+        }
         return {
           token: sign({ userId: user.id }, config.appSecret),
           user,

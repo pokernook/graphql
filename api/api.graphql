@@ -21,6 +21,7 @@ scalar Json
 
 type Mutation {
   register(email: String!, password: String!): AuthPayload
+  signIn(email: String!, password: String!): AuthPayload
 }
 
 type Query {
