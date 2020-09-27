@@ -30,9 +30,8 @@ jobs:
       - name: Build App
         run: npm ci && npm run build
 
-      # TODO: Put this logic in a separate script
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(HEAD_REF=${{ github.head_ref }} && echo pr-${HEAD_REF##*/} | tr -dc '[:alnum:]-\n\r' | head -c 25)
+        run: echo ::set-env name=DEPLOY_STAGE::$(sh ./scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
 
       - name: Deploy Function
         run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
@@ -72,7 +71,7 @@ jobs:
         run: npm ci
 
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(HEAD_REF=${{ github.head_ref }} && echo pr-${HEAD_REF##*/} | tr -dc '[:alnum:]-\n\r' | head -c 25)
+        run: echo ::set-env name=DEPLOY_STAGE::$(sh ./scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
 
       - name: Remove Function
         run: npx serverless remove --stage ${{ env.DEPLOY_STAGE }}
