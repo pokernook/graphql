@@ -28,7 +28,7 @@
     "@typescript-eslint/parser": "^4.1.1",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "prettier": "^2.1.2",
     "serverless": "^2.2.0",
     "serverless-dotenv-plugin": "^3.0.0",
