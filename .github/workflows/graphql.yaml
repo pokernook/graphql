@@ -25,7 +25,7 @@ jobs:
         run: npm run build
 
       - name: Commit Schema
-        uses: EndBug/add-and-commit@v4.4.0
+        uses: EndBug/add-and-commit@v5
         with:
           add: "*.graphql"
           message: "Generate schema"
