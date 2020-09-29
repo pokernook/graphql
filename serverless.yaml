@@ -11,6 +11,7 @@ provider:
     NODE_ENV: ${env:NODE_ENV, 'preview'}
 
 plugins:
+  - serverless-domain-manager
   - serverless-dotenv-plugin
   - serverless-offline
 
