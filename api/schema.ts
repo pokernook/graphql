@@ -21,8 +21,14 @@ export const schema = makeSchema({
   ],
   typegenAutoConfig: {
     sources: [
-      { alias: "prisma", source: require.resolve(".prisma/client/index.d.ts") },
-      { alias: "ContextModule", source: require.resolve("./context") },
+      {
+        alias: "prisma",
+        source: require.resolve(".prisma/client/index.d.ts"),
+      },
+      {
+        alias: "ContextModule",
+        source: require.resolve("./@types/context.d.ts"),
+      },
     ],
     contextType: "ContextModule.Context",
   },
