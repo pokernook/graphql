@@ -1,7 +1,7 @@
 {
-  "name": "graphql",
+  "name": "graph",
   "description": "GraphQL API built with Nexus and Prisma",
-  "repository": "github:pokernook/graphql",
+  "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
     "lint": "eslint --fix --ext .ts .",
