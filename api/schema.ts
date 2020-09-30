@@ -2,6 +2,7 @@ import { DateTimeResolver, JSONObjectResolver } from "graphql-scalars";
 import { makeSchema } from "@nexus/schema";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
+import * as types from "./graphql";
 
 export const schema = makeSchema({
   outputs: {
@@ -25,5 +26,5 @@ export const schema = makeSchema({
     ],
     contextType: "ContextModule.Context",
   },
-  types: [],
+  types,
 });
