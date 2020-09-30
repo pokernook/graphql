@@ -16,15 +16,17 @@
   },
   "dependencies": {
     "@nexus/schema": "^0.16.0",
+    "@prisma/client": "^2.8.0",
     "apollo-server": "^2.18.1",
     "argon2": "^0.27.0",
     "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",
     "nexus-plugin-jwt-auth": "^1.4.0",
-    "nexus-plugin-prisma": "^0.19.0",
+    "nexus-plugin-prisma": "^0.20.0",
     "serverless-http": "^2.6.0"
   },
   "devDependencies": {
+    "@prisma/cli": "^2.8.0",
     "@types/jsonwebtoken": "^8.5.0",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
