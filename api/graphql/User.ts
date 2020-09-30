@@ -2,7 +2,7 @@ import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
 import { signToken } from "../toolkit/auth";
 
-const User = objectType({
+export const User = objectType({
   name: "User",
   definition(t) {
     t.model.id();
@@ -10,7 +10,7 @@ const User = objectType({
   },
 });
 
-const AuthToken = objectType({
+export const AuthToken = objectType({
   name: "AuthPayload",
   definition(t) {
     t.string("token");
@@ -18,7 +18,7 @@ const AuthToken = objectType({
   },
 });
 
-const UserQuery = extendType({
+export const UserQuery = extendType({
   type: "Query",
   definition(t) {
     t.crud.user();
@@ -26,7 +26,7 @@ const UserQuery = extendType({
   },
 });
 
-const UserMutation = extendType({
+export const UserMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.field("register", {
