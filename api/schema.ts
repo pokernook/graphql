@@ -6,7 +6,7 @@ import { join } from "path";
 export const schema = makeSchema({
   outputs: {
     schema: join(__dirname, "api.graphql"),
-    typegen: join(__dirname, "nexus-typegen.ts"),
+    typegen: join(__dirname, "../node_modules/@types/nexus/nexus-typegen.ts"),
   },
   plugins: [
     nexusPrisma({
