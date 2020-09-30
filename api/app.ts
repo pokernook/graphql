@@ -1,25 +1,5 @@
-import app, { settings, use } from "nexus";
-import { auth } from "nexus-plugin-jwt-auth";
-import { prisma } from "nexus-plugin-prisma";
-import serverless from "serverless-http";
-import { config } from "./config";
-import "./schema"; // Force injection of schema into app bundle
+import { server } from "./server";
 
-settings.change({
-  schema: {
-    generateGraphQLSDLFile: "api/api.graphql",
-  },
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
 });
-
-use(
-  prisma({
-    paginationStrategy: "prisma",
-    features: { crud: true },
-  })
-);
-
-use(auth({ appSecret: config.appSecret }));
-
-app.assemble();
-
-export const graphqlFunc = serverless(app.server.express);
