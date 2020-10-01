@@ -1,6 +1,7 @@
 import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
-import { signToken } from "../toolkit/auth";
+import { sign } from "jsonwebtoken";
+import { config } from "../config";
 
 export const User = objectType({
   name: "User",
@@ -25,6 +26,9 @@ export const UserQuery = extendType({
     t.crud.users();
   },
 });
+
+const signToken = (userId: string): string =>
+  sign({ userId }, config.appSecret);
 
 export const UserMutation = extendType({
   type: "Mutation",
