@@ -9,7 +9,7 @@
     "nexus:reflect": "ts-node api/schema",
     "migrate:save": "prisma migrate save --experimental",
     "migrate:up": "prisma migrate up --experimental",
-    "seed": "npx ts-node prisma/seeds/seed",
+    "seed": "ts-node prisma/seeds/seed",
     "db:up": "docker-compose up -d && npm run migrate:up && npm run seed",
     "db:down": "docker-compose down"
   },
