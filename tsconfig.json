@@ -7,7 +7,6 @@
     "rootDir": ".",
     "outDir": ".build",
     "sourceMap": true,
-    "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
