@@ -5,8 +5,9 @@ import { config } from "./config";
 import { schema } from "./schema";
 
 const app = createExpress();
+const apollo = new ApolloServer({ context, schema });
 
-new ApolloServer({ schema, context }).applyMiddleware({ app });
+apollo.applyMiddleware({ app });
 
 app.listen(config.port, () => {
   console.log(`🚀 Server ready at http://localhost:${config.port}`);
