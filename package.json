@@ -4,8 +4,6 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
-    "lint": "eslint --fix --ext .ts .",
-    "format": "prettier --write .",
     "dev": "nexus dev",
     "build": "nexus build",
     "migrate:save": "prisma migrate save --experimental",
