@@ -1,5 +1,6 @@
+import { config } from "./config";
 import { server } from "./server";
 
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
+server.listen(config.port, () => {
+  console.log(`🚀 Server ready at http://localhost:${config.port}`);
 });
