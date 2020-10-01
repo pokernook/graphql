@@ -1,4 +1,3 @@
-import { DateTimeResolver, JSONObjectResolver } from "graphql-scalars";
 import { makeSchema } from "@nexus/schema";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
@@ -13,9 +12,11 @@ export const schema = makeSchema({
     nexusPrisma({
       experimentalCRUD: true,
       paginationStrategy: "prisma",
-      scalars: {
-        DateTime: DateTimeResolver,
-        Json: JSONObjectResolver,
+      outputs: {
+        typegen: join(
+          __dirname,
+          "../node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts"
+        ),
       },
     }),
   ],
