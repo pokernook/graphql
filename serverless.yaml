@@ -20,7 +20,7 @@ custom:
 
 package:
   exclude: ["**"]
-  include: [.nexus/**]
+  include: [.build/**]
 
 functions:
   graphql:
