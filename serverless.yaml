@@ -8,7 +8,7 @@ provider:
   environment:
     APP_SECRET: ${env:APP_SECRET}
     DATABASE_URL: ${env:DATABASE_URL}
-    NODE_ENV: ${env:NODE_ENV, 'preview'}
+    NODE_ENV: ${env:NODE_ENV, 'development'}
 
 plugins:
   - serverless-dotenv-plugin
