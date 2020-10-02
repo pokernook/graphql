@@ -5,9 +5,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "ts-node-dev --transpile-only --no-notify api",
-    "build:server": "ncc build api/index.ts --out .build",
-    "build:serverless": "ncc build api/app.ts --out .build",
     "nexus:reflect": "ts-node --transpile-only api/schema",
+    "build:server": "npm run nexus:reflect && ncc build api/index.ts --out .build",
+    "build:serverless": "npm run nexus:reflect && ncc build api/app.ts --out .build",
     "migrate:save": "prisma migrate save --experimental",
     "migrate:up": "prisma migrate up --experimental",
     "seed": "ts-node prisma/seeds/seed",
