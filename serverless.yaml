@@ -24,7 +24,7 @@ package:
 
 functions:
   graphql:
-    handler: .nexus/build/api/app.graphqlFunc
+    handler: .build/index.graphqlFunc
     events:
       - http:
           path: /{proxy+}
