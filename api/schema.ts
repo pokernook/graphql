@@ -28,7 +28,7 @@ export const schema = makeSchema({
       },
       {
         alias: "ContextModule",
-        source: require.resolve("./server/context"),
+        source: require.resolve("./server/context.ts"),
       },
     ],
     contextType: "ContextModule.Context",
