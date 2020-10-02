@@ -28,7 +28,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Build App
-        run: npm ci && npm run build
+        run: npm ci && npm run build:serverless
 
       - name: Set Stage
         run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
@@ -94,7 +94,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Build App
-        run: npm ci && npm run build
+        run: npm ci && npm run build:serverless
 
       - name: Deploy Function
         env:
