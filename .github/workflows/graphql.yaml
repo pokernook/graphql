@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Build App
-        run: npm run nexus:reflect
+        run: npx prisma generate && npm run nexus:reflect
 
       - name: Commit Schema
         uses: EndBug/add-and-commit@v5
