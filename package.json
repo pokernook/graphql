@@ -4,7 +4,7 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only ./api/app",
+    "dev": "ts-node-dev --transpile-only --no-notify ./api/app",
     "build": "nexus build",
     "nexus:reflect": "ts-node api/schema",
     "migrate:save": "prisma migrate save --experimental",
