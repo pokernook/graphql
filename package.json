@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --transpile-only --no-notify api",
     "build:server": "ncc build api/index.ts --out .build",
     "build:serverless": "ncc build api/app.ts --out .build",
-    "nexus:reflect": "ts-node api/schema",
+    "nexus:reflect": "ts-node --transpile-only api/schema",
     "migrate:save": "prisma migrate save --experimental",
     "migrate:up": "prisma migrate up --experimental",
     "seed": "ts-node prisma/seeds/seed",
