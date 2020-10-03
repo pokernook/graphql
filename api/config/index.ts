@@ -1,4 +1,6 @@
+import env from "env-var";
+
 export const config = {
-  appSecret: process.env.APP_SECRET || "",
-  port: process.env.PORT || "3000",
+  appSecret: env.get("APP_SECRET").required().asString(),
+  port: env.get("PORT").default(3000).asPortNumber(),
 };
