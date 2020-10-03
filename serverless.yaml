@@ -17,6 +17,8 @@ plugins:
 custom:
   dotenv:
     basePath: prisma/
+  serverless-offline:
+    noPrependStageInUrl: true
 
 package:
   exclude: ["**"]
@@ -27,5 +29,5 @@ functions:
     handler: .build/index.graphqlFunc
     events:
       - http:
-          path: /{proxy+}
+          path: /
           method: any
