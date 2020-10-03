@@ -6,7 +6,7 @@
   "scripts": {
     "dev:server": "ts-node-dev --transpile-only --no-notify api",
     "dev:typecheck": "tsc --noEmit --watch",
-    "dev": "concurrently --kill-others \"npm run dev:server\" \"npm run dev:typecheck\"",
+    "dev": "dotenv -e prisma/.env -- concurrently --kill-others \"npm run dev:server\" \"npm run dev:typecheck\"",
     "nexus:reflect": "ts-node --transpile-only api/server/schema",
     "build:server": "npm run nexus:reflect && ncc build api/index.ts --out .build",
     "build:serverless": "npm run nexus:reflect && ncc build api/app.ts --out .build",
@@ -36,6 +36,7 @@
     "@typescript-eslint/parser": "^4.1.1",
     "@vercel/ncc": "^0.24.1",
     "concurrently": "^5.3.0",
+    "dotenv-cli": "^4.0.0",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.1",
