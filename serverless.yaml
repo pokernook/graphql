@@ -20,10 +20,6 @@ custom:
   serverless-offline:
     noPrependStageInUrl: true
 
-package:
-  exclude: ["**"]
-  include: [.build/**]
-
 functions:
   graphql:
     handler: .build/index.graphqlFunc
