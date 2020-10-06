@@ -5,6 +5,7 @@ import * as types from "../graphql";
 
 export const schema = makeSchema({
   outputs: {
+    // TODO: Do not output schema in serverless environment
     schema: join(__dirname, "../api.graphql"),
     typegen: join(
       __dirname,
