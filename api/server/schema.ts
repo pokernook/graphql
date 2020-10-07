@@ -1,11 +1,12 @@
 import { makeSchema } from "@nexus/schema";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
+import { config } from "../config";
 import * as types from "../graphql";
 
 export const schema = makeSchema({
+  shouldGenerateArtifacts: config.isOffline,
   outputs: {
-    // TODO: Do not output schema in serverless environment
     schema: join(__dirname, "../api.graphql"),
     typegen: join(
       __dirname,
@@ -14,6 +15,7 @@ export const schema = makeSchema({
   },
   plugins: [
     nexusPrisma({
+      shouldGenerateArtifacts: config.isOffline,
       experimentalCRUD: true,
       paginationStrategy: "prisma",
       outputs: {

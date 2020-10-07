@@ -6,10 +6,10 @@ provider:
   runtime: nodejs12.x
   versionFunctions: false
   environment:
+    IS_OFFLINE: "false"
     APP_SECRET: ${env:APP_SECRET}
     DATABASE_URL: ${env:DATABASE_URL}
     NODE_ENV: ${env:NODE_ENV, 'development'}
-    IS_OFFLINE: "false"
 
 plugins:
   - serverless-dotenv-plugin
