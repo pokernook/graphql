@@ -23,6 +23,7 @@ custom:
     domainName: graph.pokernook.com
     basePath: ""
     certificateName: "*.pokernook.com"
+    createRoute53Record: true
     endpointType: edge
     apiType: rest
   dotenv:
