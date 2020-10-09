@@ -23,7 +23,6 @@ custom:
     basePath: ""
     apiType: rest
     endpointType: edge
-    autoDomain: true
   dotenv:
     basePath: prisma/
   serverless-offline:
