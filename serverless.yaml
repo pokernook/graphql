@@ -21,7 +21,7 @@ plugins:
 custom:
   customDomain:
     domainName: graph.pokernook.com
-    basePath: dev # TODO: Remove after test
+    basePath: ""
     certificateName: "*.pokernook.com"
     endpointType: edge
     apiType: rest
@@ -35,5 +35,5 @@ functions:
     handler: .build/index.graphqlFunc
     events:
       - http:
-          path: test # TODO: Remove after test
+          path: ""
           method: any
