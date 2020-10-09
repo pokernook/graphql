@@ -20,6 +20,7 @@ custom:
   customDomain:
     domainName: graph.pokernook.com
     certificateName: "*.pokernook.com"
+    basePath: ""
     apiType: rest
     endpointType: edge
     autoDomain: true
