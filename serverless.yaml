@@ -20,7 +20,6 @@ custom:
   customDomain:
     domainName: graph.pokernook.com
     certificateName: pokernook.com
-    endpointType: regional
     apiType: http
   dotenv:
     basePath: prisma/
