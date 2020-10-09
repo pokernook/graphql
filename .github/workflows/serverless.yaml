@@ -40,7 +40,7 @@ jobs:
         run: echo "DEPLOY_STAGE=$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})" >> $GITHUB_ENV
 
       - name: Deploy Function
-        run: SLS_DEBUG=* npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
+        run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
 
       - name: Migrate & Seed
         run: npm run db:migrate:up && npm run db:seed
