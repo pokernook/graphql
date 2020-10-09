@@ -17,6 +17,7 @@ plugins:
   - serverless-offline
 
 custom:
+  # Still inaccessible; should be deployed with a custom, stage-based id
   customDomain:
     domainName: graph.pokernook.com
     certificateName: pokernook.com
