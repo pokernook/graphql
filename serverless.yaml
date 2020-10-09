@@ -25,6 +25,7 @@ custom:
     certificateName: "*.pokernook.com"
     endpointType: edge
     apiType: rest
+    hostedZoneId: Z074077611FA39WHOYVGX
   dotenv:
     basePath: prisma/
   serverless-offline:
