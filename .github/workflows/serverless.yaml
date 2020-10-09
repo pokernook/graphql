@@ -37,7 +37,7 @@ jobs:
           docker cp pkg-instance:/app/.serverless ./.serverless
 
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
+        run: echo "DEPLOY_STAGE=$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})" >> $GITHUB_ENV
 
       - name: Deploy Function
         run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }} --package .serverless
@@ -46,7 +46,7 @@ jobs:
         run: npm run migrate:up && npm run seed
 
       - name: Get Deployment Info
-        run: echo ::set-env name=SLS_INFO::$(npx serverless info --stage ${{ env.DEPLOY_STAGE }} | grep http)
+        run: echo "SLS_INFO=$(npx serverless info --stage ${{ env.DEPLOY_STAGE }} | grep http)" >> $GITHUB_ENV
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@1.0.0
@@ -74,7 +74,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
+        run: echo "DEPLOY_STAGE=$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})" >> $GITHUB_ENV
 
       - name: Remove Function
         run: npx serverless remove --stage ${{ env.DEPLOY_STAGE }}
