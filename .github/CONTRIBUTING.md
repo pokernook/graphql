@@ -1,4 +1,4 @@
-# PokerNook GraphQL: Contributing Guide
+# PokerNook GraphQL API: Contributing Guide
 
 ## Pull Request Guidelines
 

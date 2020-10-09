@@ -1,8 +1,9 @@
+import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
-import { schema } from "nexus";
-import { signToken } from "../toolkit/auth";
+import { sign } from "jsonwebtoken";
+import { config } from "../config";
 
-schema.objectType({
+export const User = objectType({
   name: "User",
   definition(t) {
     t.model.id();
@@ -10,7 +11,7 @@ schema.objectType({
   },
 });
 
-schema.objectType({
+export const AuthToken = objectType({
   name: "AuthPayload",
   definition(t) {
     t.string("token");
@@ -18,7 +19,7 @@ schema.objectType({
   },
 });
 
-schema.extendType({
+export const UserQuery = extendType({
   type: "Query",
   definition(t) {
     t.crud.user();
@@ -26,14 +27,17 @@ schema.extendType({
   },
 });
 
-schema.extendType({
+const signToken = (userId: string): string =>
+  sign({ userId }, config.appSecret);
+
+export const UserMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.field("register", {
       type: "AuthPayload",
       args: {
-        email: schema.stringArg({ required: true }),
-        password: schema.stringArg({ required: true }),
+        email: stringArg({ required: true }),
+        password: stringArg({ required: true }),
       },
       resolve: async (_root, { email, password }, ctx) => {
         const passwordHash = await hash(password, { type: argon2id });
@@ -50,8 +54,8 @@ schema.extendType({
     t.field("signIn", {
       type: "AuthPayload",
       args: {
-        email: schema.stringArg({ required: true }),
-        password: schema.stringArg({ required: true }),
+        email: stringArg({ required: true }),
+        password: stringArg({ required: true }),
       },
       resolve: async (_root, { email, password }, ctx) => {
         const user = await ctx.db.user.findOne({ where: { email } });

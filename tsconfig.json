@@ -2,14 +2,13 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
+    "moduleResolution": "node",
     "lib": ["esnext"],
     "strict": true,
     "rootDir": ".",
-    "noEmit": true,
-    "plugins": [{ "name": "nexus/typescript-language-service" }],
-    "typeRoots": ["node_modules/@types", "types"],
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
-  },
-  "include": ["types.d.ts", "."]
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "typeRoots": ["node_modules/@types"]
+  }
 }
