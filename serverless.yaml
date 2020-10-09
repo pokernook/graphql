@@ -5,6 +5,8 @@ provider:
   name: aws
   runtime: nodejs12.x
   versionFunctions: false
+  httpApi:
+    cors: true
   environment:
     IS_OFFLINE: "false"
     APP_SECRET: ${env:APP_SECRET}
@@ -20,6 +22,7 @@ custom:
   customDomain:
     domainName: graph.pokernook.com
     certificateName: pokernook.com
+    endpointType: regional
     apiType: http
   dotenv:
     basePath: prisma/
