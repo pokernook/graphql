@@ -27,20 +27,26 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Build App
-        run: npm ci && npm run build
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Deployment
+        run: |
+          docker build -t pkg -f .docker/package.dockerfile .
+          docker create --name pkg-instance pkg
+          docker cp pkg-instance:/app/.build ./.build
 
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
+        run: echo "DEPLOY_STAGE=$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})" >> $GITHUB_ENV
 
       - name: Deploy Function
         run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
 
       - name: Migrate & Seed
-        run: npm run migrate:up && npm run seed
+        run: npm run db:migrate:up && npm run db:seed
 
       - name: Get Deployment Info
-        run: echo ::set-env name=SLS_INFO::$(npx serverless info --stage ${{ env.DEPLOY_STAGE }} | grep http)
+        run: echo "SLS_INFO=$(npx serverless info --stage ${{ env.DEPLOY_STAGE }} | grep http)" >> $GITHUB_ENV
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@1.0.0
@@ -67,11 +73,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Dependencies
-        run: npm ci
-
       - name: Set Stage
-        run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
+        run: echo "DEPLOY_STAGE=$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})" >> $GITHUB_ENV
 
       - name: Remove Function
         run: npx serverless remove --stage ${{ env.DEPLOY_STAGE }}
@@ -93,8 +96,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Build App
-        run: npm ci && npm run build
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Deployment
+        run: |
+          docker build -t pkg -f .docker/package.dockerfile .
+          docker create --name pkg-instance pkg
+          docker cp pkg-instance:/app/.build ./.build
 
       - name: Deploy Function
         env:
@@ -102,4 +111,4 @@ jobs:
         run: npx serverless deploy --stage prod
 
       - name: Migrate
-        run: npm run migrate:up
+        run: npm run db:migrate:up

@@ -21,8 +21,8 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build App
-        run: npm run build
+      - name: Reflect Schema
+        run: npm run nexus:reflect
 
       - name: Commit Schema
         uses: EndBug/add-and-commit@v5

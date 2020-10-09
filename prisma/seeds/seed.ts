@@ -1,4 +1,4 @@
-import { PrismaClient } from "nexus-plugin-prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { seedUser } from "./fixtures/User";
 
 const seed = async () => {

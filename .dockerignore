@@ -19,5 +19,11 @@ lerna-debug.log*
 # Environment
 *.env
 
+# Docs
+*.md
+
+# Git
+/.git*
+
 # IDE - VSCode
 /.vscode
