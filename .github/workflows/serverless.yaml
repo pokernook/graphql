@@ -73,6 +73,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Install Dependencies
+        run: npm ci
+
       - name: Set Stage
         run: echo "DEPLOY_STAGE=$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})" >> $GITHUB_ENV
 
