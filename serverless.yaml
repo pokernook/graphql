@@ -19,9 +19,11 @@ plugins:
 custom:
   # Still inaccessible; should be deployed with a custom, stage-based id
   customDomain:
-    autoDomain: true
-    certificateName: pokernook.com
-    domainName: graph.pokernook.com
+    http:
+      domainName: graph.pokernook.com
+      certificateName: pokernook.com
+      endpointType: regional
+      autoDomain: true
   dotenv:
     basePath: prisma/
   serverless-offline:
