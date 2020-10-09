@@ -1,6 +1,8 @@
 service:
   name: pokernook
 
+frameworkVersion: "2"
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -19,10 +21,10 @@ plugins:
 custom:
   customDomain:
     domainName: graph.pokernook.com
+    basePath: dev # TODO: Remove after test
     certificateName: "*.pokernook.com"
-    basePath: ""
-    apiType: rest
     endpointType: edge
+    apiType: rest
   dotenv:
     basePath: prisma/
   serverless-offline:
@@ -33,5 +35,5 @@ functions:
     handler: .build/index.graphqlFunc
     events:
       - http:
-          path: /
+          path: test # TODO: Remove after test
           method: any
