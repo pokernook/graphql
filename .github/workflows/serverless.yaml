@@ -27,14 +27,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Build App
-        run: npm ci && npm run build:serverless
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Bundle Deployment Package
+        run: |
+          docker build -t pkg -f .docker/package.dockerfile .
+          docker create --name pkg-instance pkg
+          docker cp pkg-instance:/app/.serverless ./.serverless
 
       - name: Set Stage
         run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
 
       - name: Deploy Function
-        run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
+        run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }} --package .serverless
 
       - name: Migrate & Seed
         run: npm run migrate:up && npm run seed
@@ -67,9 +73,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Dependencies
-        run: npm ci
-
       - name: Set Stage
         run: echo ::set-env name=DEPLOY_STAGE::$(sh .github/scripts/ref-to-serverless-stage.sh ${{ github.head_ref }})
 
@@ -93,13 +96,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Build App
-        run: npm ci && npm run build:serverless
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Bundle Deployment Package
+        run: |
+          docker build -t pkg -f .docker/package.dockerfile .
+          docker create --name pkg-instance pkg
+          docker cp pkg-instance:/app/.serverless ./.serverless
 
       - name: Deploy Function
         env:
           NODE_ENV: production
-        run: npx serverless deploy --stage prod
+        run: npx serverless deploy --stage prod --package .serverless
 
       - name: Migrate
         run: npm run migrate:up
