@@ -43,7 +43,7 @@ jobs:
         run: npx serverless deploy --stage ${{ env.DEPLOY_STAGE }}
 
       - name: Migrate & Seed
-        run: npm run migrate:up && npm run seed
+        run: npm run db:migrate:up && npm run db:seed
 
       - name: Get Deployment Info
         run: echo "SLS_INFO=$(npx serverless info --stage ${{ env.DEPLOY_STAGE }} | grep http)" >> $GITHUB_ENV
@@ -111,4 +111,4 @@ jobs:
         run: npx serverless deploy --stage prod
 
       - name: Migrate
-        run: npm run migrate:up
+        run: npm run db:migrate:up
