@@ -23,7 +23,6 @@ custom:
     domainName: graph.pokernook.com
     basePath: ""
     certificateName: "*.pokernook.com"
-    hostedZoneId: "Z0223362MK9F753U67IW"
   dotenv:
     basePath: prisma/
   serverless-offline:
