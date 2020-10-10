@@ -8,7 +8,7 @@ provider:
   runtime: nodejs12.x
   versionFunctions: false
   environment:
-    IS_OFFLINE: "false"
+    IS_OFFLINE: ${env:IS_OFFLINE, 'false'}
     APP_SECRET: ${env:APP_SECRET}
     DATABASE_URL: ${env:DATABASE_URL}
     NODE_ENV: ${env:NODE_ENV, 'development'}
@@ -19,10 +19,14 @@ plugins:
   - serverless-offline
 
 custom:
+  enabled:
+    prod: true
+    other: false
   customDomain:
-    domainName: graph.pokernook.com
     basePath: ""
     certificateName: "*.pokernook.com"
+    domainName: graph.pokernook.com
+    enabled: ${self:custom.enabled.${opt:stage}, self:custom.enabled.other}
   dotenv:
     basePath: prisma/
   serverless-offline:
