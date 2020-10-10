@@ -23,8 +23,7 @@ custom:
     domainName: graph.pokernook.com
     basePath: ""
     certificateName: "*.pokernook.com"
-    endpointType: edge
-    apiType: rest
+    hostedZoneId: "Z0223362MK9F753U67IW"
   dotenv:
     basePath: prisma/
   serverless-offline:
@@ -35,5 +34,5 @@ functions:
     handler: .build/index.graphqlFunc
     events:
       - http:
-          path: ""
+          path: /
           method: any
