@@ -33,7 +33,7 @@ custom:
     domainName: graph.pokernook.com
     enabled: ${self:custom.enabled.${opt:stage}, self:custom.enabled.other}
   warmup:
-    enabled: true # TODO: Set to prod when merging
+    enabled: ${self:custom.enabled.${opt:stage}, self:custom.enabled.other}
   dotenv:
     basePath: prisma/
   serverless-offline:
