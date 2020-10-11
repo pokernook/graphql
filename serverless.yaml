@@ -16,6 +16,7 @@ provider:
 plugins:
   - serverless-domain-manager
   - serverless-dotenv-plugin
+  - serverless-plugin-warmup
   - serverless-offline
 
 custom:
@@ -27,6 +28,8 @@ custom:
     certificateName: "*.pokernook.com"
     domainName: graph.pokernook.com
     enabled: ${self:custom.enabled.${opt:stage}, self:custom.enabled.other}
+  warmup:
+    enabled: true # TODO: Set to prod when merging
   dotenv:
     basePath: prisma/
   serverless-offline:
