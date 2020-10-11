@@ -7,6 +7,10 @@ provider:
   name: aws
   runtime: nodejs12.x
   versionFunctions: false
+  iamRoleStatements:
+    - Effect: Allow
+      Action: [lambda:InvokeFunction, lambda:InvokeAsync]
+      Resource: "*"
   environment:
     IS_OFFLINE: ${env:IS_OFFLINE, 'false'}
     APP_SECRET: ${env:APP_SECRET}
@@ -16,6 +20,7 @@ provider:
 plugins:
   - serverless-domain-manager
   - serverless-dotenv-plugin
+  - serverless-plugin-warmup
   - serverless-offline
 
 custom:
@@ -26,6 +31,8 @@ custom:
     basePath: ""
     certificateName: "*.pokernook.com"
     domainName: graph.pokernook.com
+    enabled: ${self:custom.enabled.${opt:stage}, self:custom.enabled.other}
+  warmup:
     enabled: ${self:custom.enabled.${opt:stage}, self:custom.enabled.other}
   dotenv:
     basePath: prisma/
