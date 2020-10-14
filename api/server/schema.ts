@@ -1,6 +1,7 @@
 import { makeSchema } from "@nexus/schema";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
+
 import { config } from "../config";
 import * as types from "../graphql";
 
