@@ -5,13 +5,18 @@ parserOptions:
   sourceType: module
 
 plugins:
+  - simple-import-sort
   - "@typescript-eslint/eslint-plugin"
 
 extends:
-  - "plugin:@typescript-eslint/eslint-recommended"
-  - "plugin:@typescript-eslint/recommended"
-  - "prettier"
-  - "prettier/@typescript-eslint"
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
+  - prettier
+  - prettier/@typescript-eslint
+
+rules:
+  simple-import-sort/sort: "error"
+  sort-imports: "off"
 
 root: true
 

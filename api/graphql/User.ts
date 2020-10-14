@@ -1,6 +1,7 @@
 import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
 import { sign } from "jsonwebtoken";
+
 import { config } from "../config";
 
 export const User = objectType({
