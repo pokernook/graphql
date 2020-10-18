@@ -1,0 +1,16 @@
+name: Semantic Analysis
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  run-codeql:
+    name: Run CodeQL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: github/codeql-action/init@v1
+
+      - uses: github/codeql-action/analyze@v1
