@@ -8,7 +8,7 @@
     "dev:server": "ts-node-dev --transpile-only --no-notify api",
     "dev:typecheck": "tsc --noEmit --watch",
     "dev": "dotenv -e prisma/.env -- concurrently --kill-others \"npm run dev:server\" \"npm run dev:typecheck\"",
-    "build": "tsc",
+    "build": "npm run nexus:reflect && tsc",
     "build:server": "npm run nexus:reflect && ncc build api/index.ts --out .build",
     "build:serverless": "npm run nexus:reflect && ncc build api/app.ts --out .build",
     "db:migrate:save": "prisma migrate save --experimental",
