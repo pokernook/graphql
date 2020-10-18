@@ -1,11 +1,11 @@
-name: Code Review
+name: Lint and Format
 
 on:
   push:
 
 jobs:
-  lint:
-    name: Lint
+  execute-lint-action:
+    name: Execute Lint Action
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -13,16 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.1.2
+      - uses: actions/setup-node@v2.1.2
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Run Linters & Formatters
-        uses: wearerequired/lint-action@v1.6.0
+      - uses: wearerequired/lint-action@v1.6.0
         with:
           github_token: ${{ secrets.github_token }}
           auto_fix: true
