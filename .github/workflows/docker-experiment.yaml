@@ -1,0 +1,19 @@
+name: Docker Experiment
+
+on:
+  push:
+
+jobs:
+  build-and-push:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: docker/build-push-action@v1.1.1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: pokernook/graph/graph
+          tag_with_ref: true
