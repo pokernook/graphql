@@ -3,9 +3,6 @@ name: Publish Container
 on:
   push:
 
-env:
-  image: ghcr.io/pokernook/graph
-
 jobs:
   build-and-push:
     name: Build and Push
@@ -16,7 +13,7 @@ jobs:
       - name: Prepare Container
         id: prepare
         run: |
-          IMAGE=${{ env.image }}
+          IMAGE=pokernookgraph.azurecr.io
           TAG="${IMAGE}:sha-${GITHUB_SHA::8}"
           echo ::set-output name=tag::${TAG}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
@@ -25,9 +22,9 @@ jobs:
 
       - uses: docker/login-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.CR_PAT }}
+          registry: azurecr.io
+          username: ${{ secrets.AZURE_CR_USERNAME }}
+          password: ${{ secrets.AZURE_CR_PASSWORD }}
 
       - uses: docker/build-push-action@v2
         with:
