@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  cr_server: pokernook.azurecr.io
+  cr_server: 445789524075.dkr.ecr.us-east-1.amazonaws.com
 
 jobs:
   build-and-push:
@@ -16,7 +16,7 @@ jobs:
       - name: Prepare Container
         id: prepare
         run: |
-          IMAGE=${{ env.cr_server }}/graph
+          IMAGE=${{ env.cr_server }}/pokernook/graph
           TAG="${IMAGE}:sha-${GITHUB_SHA::8}"
           echo ::set-output name=tag::${TAG}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
@@ -26,8 +26,8 @@ jobs:
       - uses: docker/login-action@v1
         with:
           registry: ${{ env.cr_server }}
-          username: ${{ secrets.AZURE_CR_USERNAME }}
-          password: ${{ secrets.AZURE_CR_PASSWORD }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - uses: docker/build-push-action@v2
         with:
@@ -37,9 +37,3 @@ jobs:
             org.opencontainers.image.source=${{ github.event.repository.clone_url }}
             org.opencontainers.image.created=${{ steps.prepare.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
-
-      - uses: azure/webapps-deploy@v2
-        with:
-          app-name: pokernook-graph
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          images: ${{ steps.prepare.outputs.tag }}
