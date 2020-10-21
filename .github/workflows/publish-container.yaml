@@ -48,6 +48,8 @@ jobs:
           image: ${{ steps.prepare.outputs.tag }}
 
       - uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        env:
+          AWS_REGION: us-east-1
         with:
           task-definition: ${{ steps.render-task.outputs.task-definition }}
           cluster: pokernook
