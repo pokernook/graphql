@@ -39,3 +39,17 @@ jobs:
             org.opencontainers.image.source=${{ github.event.repository.clone_url }}
             org.opencontainers.image.created=${{ steps.prepare.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
+
+      - uses: aws-actions/amazon-ecs-render-task-definition@v1
+        id: render-task
+        with:
+          task-definition: .aws/ecs-task-definition.json
+          container-name: graph
+          image: ${{ steps.prepare.outputs.tag }}
+
+      - uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-task.outputs.task-definition }}
+          cluster: pokernook
+          service: graph
+          wait-for-service-stability: true
