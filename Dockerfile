@@ -1,4 +1,4 @@
-FROM node:14-buster AS builder
+FROM node:14-alpine
 
 WORKDIR /app
 
@@ -11,13 +11,5 @@ RUN npm ci
 COPY . .
 
 RUN npm run build
-
-FROM node:14-alpine
-
-WORKDIR /app
-
-COPY --from=builder /app/.build .build
-
-COPY --from=builder /app/node_modules node_modules
 
 CMD ["node", ".build/api"]
