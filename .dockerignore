@@ -1,9 +1,11 @@
 # Build output
 /.build
-/.serverless
 
 # Dependencies
 node_modules
+
+# GraphQL SDL
+*.graphql
 
 # Logs
 logs

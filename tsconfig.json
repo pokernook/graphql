@@ -6,6 +6,7 @@
     "lib": ["esnext"],
     "strict": true,
     "rootDir": ".",
+    "outDir": ".build",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,

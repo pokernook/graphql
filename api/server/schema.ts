@@ -2,18 +2,15 @@ import { makeSchema } from "@nexus/schema";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
 
-import { config } from "../config";
 import * as types from "../graphql";
 
 export const schema = makeSchema({
-  shouldGenerateArtifacts: config.isOffline,
   outputs: {
     schema: join(__dirname, "../api.graphql"),
     typegen: join(__dirname, "../node_modules/@types/nexus-typegen/index.d.ts"),
   },
   plugins: [
     nexusPrisma({
-      shouldGenerateArtifacts: config.isOffline,
       experimentalCRUD: true,
       paginationStrategy: "prisma",
       outputs: {
@@ -32,7 +29,7 @@ export const schema = makeSchema({
       },
       {
         alias: "ContextModule",
-        source: require.resolve("./context.ts"),
+        source: require.resolve("./context"),
       },
     ],
     contextType: "ContextModule.Context",

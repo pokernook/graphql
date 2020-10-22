@@ -15,9 +15,7 @@ npm install # Install project dependencies
 ```bash
 npm run dev # Create a hot-reloading GraphQL server
 
-npm run build:server # Build serverful application for deployment
-
-npm run build:serverless # Build serverless application for deployment
+npm run build # Build application for deployment
 
 npm run db:up # Create, migrate, and seed a local postgres db
 
