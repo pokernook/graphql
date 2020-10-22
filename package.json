@@ -4,10 +4,11 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
-    "nexus:reflect": "ts-node --transpile-only api/server/schema",
+    "dev:prisma": "prisma generate --watch",
     "dev:server": "ts-node-dev --transpile-only --no-notify api",
     "dev:typecheck": "tsc --noEmit --watch",
-    "dev": "dotenv -e prisma/.env -- concurrently --kill-others \"npm run dev:server\" \"npm run dev:typecheck\"",
+    "dev": "dotenv -e prisma/.env -- concurrently --kill-others npm:dev:*",
+    "nexus:reflect": "ts-node --transpile-only api/server/schema",
     "build": "npm run nexus:reflect && tsc",
     "db:migrate:save": "prisma migrate save --experimental",
     "db:migrate:up": "prisma migrate up --experimental",
