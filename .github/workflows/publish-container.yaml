@@ -2,6 +2,7 @@ name: Publish Container
 
 on:
   push:
+    branches: [main]
 
 env:
   cr_server: 445789524075.dkr.ecr.us-east-1.amazonaws.com
@@ -16,8 +17,8 @@ jobs:
       - name: Prepare Container
         id: prepare
         run: |
-          IMAGE=${{ env.cr_server }}/pokernook/graph
-          TAG="${IMAGE}:sha-${GITHUB_SHA::8}"
+          URI=${{ env.cr_server }}/pokernook/graph
+          TAG="${URI}:sha-${GITHUB_SHA::8}"
           echo ::set-output name=tag::${TAG}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
