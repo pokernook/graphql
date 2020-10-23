@@ -2,7 +2,7 @@
 /.build
 
 # GraphQL SDL
-*.graphql
+**/*.graphql
 
 # Database migrations
-*/migrations
+prisma/migrations
