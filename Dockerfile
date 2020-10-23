@@ -8,8 +8,6 @@ COPY prisma prisma
 
 RUN apk --no-cache --virtual build-dependencies add \
   python \
-  make \
-  g++ \
   && npm ci \
   && apk del build-dependencies
 
