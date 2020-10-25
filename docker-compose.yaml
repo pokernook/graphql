@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - 3000:3000
+
   db:
     image: postgres:12-alpine
     ports:
