@@ -6,15 +6,14 @@
   "scripts": {
     "dev:prisma": "prisma generate --watch",
     "dev:server": "ts-node-dev --transpile-only --no-notify api",
-    "dev:typecheck": "tsc --noEmit --watch",
+    "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -e prisma/.env -- concurrently --kill-others npm:dev:*",
     "nexus:reflect": "prisma generate && ts-node --transpile-only api/server/schema",
     "build": "npm run nexus:reflect && tsc",
     "db:migrate:save": "prisma migrate save --experimental",
     "db:migrate:up": "prisma migrate up --experimental",
     "db:seed": "ts-node prisma/seeds/seed",
-    "db:up": "docker-compose up -d && npm run db:migrate:up && npm run db:seed",
-    "db:down": "docker-compose down"
+    "db:up": "npm run db:migrate:up && npm run db:seed"
   },
   "dependencies": {
     "@nexus/schema": "^0.16.0",
