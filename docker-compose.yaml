@@ -9,8 +9,8 @@ services:
       - /app/node_modules
     ports:
       - 3000:3000
+    env_file: prisma/.env
     environment:
-      APP_SECRET: appSecret
       DATABASE_URL: postgresql://postgres:password@db:5432
 
   db:
