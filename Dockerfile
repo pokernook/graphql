@@ -7,8 +7,7 @@ COPY package*.json ./
 COPY prisma prisma
 
 RUN apk update \
-  && apk --no-cache --virtual build-dependencies add \
-  python \
+  && apk --no-cache --virtual build-dependencies add python \
   && npm ci \
   && apk del build-dependencies
 
