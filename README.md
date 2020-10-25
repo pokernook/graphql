@@ -7,6 +7,8 @@ You'll need Node.js and Docker installed. Use a package manager to install Node.
 Clone the repo, then run:
 
 ```bash
+npm install # Install project dependencies
+
 docker-compose up # Run the server and database containers
 ```
 
