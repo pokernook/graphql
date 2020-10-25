@@ -13,8 +13,7 @@
     "db:migrate:save": "prisma migrate save --experimental",
     "db:migrate:up": "prisma migrate up --experimental",
     "db:seed": "ts-node prisma/seeds/seed",
-    "db:up": "docker-compose up -d db && npm run db:migrate:up && npm run db:seed",
-    "db:down": "docker-compose down"
+    "db:up": "npm run db:migrate:up && npm run db:seed"
   },
   "dependencies": {
     "@nexus/schema": "^0.16.0",
