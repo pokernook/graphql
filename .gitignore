@@ -1,5 +1,5 @@
 # Build output
-/.build
+/.build/
 
 # Dependencies
 node_modules
@@ -14,9 +14,14 @@ lerna-debug.log*
 
 # OS
 .DS_Store
+*.pem
 
 # Environment
 *.env
+*.env.*
 
 # IDE - VSCode
-/.vscode
+.vscode
+
+# Testing
+/coverage
