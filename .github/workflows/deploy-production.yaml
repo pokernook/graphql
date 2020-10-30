@@ -1,4 +1,4 @@
-name: Publish Container
+name: Deploy Production
 
 on:
   push:
@@ -8,9 +8,30 @@ env:
   cr_server: 445789524075.dkr.ecr.us-east-1.amazonaws.com
 
 jobs:
-  build-and-push:
-    name: Build and Push
+  migrate-database:
+    name: Migrate Database
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [15.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2.1.2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm ci
+
+      - name: Run Migrations
+        run: npm run db:migrate:up
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  publish-container:
+    name: Publish Container
+    runs-on: ubuntu-latest
+    needs: migrate-database
     steps:
       - uses: actions/checkout@v2
 
