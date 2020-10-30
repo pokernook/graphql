@@ -2,7 +2,11 @@
 
 ## Development Setup
 
-You'll need Node.js and Docker installed. Use a package manager to install Node.js. VS Code is the recommended IDE.
+### Recommended Tools
+
+- Node.js 15.x
+- Docker Desktop
+- VS Code
 
 Clone the repo, then run:
 
