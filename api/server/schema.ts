@@ -7,7 +7,10 @@ import * as types from "../graphql";
 export const schema = makeSchema({
   outputs: {
     schema: join(__dirname, "../api.graphql"),
-    typegen: join(__dirname, "../node_modules/@types/nexus-typegen/index.d.ts"),
+    typegen: join(
+      __dirname,
+      "../../node_modules/@types/nexus-typegen/index.d.ts"
+    ),
   },
   plugins: [
     nexusPrisma({
@@ -16,7 +19,7 @@ export const schema = makeSchema({
       outputs: {
         typegen: join(
           __dirname,
-          "../node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts"
+          "../../node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts"
         ),
       },
     }),
