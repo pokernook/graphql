@@ -16,12 +16,6 @@ export const schema = makeSchema({
     nexusPrisma({
       experimentalCRUD: true,
       paginationStrategy: "prisma",
-      outputs: {
-        typegen: join(
-          __dirname,
-          "../../node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts"
-        ),
-      },
     }),
   ],
   typegenAutoConfig: {
