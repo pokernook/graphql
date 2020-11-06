@@ -42,7 +42,7 @@ export const UserMutation = extendType({
       },
       resolve: async (_root, { email, password }, ctx) => {
         const passwordHash = await hash(password, { type: argon2id });
-        const user = await ctx.db.user.create({
+        const user = await ctx.prisma.user.create({
           data: { email, passwordHash },
         });
         return {
@@ -59,7 +59,7 @@ export const UserMutation = extendType({
         password: stringArg({ required: true }),
       },
       resolve: async (_root, { email, password }, ctx) => {
-        const user = await ctx.db.user.findOne({ where: { email } });
+        const user = await ctx.prisma.user.findOne({ where: { email } });
         if (!user) {
           throw new Error(`No such user: ${email}`);
         }

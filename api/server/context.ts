@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
 export type Context = {
-  db: PrismaClient;
+  prisma: PrismaClient;
 };
 
 export const context = (): Context => ({
-  db: new PrismaClient(),
+  prisma: new PrismaClient(),
 });
