@@ -16,7 +16,7 @@ export const schema = makeSchema({
       outputs: {
         typegen: join(
           __dirname,
-          "../node_modules/@types/prisma-plugin-typegen/index.d.ts"
+          "../node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts"
         ),
       },
     }),
