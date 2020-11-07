@@ -3,7 +3,9 @@ FROM node:15-alpine
 WORKDIR /app
 
 RUN apk update \
-  && apk --no-cache --virtual build-dependencies add python
+  && apk --no-cache --virtual build-dependencies add \
+  python \
+  make
 
 COPY package*.json ./
 
