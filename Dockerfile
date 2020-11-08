@@ -5,7 +5,8 @@ WORKDIR /app
 RUN apk update \
   && apk --no-cache --virtual build-dependencies add \
   python \
-  make
+  make \
+  gcc
 
 COPY package*.json ./
 
