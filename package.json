@@ -28,7 +28,7 @@
     "nexus-plugin-prisma": "^0.23.0"
   },
   "devDependencies": {
-    "@prisma/cli": "2.10.1",
+    "@prisma/cli": "2.10.2",
     "@types/express": "^4.17.8",
     "@types/jsonwebtoken": "^8.5.0",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
