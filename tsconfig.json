@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -12,6 +11,6 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2020",
-    "typeRoots": ["node_modules/@types", "generated/@types"]
+    "typeRoots": ["node_modules/@types"]
   }
 }

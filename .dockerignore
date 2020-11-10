@@ -1,9 +1,6 @@
 # Build output
 /.build/
 
-# Generated Code
-/generated/
-
 # Dependencies
 node_modules
 

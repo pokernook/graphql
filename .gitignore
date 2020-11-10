@@ -4,9 +4,6 @@
 # Dependencies
 node_modules
 
-# Generated Code
-generated/
-
 # Logs
 logs
 *.log
