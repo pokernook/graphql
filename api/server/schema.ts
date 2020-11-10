@@ -7,16 +7,19 @@ import * as types from "../graphql";
 export const schema = makeSchema({
   outputs: {
     schema: join(__dirname, "../api.graphql"),
-    typegen: join(__dirname, "../node_modules/@types/nexus-typegen/index.d.ts"),
+    typegen: join(__dirname, "../../generated/@types/nexus-typegen/index.d.ts"),
   },
   plugins: [
     nexusPrisma({
       experimentalCRUD: true,
       paginationStrategy: "prisma",
+      inputs: {
+        prismaClient: join(__dirname, "../../generated/prisma/client"),
+      },
       outputs: {
         typegen: join(
           __dirname,
-          "../node_modules/@types/typegen-nexus-plugin-prisma/index.d.ts"
+          "../../generated/@types/typegen-nexus-plugin-prisma/index.d.ts"
         ),
       },
     }),
@@ -25,11 +28,11 @@ export const schema = makeSchema({
     sources: [
       {
         alias: "prisma",
-        source: require.resolve(".prisma/client/index.d.ts"),
+        source: join(__dirname, "../../generated/prisma/client/index.d.ts"),
       },
       {
         alias: "ContextModule",
-        source: require.resolve("./context"),
+        source: join(__dirname, "./context.ts"),
       },
     ],
     contextType: "ContextModule.Context",
