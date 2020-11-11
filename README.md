@@ -22,8 +22,6 @@ docker-compose up # Run the server and database containers
 npm run dev # Create a hot-reloading GraphQL server
 
 npm run build # Build application for deployment
-
-npm start # Run compiled Node.js server
 ```
 
 ## Contributing
