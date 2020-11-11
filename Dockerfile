@@ -1,19 +1,14 @@
-FROM node:15.1.0-alpine
+FROM node:15.1.0-slim
 
 WORKDIR /app
 
-RUN apk update \
-  && apk --no-cache --virtual build-dependencies add \
-  python \
-  make \
-  gcc
+RUN apt-get update && apt-get -y install openssl
 
 COPY package*.json ./
 
 COPY prisma prisma
 
-RUN npm ci \
-  && apk del build-dependencies
+RUN npm ci
 
 COPY . .
 
