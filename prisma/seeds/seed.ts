@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
+import { PrismaClient } from "../../generated/prisma/client";
 import { seedUser } from "./fixtures/User";
 
 const seed = async () => {
