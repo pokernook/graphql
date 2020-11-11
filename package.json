@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev:prisma": "nodemon --watch \"prisma/schema.prisma\" --exec \"npm run db:push\"",
-    "dev:server": "ts-node-dev --transpile-only --no-notify api",
+    "dev:server": "ts-node-dev --transpile-only api",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "nexus:reflect": "ts-node --transpile-only api/server/schema",
