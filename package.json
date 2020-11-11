@@ -14,8 +14,7 @@
     "db:migrate:save": "prisma migrate save --experimental",
     "db:migrate:up": "prisma migrate up --experimental",
     "db:push": "prisma db push --preview-feature --ignore-migrations --force",
-    "db:seed": "ts-node prisma/seeds/seed",
-    "db:up": "npm run db:migrate:up && npm run db:seed"
+    "db:seed": "ts-node prisma/seeds/seed"
   },
   "dependencies": {
     "@nexus/schema": "^0.17.0",

@@ -23,7 +23,7 @@ npm run dev # Create a hot-reloading GraphQL server
 
 npm run build # Build application for deployment
 
-npm run db:up # Migrate and seed a local postgres db
+npm start # Run compiled Node.js server
 ```
 
 ## Contributing
