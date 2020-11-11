@@ -10,7 +10,7 @@
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "nexus:reflect": "ts-node --transpile-only api/server/schema",
     "build": "prisma generate && npm run nexus:reflect && tsc",
-    "start": "node .build",
+    "start": "node .build/api",
     "db:migrate:save": "prisma migrate save --experimental",
     "db:migrate:up": "prisma migrate up --experimental",
     "db:push": "prisma db push --preview-feature --ignore-migrations --force",
