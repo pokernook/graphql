@@ -1,12 +1,10 @@
 FROM node:15.1.0-slim
 
-WORKDIR /app
-
 RUN apt-get update && apt-get -y install openssl
 
-COPY package*.json ./
+WORKDIR /app
 
-COPY prisma prisma
+COPY package*.json ./
 
 RUN npm ci
 
