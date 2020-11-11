@@ -22,7 +22,7 @@ export const schema = makeSchema({
     sources: [
       {
         alias: "prisma",
-        source: require.resolve(".prisma/client/index.d.ts"),
+        source: require.resolve("@prisma/client/index.d.ts"),
       },
       {
         alias: "ContextModule",
