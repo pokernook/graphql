@@ -12,4 +12,4 @@ COPY . .
 
 RUN npm run build
 
-CMD ["node", ".build/api"]
+CMD ["node", "dist"]
