@@ -4,16 +4,17 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
-    "dev:prisma": "nodemon --watch \"prisma/schema.prisma\" --exec \"npm run db:push\"",
+    "dev:prisma": "nodemon --watch \"prisma/schema.prisma\" --exec \"npm run prisma:db:push\"",
     "dev:server": "ts-node-dev --transpile-only api",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "nexus:reflect": "ts-node --transpile-only api/server/schema",
-    "build": "prisma generate && npm run nexus:reflect && ncc build api/index.ts --no-cache",
-    "db:migrate:save": "prisma migrate save --experimental",
-    "db:migrate:up": "prisma migrate up --experimental",
-    "db:push": "prisma db push --preview-feature --ignore-migrations --force",
-    "db:seed": "ts-node prisma/seeds/seed"
+    "build": "ncc build api/index.ts --quiet",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:save": "prisma migrate save --experimental",
+    "prisma:migrate:up": "prisma migrate up --experimental",
+    "prisma:db:push": "prisma db push --preview-feature --ignore-migrations --force",
+    "prisma:db:seed": "ts-node prisma/seeds/seed"
   },
   "dependencies": {
     "@nexus/schema": "^0.17.0",
