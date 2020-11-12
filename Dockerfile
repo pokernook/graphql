@@ -1,4 +1,4 @@
-FROM node:15.1.0-slim
+FROM node:15.2.0-slim
 
 RUN apt-get update && apt-get -y install openssl
 
