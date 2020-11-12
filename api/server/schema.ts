@@ -1,3 +1,4 @@
+// TODO: Find out why nexus doesn't work in ncc bundle
 import { makeSchema } from "@nexus/schema";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";

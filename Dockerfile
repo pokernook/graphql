@@ -1,3 +1,4 @@
+# TODO: Reduce container size
 FROM node:15.1.0-slim
 
 RUN apt-get update && apt-get -y install openssl
