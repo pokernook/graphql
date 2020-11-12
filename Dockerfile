@@ -10,6 +10,9 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build
+RUN npm run prisma:generate \
+  && npm run nexus:reflect \
+  && npm run build \
+  && cp prisma/schema.prisma dist
 
 CMD ["node", "dist"]
