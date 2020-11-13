@@ -8,13 +8,14 @@
     "dev:server": "ts-node-dev --transpile-only api",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
-    "nexus:reflect": "ts-node --transpile-only api/server/schema",
-    "build": "ncc build api/index.ts --quiet --out dist",
     "prisma:generate": "prisma generate",
     "prisma:migrate:save": "prisma migrate save --experimental",
     "prisma:migrate:up": "prisma migrate up --experimental",
     "prisma:db:push": "prisma db push --preview-feature --ignore-migrations --force",
-    "prisma:db:seed": "ts-node prisma/seeds/seed"
+    "prisma:db:seed": "ts-node prisma/seeds/seed",
+    "nexus:reflect": "ts-node --transpile-only api/server/schema",
+    "prebuild": "npm run prisma:generate && npm run nexus:reflect",
+    "build": "ncc build api/index.ts --quiet --out dist"
   },
   "dependencies": {
     "@nexus/schema": "^0.18.0",

@@ -9,9 +9,7 @@ COPY . .
 FROM node AS build
 WORKDIR /build
 COPY --from=develop /develop .
-RUN npm run prisma:generate \
-  && npm run nexus:reflect \
-  && npm run build \
+RUN npm run build \
   && cp prisma/schema.prisma dist
 
 FROM node AS app
