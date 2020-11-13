@@ -9,7 +9,7 @@
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "nexus:reflect": "ts-node --transpile-only api/server/schema",
-    "build": "ncc build api/index.ts --out dist",
+    "build": "ncc build api/index.ts --quiet --out dist",
     "prisma:generate": "prisma generate",
     "prisma:migrate:save": "prisma migrate save --experimental",
     "prisma:migrate:up": "prisma migrate up --experimental",
