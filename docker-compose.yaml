@@ -2,11 +2,13 @@ version: "3"
 
 services:
   server:
-    build: .
+    build:
+      context: .
+      target: develop
     command: ["npm", "run", "dev"]
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/develop
+      - /develop/node_modules
     ports:
       - 3000:3000
     environment:

@@ -1,5 +1,9 @@
 # Build output
 /.build
+/dist
+
+# Generated Code
+generated
 
 # GraphQL SDL
 **/*.graphql

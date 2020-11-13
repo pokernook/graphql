@@ -21,10 +21,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
-
       - name: Run Migrations
-        run: npm run db:migrate:up
+        run: |
+          npm ci
+          npm run prisma:migrate:up
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 

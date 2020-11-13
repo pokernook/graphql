@@ -20,7 +20,7 @@ jobs:
       - name: Reflect App
         run: |
           npm ci
-          npx prisma generate
+          npm run prisma:generate
           npm run nexus:reflect
 
       - name: Commit Schema

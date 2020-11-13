@@ -21,6 +21,10 @@ docker-compose up # Run the server and database containers
 ```bash
 npm run dev # Create a hot-reloading GraphQL server
 
+npm run prisma:generate # Generate Prisma client
+
+npm run nexus:reflect # Generate types from Nexus schema
+
 npm run build # Build application for deployment
 ```
 
