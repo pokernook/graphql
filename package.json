@@ -17,7 +17,7 @@
     "prisma:db:seed": "ts-node prisma/seeds/seed"
   },
   "dependencies": {
-    "@nexus/schema": "^0.17.0",
+    "@nexus/schema": "^0.18.0",
     "@prisma/client": "2.10.1",
     "@vercel/ncc": "^0.25.1",
     "apollo-server-express": "^2.19.0",
