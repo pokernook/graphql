@@ -9,8 +9,11 @@ generator client {
 }
 
 model User {
-  id           String @id @default(cuid())
-  email        String @unique
-  username     String
-  passwordHash String
+  id            String @id @default(cuid())
+  email         String @unique
+  username      String
+  discriminator Int
+  passwordHash  String
+
+  @@unique([username, discriminator], name: "UserTag")
 }
