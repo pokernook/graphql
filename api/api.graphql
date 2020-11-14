@@ -18,6 +18,7 @@ type Query {
 }
 
 type User {
+  discriminator: Int!
   email: String!
   id: String!
   username: String!
