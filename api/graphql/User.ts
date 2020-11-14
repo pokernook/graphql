@@ -9,6 +9,7 @@ export const User = objectType({
   definition(t) {
     t.model.id();
     t.model.email();
+    t.model.username();
   },
 });
 
@@ -38,12 +39,13 @@ export const UserMutation = extendType({
       type: "AuthPayload",
       args: {
         email: stringArg({ required: true }),
+        username: stringArg({ required: true }),
         password: stringArg({ required: true }),
       },
-      resolve: async (_root, { email, password }, ctx) => {
+      resolve: async (_root, { email, username, password }, ctx) => {
         const passwordHash = await hash(password, { type: argon2id });
         const user = await ctx.prisma.user.create({
-          data: { email, passwordHash },
+          data: { email, username, passwordHash },
         });
         return {
           token: signToken(user.id),
@@ -59,13 +61,14 @@ export const UserMutation = extendType({
         password: stringArg({ required: true }),
       },
       resolve: async (_root, { email, password }, ctx) => {
+        const errMsg = "Invalid sign in credentials";
         const user = await ctx.prisma.user.findOne({ where: { email } });
         if (!user) {
-          throw new Error(`No such user: ${email}`);
+          throw new Error(errMsg);
         }
         const validPassword = await verify(user.passwordHash, password);
         if (!validPassword) {
-          throw new Error("Invalid password");
+          throw new Error(errMsg);
         }
         return {
           token: signToken(user.id),
