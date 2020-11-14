@@ -18,12 +18,19 @@ type Query {
 }
 
 type User {
+  discriminator: Int!
   email: String!
   id: String!
+  username: String!
+}
+
+input UserTagCompoundUniqueInput {
+  discriminator: Int!
   username: String!
 }
 
 input UserWhereUniqueInput {
   email: String
   id: String
+  UserTag: UserTagCompoundUniqueInput
 }
