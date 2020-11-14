@@ -10,6 +10,7 @@ export const User = objectType({
     t.model.id();
     t.model.email();
     t.model.username();
+    t.model.discriminator();
   },
 });
 
