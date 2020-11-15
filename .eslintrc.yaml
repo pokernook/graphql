@@ -15,7 +15,7 @@ extends:
   - prettier/@typescript-eslint
 
 rules:
-  simple-import-sort/sort: "error"
+  simple-import-sort/imports: "error"
   sort-imports: "off"
 
 root: true
