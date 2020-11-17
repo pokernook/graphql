@@ -1,5 +1,6 @@
 import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
+import { randomInt } from "crypto";
 import { sign } from "jsonwebtoken";
 
 import { config } from "../config";
@@ -44,9 +45,30 @@ export const UserMutation = extendType({
         password: stringArg({ required: true }),
       },
       resolve: async (_root, { email, username, password }, ctx) => {
+        let discriminator = undefined;
+        const possibleDiscriminators = [...Array(5)].map(() =>
+          randomInt(10000)
+        );
+        for (const d of possibleDiscriminators) {
+          const existingUserCount = await ctx.prisma.user.count({
+            where: {
+              AND: [
+                { username: { equals: username } },
+                { discriminator: { equals: d } },
+              ],
+            },
+          });
+          if (existingUserCount === 0) {
+            discriminator = d;
+            break;
+          }
+        }
+        if (discriminator === undefined) {
+          throw new Error("Too many users have this username");
+        }
         const passwordHash = await hash(password, { type: argon2id });
         const user = await ctx.prisma.user.create({
-          data: { email, username, passwordHash },
+          data: { discriminator, email, passwordHash, username },
         });
         return {
           token: signToken(user.id),
