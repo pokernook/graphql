@@ -1,9 +1,15 @@
 import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
-import { randomInt } from "crypto";
-import { sign } from "jsonwebtoken";
 
-import { config } from "../config";
+import { signToken, uniqueDiscriminator } from "./helper";
+
+export const AuthToken = objectType({
+  name: "AuthPayload",
+  definition(t) {
+    t.string("token");
+    t.field("user", { type: "User" });
+  },
+});
 
 export const User = objectType({
   name: "User",
@@ -15,14 +21,6 @@ export const User = objectType({
   },
 });
 
-export const AuthToken = objectType({
-  name: "AuthPayload",
-  definition(t) {
-    t.string("token");
-    t.field("user", { type: "User" });
-  },
-});
-
 export const UserQuery = extendType({
   type: "Query",
   definition(t) {
@@ -30,9 +28,6 @@ export const UserQuery = extendType({
     t.crud.users();
   },
 });
-
-const signToken = (userId: string): string =>
-  sign({ userId }, config.appSecret);
 
 export const UserMutation = extendType({
   type: "Mutation",
@@ -45,24 +40,7 @@ export const UserMutation = extendType({
         password: stringArg({ required: true }),
       },
       resolve: async (_root, { email, username, password }, ctx) => {
-        let discriminator = undefined;
-        const possibleDiscriminators = [...Array(5)].map(() =>
-          randomInt(10000)
-        );
-        for (const d of possibleDiscriminators) {
-          const existingUserCount = await ctx.prisma.user.count({
-            where: {
-              AND: [
-                { username: { equals: username } },
-                { discriminator: { equals: d } },
-              ],
-            },
-          });
-          if (existingUserCount === 0) {
-            discriminator = d;
-            break;
-          }
-        }
+        const discriminator = await uniqueDiscriminator(ctx.prisma, username);
         if (discriminator === undefined) {
           throw new Error("Too many users have this username");
         }
