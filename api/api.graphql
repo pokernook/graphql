@@ -8,7 +8,7 @@ type AuthPayload {
 }
 
 type Mutation {
-  register(email: String!, password: String!): AuthPayload
+  register(email: String!, password: String!, username: String!): AuthPayload
   signIn(email: String!, password: String!): AuthPayload
 }
 
@@ -18,11 +18,19 @@ type Query {
 }
 
 type User {
+  discriminator: Int!
   email: String!
   id: String!
+  username: String!
+}
+
+input UserTagCompoundUniqueInput {
+  discriminator: Int!
+  username: String!
 }
 
 input UserWhereUniqueInput {
   email: String
   id: String
+  UserTag: UserTagCompoundUniqueInput
 }
