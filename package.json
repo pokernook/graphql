@@ -14,7 +14,7 @@
     "prisma:db:push": "prisma db push --preview-feature --ignore-migrations --force",
     "prisma:db:seed": "ts-node prisma/seeds/seed",
     "nexus:reflect": "ts-node --transpile-only api/server/schema",
-    "prebuild": "npm run prisma:generate && npm run nexus:reflect",
+    "generate": "npm run prisma:generate && npm run nexus:reflect",
     "build": "ncc build api/index.ts --quiet --out dist"
   },
   "dependencies": {

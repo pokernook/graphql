@@ -5,6 +5,7 @@ WORKDIR /develop
 COPY package*.json ./
 RUN npm ci
 COPY . .
+RUN npm run generate
 
 FROM node AS build
 WORKDIR /build
