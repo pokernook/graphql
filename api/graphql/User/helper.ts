@@ -17,12 +17,12 @@ export const uniqueDiscriminator = async (
   const possibleDiscriminators = [...Array(DISCRIMINATOR_CHECKS)].map(() =>
     randomInt(MAX_DISCRIMINATOR)
   );
-  for (const d of possibleDiscriminators) {
+  for (const discriminator of possibleDiscriminators) {
     const existingUser = await prisma.user.findOne({
-      where: { UserTag: { username, discriminator: d } },
+      where: { UserTag: { username, discriminator } },
     });
     if (!existingUser) {
-      return d;
+      return discriminator;
     }
   }
 };
