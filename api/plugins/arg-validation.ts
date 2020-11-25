@@ -29,7 +29,7 @@ export const argValidation = (): NexusPlugin =>
           : Joi.string().validate(undefined);
 
         if (error) {
-          throw new Error(error.details[0].message);
+          throw new Error(error.details[0]?.message);
         }
 
         return next(root, args, ctx, info);
