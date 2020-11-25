@@ -5,21 +5,25 @@ import Joi from "joi";
 const fieldDefTypes = printedGenTyping({
   optional: true,
   name: "argSchema",
-  description: "Joi schema to validate resolver args against",
+  description: "A joi schema to validate resolver args against",
   type: "object", // TODO: This should be strongly typed as joi.Schema
 });
 
 export const argValidation = (): NexusPlugin =>
   plugin({
     name: "nexus-plugin-arg-validation",
-    description: "Validate resolver arguments against a schema",
+    description: "Validate resolver arguments against a joi schema",
     fieldDefTypes,
     onCreateFieldResolver(config) {
       const argSchema: Joi.Schema =
         config.fieldConfig.extensions?.nexus?.config.argSchema;
 
       if (argSchema && !argSchema.validate) {
-        console.error(new Error(`No validate() function found on argSchema`));
+        console.error(
+          new Error(
+            `No validate() function found on argSchema; expected joi.Schema type but found ${typeof argSchema}`
+          )
+        );
         return;
       }
 
