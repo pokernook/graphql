@@ -3,7 +3,7 @@ import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
 
 import * as types from "../graphql";
-import { argValidation } from "../plugins/arg-validation";
+import { argValidation } from "../plugins";
 
 const genBase = join(__dirname, "../../generated");
 
