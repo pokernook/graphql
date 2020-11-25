@@ -2,7 +2,7 @@ import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
 import Joi from "joi";
 
-import { signToken, uniqueDiscriminator } from "./helper";
+import { signToken, uniqueDiscriminator } from "./util";
 
 export const AuthToken = objectType({
   name: "AuthPayload",
