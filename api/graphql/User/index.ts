@@ -1,4 +1,4 @@
-import { extendType, objectType, stringArg } from "@nexus/schema";
+import { extendType, nonNull, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
 import Joi from "joi";
 
@@ -36,14 +36,14 @@ export const UserMutation = extendType({
     t.field("register", {
       type: "AuthPayload",
       args: {
-        email: stringArg({ required: true }),
-        username: stringArg({ required: true }),
-        password: stringArg({ required: true }),
+        email: nonNull(stringArg()),
+        username: nonNull(stringArg()),
+        password: nonNull(stringArg()),
       },
       argSchema: Joi.object({
-        email: Joi.string().email().required(),
-        username: Joi.string().min(3).max(20).trim().required(),
-        password: Joi.string().min(8).required(),
+        email: Joi.string().email(),
+        username: Joi.string().min(3).max(20).trim(),
+        password: Joi.string().min(8),
       }),
       resolve: async (_root, { email, username, password }, ctx) => {
         const discriminator = await uniqueDiscriminator(ctx.prisma, username);
@@ -64,12 +64,12 @@ export const UserMutation = extendType({
     t.field("signIn", {
       type: "AuthPayload",
       args: {
-        email: stringArg({ required: true }),
-        password: stringArg({ required: true }),
+        email: nonNull(stringArg()),
+        password: nonNull(stringArg()),
       },
       resolve: async (_root, { email, password }, ctx) => {
         const errMsg = "Invalid sign in credentials";
-        const user = await ctx.prisma.user.findOne({ where: { email } });
+        const user = await ctx.prisma.user.findUnique({ where: { email } });
         if (!user) {
           throw new Error(errMsg);
         }
