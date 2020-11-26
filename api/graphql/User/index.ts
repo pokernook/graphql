@@ -1,7 +1,8 @@
 import { extendType, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
+import Joi from "joi";
 
-import { signToken, uniqueDiscriminator } from "./helper";
+import { signToken, uniqueDiscriminator } from "./util";
 
 export const AuthToken = objectType({
   name: "AuthPayload",
@@ -39,6 +40,11 @@ export const UserMutation = extendType({
         username: stringArg({ required: true }),
         password: stringArg({ required: true }),
       },
+      argSchema: Joi.object({
+        email: Joi.string().email().required(),
+        username: Joi.string().min(3).max(20).trim().required(),
+        password: Joi.string().min(8).required(),
+      }),
       resolve: async (_root, { email, username, password }, ctx) => {
         const discriminator = await uniqueDiscriminator(ctx.prisma, username);
         if (discriminator === undefined) {

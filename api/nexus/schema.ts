@@ -3,15 +3,17 @@ import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
 
 import * as types from "../graphql";
+import { argValidation } from "../plugins";
 
 const genBase = join(__dirname, "../../generated");
 
 export const schema = makeSchema({
   outputs: {
-    schema: join(__dirname, "../api.graphql"),
+    schema: join(__dirname, "../../api.graphql"),
     typegen: join(genBase, "@types/nexus-typegen/index.d.ts"),
   },
   plugins: [
+    argValidation(),
     nexusPrisma({
       experimentalCRUD: true,
       paginationStrategy: "prisma",

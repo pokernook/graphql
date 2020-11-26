@@ -2,8 +2,7 @@ import { ApolloServer } from "apollo-server-express";
 import createExpress from "express";
 import http from "http";
 
-import { context } from "./context";
-import { schema } from "./schema";
+import { context, schema } from "../nexus";
 
 const app = createExpress();
 const apollo = new ApolloServer({
