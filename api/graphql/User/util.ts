@@ -18,7 +18,7 @@ export const uniqueDiscriminator = async (
     randomInt(MAX_DISCRIMINATOR)
   );
   for (const discriminator of possibleDiscriminators) {
-    const existingUser = await prisma.user.findOne({
+    const existingUser = await prisma.user.findUnique({
       where: { UserTag: { username, discriminator } },
     });
     if (!existingUser) {

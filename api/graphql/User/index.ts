@@ -69,7 +69,7 @@ export const UserMutation = extendType({
       },
       resolve: async (_root, { email, password }, ctx) => {
         const errMsg = "Invalid sign in credentials";
-        const user = await ctx.prisma.user.findOne({ where: { email } });
+        const user = await ctx.prisma.user.findUnique({ where: { email } });
         if (!user) {
           throw new Error(errMsg);
         }
