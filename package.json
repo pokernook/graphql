@@ -18,7 +18,7 @@
     "build": "ncc build api/index.ts --quiet --out dist"
   },
   "dependencies": {
-    "@nexus/schema": "^0.19.1",
+    "@nexus/schema": "^0.19.2",
     "@prisma/client": "2.12.1",
     "@vercel/ncc": "^0.25.1",
     "apollo-server-express": "^2.19.0",
