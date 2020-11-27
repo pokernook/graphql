@@ -8,14 +8,14 @@ import Joi from "joi";
 
 const ArgSchemaResolverImport = printedGenTypingImport({
   module: "joi",
-  bindings: ["Schema"],
+  bindings: [["Schema", "JoiSchema"]],
 });
 
 const fieldDefTypes = printedGenTyping({
   optional: true,
   name: "argSchema",
   description: "A joi schema to validate resolver args against",
-  type: "Schema",
+  type: "JoiSchema",
   imports: [ArgSchemaResolverImport],
 });
 
