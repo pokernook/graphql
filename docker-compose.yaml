@@ -10,7 +10,7 @@ services:
       - .:/develop
       - /develop/node_modules
     ports:
-      - 3000:3000
+      - 4000:4000
     environment:
       DATABASE_URL: postgresql://postgres:password@db:5432
 
