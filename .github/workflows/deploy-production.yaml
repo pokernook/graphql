@@ -21,7 +21,7 @@ jobs:
       - name: Run Migrations
         run: |
           npm ci
-          yes | npm run prisma:migrate:up
+          yes 2>/dev/null | npm run prisma:migrate:up
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
