@@ -8,8 +8,8 @@ type AuthPayload {
 }
 
 type Mutation {
-  register(email: String!, password: String!, username: String!): AuthPayload
-  signIn(email: String!, password: String!): AuthPayload
+  logIn(email: String!, password: String!): AuthPayload
+  signUp(email: String!, password: String!, username: String!): AuthPayload
 }
 
 type Query {

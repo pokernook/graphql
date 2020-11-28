@@ -33,7 +33,7 @@ export const UserQuery = extendType({
 export const UserMutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("register", {
+    t.field("signUp", {
       type: "AuthPayload",
       args: {
         email: nonNull(stringArg()),
@@ -61,14 +61,14 @@ export const UserMutation = extendType({
       },
     });
 
-    t.field("signIn", {
+    t.field("logIn", {
       type: "AuthPayload",
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
       resolve: async (_root, { email, password }, ctx) => {
-        const errMsg = "Invalid sign in credentials";
+        const errMsg = "Invalid login credentials";
         const user = await ctx.prisma.user.findUnique({ where: { email } });
         if (!user) {
           throw new Error(errMsg);
