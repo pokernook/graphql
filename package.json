@@ -1,6 +1,6 @@
 {
   "name": "graph",
-  "description": "GraphQL, Nexus Schema & Prisma",
+  "description": "GraphQL API built with Nexus and Prisma",
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
