@@ -4,7 +4,6 @@ import { sign } from "jsonwebtoken";
 import { PrismaClient } from "../../../generated/prisma/client";
 import { config } from "../../config";
 
-const DISCRIMINATOR_CHECKS = 5;
 const MAX_DISCRIMINATOR = 10000;
 
 export const signToken = (userId: string): string =>
@@ -12,9 +11,10 @@ export const signToken = (userId: string): string =>
 
 export const uniqueDiscriminator = async (
   prisma: PrismaClient,
-  username: string
+  username: string,
+  uniquenessChecks = 5
 ): Promise<number | undefined> => {
-  const possibleDiscriminators = [...Array(DISCRIMINATOR_CHECKS)].map(() =>
+  const possibleDiscriminators = [...Array(uniquenessChecks)].map(() =>
     randomInt(MAX_DISCRIMINATOR)
   );
   for (const discriminator of possibleDiscriminators) {
