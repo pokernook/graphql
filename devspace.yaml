@@ -1,7 +1,7 @@
 version: v1beta9
 
 images:
-  server:
+  graph:
     image: registry.digitalocean.com/pokernook/graph
     tags:
       - ${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
@@ -15,7 +15,19 @@ images:
           target: develop
 
 deployments:
-  - name: graph
+  - name: postgres
+    helm:
+      componentChart: true
+      values:
+        containers:
+          - image: postgres:12-alpine
+            env:
+              - name: POSTGRES_PASSWORD
+                value: password
+        service:
+          ports:
+            - port: 5432
+  - name: server
     helm:
       componentChart: true
       values:
@@ -27,11 +39,11 @@ deployments:
 
 dev:
   ports:
-    - imageName: server
+    - imageName: graph
       forward:
         - port: 4000
   sync:
-    - imageName: server
+    - imageName: graph
       excludePaths:
         - .git/
       uploadExcludePaths:
