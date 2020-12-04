@@ -9,13 +9,13 @@ images:
     preferSyncOverRebuild: true
     build:
       docker:
-        skipPush: true
+        skipPush: true # TODO: Push should be enabled for prod deploys
         useBuildKit: true
         options:
           target: develop
 
 deployments:
-  - name: postgres
+  - name: postgres # TODO: This deployment should be dev only
     helm:
       componentChart: true
       values:
@@ -33,6 +33,11 @@ deployments:
       values:
         containers:
           - image: registry.digitalocean.com/pokernook/graph
+            env: # TODO: These should be pulled from external configuration
+              - name: APP_SECRET
+                value: appSecret
+              - name: DATABASE_URL
+                value: postgresql://postgres:password@postgres:5432
         service:
           ports:
             - port: 4000
