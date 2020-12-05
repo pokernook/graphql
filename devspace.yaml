@@ -32,7 +32,7 @@ deployments:
       values:
         containers:
           - image: registry.digitalocean.com/pokernook/graph
-            env:
+            env: # TODO: Should be injected via Kubernetes Secret
               - name: APP_SECRET
                 value: ${APP_SECRET}
               - name: DATABASE_URL
