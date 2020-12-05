@@ -4,18 +4,17 @@ images:
   graph:
     image: registry.digitalocean.com/pokernook/graph
     tags:
-      - ${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
+      - sha-${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
     cmd: ["npm", "run", "dev"]
     preferSyncOverRebuild: true
     build:
       docker:
-        skipPush: true # TODO: Push should be enabled for prod deploys
         useBuildKit: true
         options:
           target: develop
 
 deployments:
-  - name: postgres # TODO: This deployment should be dev only
+  - name: postgres
     helm:
       componentChart: true
       values:
@@ -41,6 +40,16 @@ deployments:
         service:
           ports:
             - port: 4000
+
+profiles:
+  - name: production
+    patches:
+      - op: remove
+        path: images.graph.cmd
+      - op: remove
+        path: images.graph.build.docker.options.target
+      - op: remove
+        path: deployments.name=postgres
 
 dev:
   ports:
