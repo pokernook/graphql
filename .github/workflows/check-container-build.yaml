@@ -12,4 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # TODO: Expecting vars to be set for this command
       - run: docker run -v ${PWD}:/project -w /project devspacesh/devspace devspace build --profile production --skip-push
