@@ -1,8 +1,13 @@
 version: v1beta9
 
+vars:
+  - name: IMAGE
+    source: none
+    default: registry.digitalocean.com/pokernook/graph
+
 images:
   graph:
-    image: registry.digitalocean.com/pokernook/graph
+    image: ${IMAGE}
     tags:
       - sha-${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
     cmd: ["npm", "run", "dev"]
@@ -31,7 +36,7 @@ deployments:
       componentChart: true
       values:
         containers:
-          - image: registry.digitalocean.com/pokernook/graph
+          - image: ${IMAGE}
             env: # TODO: Should be injected via Kubernetes Secret
               - name: APP_SECRET
                 value: ${APP_SECRET}
