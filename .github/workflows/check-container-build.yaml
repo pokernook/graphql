@@ -12,7 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install DevSpace
-        run: npm install -g devspace
-
-      - run: devspace build --profile production --skip-push
+      - run: docker run -v ${PWD}:/project -w /project devspacesh/devspace build --profile production --skip-push
