@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: docker run -v ${PWD}:/project -w /project devspacesh/devspace build --profile production --skip-push
+      - run: docker run -v ${PWD}:/project -w /project devspacesh/devspace devspace build --profile production --skip-push
