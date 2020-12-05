@@ -4,6 +4,10 @@ on:
   push:
     # branches: [main]
 
+env:
+  APP_SECRET: ${{ secrets.APP_SECRET }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
 jobs:
   migrate-database:
     name: Migrate Database
@@ -22,15 +26,23 @@ jobs:
         run: |
           npm ci
           yes 2>/dev/null | npm run prisma:migrate:up
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
   publish-container:
     name: Publish Container
     runs-on: ubuntu-latest
     needs: migrate-database
+    strategy:
+      matrix:
+        node-version: [15.x]
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2.1.2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install DevSpace
+        run: npm install -g devspace
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -41,13 +53,10 @@ jobs:
         run: doctl registry login --expiry-seconds 600
 
       - name: Build and Push Container
-        run: docker run -v ${PWD}:/project -w /project devspacesh/devspace devspace build --profile production
-        env:
-          APP_SECRET: ${{ secrets.APP_SECRET }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: devspace build --profile production
 
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 pokernook-k8s
 
       - name: Deploy to Kubernetes
-        run: docker run -v ${PWD}:/project -w /project devspacesh/devspace devspace deploy --skip-build --profile production --wait --timeout 120
+        run: devspace deploy --skip-build --profile production --wait --timeout 120
