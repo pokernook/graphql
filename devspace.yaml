@@ -33,11 +33,11 @@ deployments:
       values:
         containers:
           - image: registry.digitalocean.com/pokernook/graph
-            env: # TODO: These should be pulled from external configuration
+            env:
               - name: APP_SECRET
-                value: appSecret
+                value: ${APP_SECRET}
               - name: DATABASE_URL
-                value: postgresql://postgres:password@postgres:5432
+                value: ${DATABASE_URL}
         service:
           ports:
             - port: 4000
