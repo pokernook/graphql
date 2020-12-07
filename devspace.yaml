@@ -1,13 +1,8 @@
 version: v1beta9
 
-vars:
-  - name: IMAGE
-    source: none
-    default: registry.digitalocean.com/pokernook/graph
-
 images:
   graph:
-    image: ${IMAGE}
+    image: registry.digitalocean.com/pokernook/graph
     tags:
       - sha-${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
     cmd: ["npm", "run", "dev"]
@@ -36,12 +31,16 @@ deployments:
       componentChart: true
       values:
         containers:
-          - image: ${IMAGE}
-            env: # TODO: Should be injected via Kubernetes Secret volume
+          - image: registry.digitalocean.com/pokernook/graph
+            env: # TODO: Should be injected via Kubernetes Secret/ConfigMap volume
               - name: APP_SECRET
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
                 value: ${DATABASE_URL}
+              - name: NODE_ENV
+                value: development
+              - name: PORT
+                value: "4000"
         service:
           ports:
             - port: 4000
@@ -55,6 +54,9 @@ profiles:
         path: images.graph.build.docker.options.target
       - op: remove
         path: deployments.name=postgres
+      - op: replace
+        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
+        value: production
 
 dev:
   ports:
