@@ -37,9 +37,9 @@ deployments:
       values:
         containers:
           - image: ${IMAGE}
-            env: # TODO: Should be injected via Kubernetes Secret
+            env: # TODO: Should be injected via Kubernetes Secret volume
               - name: APP_SECRET
-                value: ${APP_SECRET}
+                value: $!{APP_SECRET}
               - name: DATABASE_URL
                 value: ${DATABASE_URL}
         service:
