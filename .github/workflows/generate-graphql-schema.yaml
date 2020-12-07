@@ -7,15 +7,12 @@ jobs:
   generate-schema:
     name: Generate Schema
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [15.x]
     steps:
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v2.1.2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 15.x
 
       - name: Reflect App
         run: |

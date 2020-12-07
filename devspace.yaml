@@ -1,0 +1,87 @@
+version: v1beta9
+
+vars:
+  - name: APP_SECRET
+    source: env
+  - name: DATABASE_URL
+    source: env
+
+images:
+  graph:
+    image: registry.digitalocean.com/pokernook/graph
+    tags:
+      - sha-${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
+    cmd: ["npm", "run", "dev"]
+    preferSyncOverRebuild: true
+    build:
+      docker:
+        useBuildKit: true
+        options:
+          target: develop
+
+deployments:
+  - name: postgres
+    helm:
+      componentChart: true
+      values:
+        containers:
+          - image: postgres:12-alpine
+            env:
+              - name: POSTGRES_PASSWORD
+                value: password
+        service:
+          ports:
+            - port: 5432
+  - name: pokernook-graph
+    helm:
+      componentChart: true
+      values:
+        containers:
+          - image: registry.digitalocean.com/pokernook/graph
+            env:
+              - name: APP_SECRET
+                value: $!{APP_SECRET}
+              - name: DATABASE_URL
+                value: ${DATABASE_URL}
+              - name: NODE_ENV
+                value: development
+              - name: PORT
+                value: "4000"
+        service:
+          ports:
+            - port: 4000
+
+profiles:
+  - name: production
+    patches:
+      - op: remove
+        path: images.graph.cmd
+      - op: remove
+        path: images.graph.build.docker.options.target
+      - op: remove
+        path: deployments.name=postgres
+      - op: replace
+        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
+        value: production
+
+dev:
+  ports:
+    - imageName: graph
+      forward:
+        - port: 4000
+  sync:
+    - imageName: graph
+      excludePaths:
+        - .git/
+      uploadExcludePaths:
+        - node_modules
+        - generated
+        - "**/*.graphql"
+        - logs
+        - "**/*.log"
+        - npm-debug.log*
+        - yarn-debug.log*
+        - yarn-error.log*
+        - lerna-debug.log*
+        - /coverage
+        - devspace.yaml
