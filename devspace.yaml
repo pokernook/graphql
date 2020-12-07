@@ -1,5 +1,11 @@
 version: v1beta9
 
+vars:
+  - name: APP_SECRET
+    source: env
+  - name: DATABASE_URL
+    source: env
+
 images:
   graph:
     image: registry.digitalocean.com/pokernook/graph
@@ -32,7 +38,7 @@ deployments:
       values:
         containers:
           - image: registry.digitalocean.com/pokernook/graph
-            env: # TODO: Should be injected via Kubernetes Secret/ConfigMap volume
+            env:
               - name: APP_SECRET
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
