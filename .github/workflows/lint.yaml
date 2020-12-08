@@ -1,11 +1,11 @@
-name: Generate GraphQL Schema
+name: Lint
 
 on:
   push:
 
 jobs:
-  generate-schema:
-    name: Generate Schema
+  eslint:
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,12 +14,12 @@ jobs:
         with:
           node-version: 15.x
 
-      - name: Reflect App
+      - name: Run ESLint Script
         run: |
           npm ci
-          npm run generate
+          npm run lint
 
-      - name: Commit Schema
+      - name: Commit ESLint Fixes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Generate GraphQL schema
+          commit_message: Fix ESLint problems
