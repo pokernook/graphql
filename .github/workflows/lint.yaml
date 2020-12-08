@@ -17,6 +17,7 @@ jobs:
       - name: Run ESLint Script
         run: |
           npm ci
+          npm run generate
           npm run lint
 
       - name: Commit ESLint Fixes
