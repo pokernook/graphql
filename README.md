@@ -22,6 +22,8 @@ devspace dev # Run the app in a Kubernetes cluster
 ```bash
 npm run dev # Create a hot-reloading GraphQL server
 
+npm run lint # ESLint the project
+
 npm run generate # Generate Prisma client and schema types
 
 npm run build # Build application for deployment
