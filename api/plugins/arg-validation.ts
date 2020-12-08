@@ -25,9 +25,8 @@ export const argValidation = (): NexusPlugin =>
     description: "Validate resolver arguments against a joi schema",
     fieldDefTypes,
     onCreateFieldResolver(config) {
-      const nexusConfig =
-        config.fieldConfig.extensions?.nexus
-          ?.config; /*  as Record<string, unknown> */
+      const nexusConfig = config.fieldConfig.extensions?.nexus
+        ?.config as Record<string, unknown>;
       const argSchema = nexusConfig.argSchema as Joi.Schema;
 
       if (argSchema && !Joi.isSchema(argSchema)) {
