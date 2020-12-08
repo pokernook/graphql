@@ -3,11 +3,9 @@ import { seedUser } from "./fixtures/User";
 
 const seed = async () => {
   const prisma = new PrismaClient();
-
   console.info("Seeding database...");
   await seedUser(prisma);
-
-  prisma.$disconnect();
+  await prisma.$disconnect();
 };
 
-seed();
+seed().catch((e) => console.error(e));
