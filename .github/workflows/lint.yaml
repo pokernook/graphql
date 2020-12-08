@@ -19,8 +19,3 @@ jobs:
           npm ci
           npm run generate
           npm run lint
-
-      - name: Commit ESLint Fixes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Fix ESLint problems

@@ -4,7 +4,7 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
-    "lint": "eslint . --ext .js,.ts --fix",
+    "lint": "eslint . --ext .js,.ts",
     "dev:prisma": "nodemon --watch \"prisma/schema.prisma\" --exec \"npm run prisma:db:push\"",
     "dev:server": "ts-node-dev --transpile-only api",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
