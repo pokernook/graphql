@@ -43,5 +43,3 @@ migration 20200911013823-create-user..20200926151442-add-user-password
 +  passwordHash String
  }
 ```
-
-

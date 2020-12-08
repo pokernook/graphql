@@ -7,7 +7,7 @@ You can check out the [state of the schema](./schema.prisma) after the migration
 
 ```sql
 ALTER TABLE "public"."User" ADD COLUMN "username" text   NOT NULL ,
-ADD COLUMN "discriminator" integer   NOT NULL 
+ADD COLUMN "discriminator" integer   NOT NULL
 
 CREATE UNIQUE INDEX "UserTag" ON "public"."User"("username", "discriminator")
 ```
@@ -45,5 +45,3 @@ migration 20200926151442-add-user-password..20201117012322-add-user-tag
 +  @@unique([username, discriminator], name: "UserTag")
  }
 ```
-
-

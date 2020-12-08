@@ -37,5 +37,3 @@ migration ..20200911013823-create-user
 +  email String @unique
 +}
 ```
-
-
