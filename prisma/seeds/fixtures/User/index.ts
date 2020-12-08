@@ -6,6 +6,6 @@ export const seedUser = async (prisma: PrismaClient): Promise<void> => {
     await Promise.all(users.map((user) => prisma.user.create({ data: user })));
     console.info(`✅ User (${users.length})`);
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
   }
 };
