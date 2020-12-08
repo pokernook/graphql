@@ -4,6 +4,7 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
+    "lint": "eslint --ext .js,.ts --fix .",
     "dev:prisma": "nodemon --watch \"prisma/schema.prisma\" --exec \"npm run prisma:db:push\"",
     "dev:server": "ts-node-dev --transpile-only api",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
@@ -40,6 +41,7 @@
     "dotenv-cli": "^4.0.0",
     "eslint": "^7.12.0",
     "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.2.0",
     "eslint-plugin-simple-import-sort": "^6.0.0",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
