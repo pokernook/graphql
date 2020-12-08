@@ -14,7 +14,7 @@ export const uniqueDiscriminator = async (
   username: string,
   uniquenessChecks = 5
 ): Promise<number | undefined> => {
-  const possibleDiscriminators = [...Array(uniquenessChecks)].map(() =>
+  const possibleDiscriminators = Array.from({ length: uniquenessChecks }, () =>
     randomInt(MAX_DISCRIMINATOR)
   );
   for (const discriminator of possibleDiscriminators) {
