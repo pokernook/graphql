@@ -4,19 +4,19 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
-    "lint": "eslint . --ext .js,.ts",
     "dev:prisma": "nodemon --watch \"prisma/schema.prisma\" --exec \"npm run prisma:db:push\"",
     "dev:server": "ts-node-dev --transpile-only api",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
+    "lint": "eslint . --ext .js,.ts",
+    "nexus:reflect": "ts-node --transpile-only api/nexus/schema",
+    "generate": "npm run prisma:generate && npm run nexus:reflect",
     "prisma:generate": "prisma generate",
     "prisma:migrate:dev": "prisma migrate dev --preview-feature",
     "prisma:migrate:reset": "prisma migrate reset --preview-feature",
     "prisma:migrate:deploy": "prisma migrate deploy --preview-feature",
-    "prisma:db:push": "prisma db push --preview-feature --force",
+    "prisma:db:push": "prisma db push --force --preview-feature",
     "prisma:db:seed": "ts-node prisma/seeds/seed",
-    "nexus:reflect": "ts-node --transpile-only api/nexus/schema",
-    "generate": "npm run prisma:generate && npm run nexus:reflect",
     "build": "ncc build api/index.ts --quiet --out dist"
   },
   "dependencies": {
