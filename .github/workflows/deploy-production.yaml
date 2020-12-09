@@ -22,7 +22,7 @@ jobs:
       - name: Run Migrations
         run: |
           npm ci
-          yes 2>/dev/null | npm run prisma:migrate:up
+          npm run prisma:migrate:deploy
 
   publish-container:
     name: Publish Container
