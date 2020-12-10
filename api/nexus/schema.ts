@@ -1,5 +1,5 @@
 import { makeSchema } from "@nexus/schema";
-import { nexusPrisma } from "nexus-plugin-prisma"; // TODO: Do not merge until nexus-plugin-prisma supports prisma@2.13
+import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
 
 import * as types from "../graphql";
