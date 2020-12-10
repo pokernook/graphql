@@ -47,7 +47,7 @@ export const argValidation = (): NexusPlugin =>
           throw new Error(error.details[0]?.message);
         }
 
-        next(root, args, ctx, info);
+        return next(root, args, ctx, info) as unknown;
       };
     },
   });
