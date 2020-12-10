@@ -72,6 +72,11 @@ dev:
     - imageName: graph
       forward:
         - port: 4000
+    - labelSelector:
+        app.kubernetes.io/name: devspace-app
+        app.kubernetes.io/component: postgres
+      forward:
+        - port: 5432
   sync:
     - imageName: graph
       excludePaths:
