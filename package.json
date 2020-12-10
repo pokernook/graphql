@@ -4,23 +4,24 @@
   "repository": "github:pokernook/graph",
   "version": "0.0.0",
   "scripts": {
-    "lint": "eslint . --ext .js,.ts",
     "dev:prisma": "nodemon --watch \"prisma/schema.prisma\" --exec \"npm run prisma:db:push\"",
     "dev:server": "ts-node-dev --transpile-only api",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate:save": "prisma migrate save --experimental",
-    "prisma:migrate:up": "prisma migrate up --experimental",
-    "prisma:db:push": "prisma db push --preview-feature --ignore-migrations --force",
-    "prisma:db:seed": "ts-node prisma/seeds/seed",
+    "lint": "eslint . --ext .js,.ts",
     "nexus:reflect": "ts-node --transpile-only api/nexus/schema",
     "generate": "npm run prisma:generate && npm run nexus:reflect",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:dev": "prisma migrate dev --preview-feature",
+    "prisma:migrate:reset": "prisma migrate reset --preview-feature",
+    "prisma:migrate:deploy": "prisma migrate deploy --preview-feature",
+    "prisma:db:push": "prisma db push --force --preview-feature",
+    "prisma:db:seed": "ts-node prisma/seeds/seed",
     "build": "ncc build api/index.ts --quiet --out dist"
   },
   "dependencies": {
     "@nexus/schema": "^0.19.2",
-    "@prisma/client": "2.12.1",
+    "@prisma/client": "2.13.0",
     "@vercel/ncc": "^0.25.1",
     "apollo-server-express": "^2.19.0",
     "argon2": "^0.27.0",
@@ -28,10 +29,10 @@
     "graphql": "^15.4.0",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "nexus-plugin-prisma": "^0.25.0"
+    "nexus-plugin-prisma": "^0.26.0"
   },
   "devDependencies": {
-    "@prisma/cli": "2.12.1",
+    "@prisma/cli": "2.13.0",
     "@types/express": "^4.17.8",
     "@types/jsonwebtoken": "^8.5.0",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
@@ -41,11 +42,11 @@
     "eslint": "^7.12.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-prettier": "^3.2.0",
-    "eslint-plugin-simple-import-sort": "^6.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
     "ts-node": "^9.0.0",
-    "ts-node-dev": "^1.0.0",
+    "ts-node-dev": "^1.1.0",
     "typescript": "^4.1.0"
   }
 }

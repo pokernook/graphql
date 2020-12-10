@@ -42,7 +42,7 @@ deployments:
               - name: APP_SECRET
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
-                value: ${DATABASE_URL}
+                value: postgresql://postgres:password@postgres:5432
               - name: NODE_ENV
                 value: development
               - name: PORT
@@ -61,6 +61,9 @@ profiles:
       - op: remove
         path: deployments.name=postgres
       - op: replace
+        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=DATABASE_URL.value
+        value: ${DATABASE_URL}
+      - op: replace
         path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
         value: production
 
@@ -69,6 +72,11 @@ dev:
     - imageName: graph
       forward:
         - port: 4000
+    - labelSelector:
+        app.kubernetes.io/name: devspace-app
+        app.kubernetes.io/component: postgres
+      forward:
+        - port: 5432
   sync:
     - imageName: graph
       excludePaths:

@@ -1,19 +1,19 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma/client"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model User {
   id            String @id @default(cuid())
   email         String @unique
+  passwordHash  String
   username      String
   discriminator Int
-  passwordHash  String
 
   @@unique([username, discriminator], name: "UserTag")
 }
