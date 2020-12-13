@@ -3,8 +3,10 @@ version: v1beta9
 vars:
   - name: APP_SECRET
     source: env
+    default: appSecret
   - name: DATABASE_URL
     source: env
+    default: postgresql://postgres:password@postgres:5432
 
 images:
   graph:
@@ -42,7 +44,7 @@ deployments:
               - name: APP_SECRET
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
-                value: postgresql://postgres:password@postgres:5432
+                value: $!{DATABASE_URL}
               - name: NODE_ENV
                 value: development
               - name: PORT
@@ -60,9 +62,6 @@ profiles:
         path: images.graph.build.docker.options.target
       - op: remove
         path: deployments.name=postgres
-      - op: replace
-        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=DATABASE_URL.value
-        value: ${DATABASE_URL}
       - op: replace
         path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
         value: production
