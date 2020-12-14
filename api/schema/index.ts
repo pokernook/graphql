@@ -1,4 +1,4 @@
-import { makeSchema } from "@nexus/schema";
+import { makeSchema } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
 
@@ -8,6 +8,10 @@ import { argValidation } from "../plugins";
 const genBase = join(__dirname, "../../generated");
 
 export const schema = makeSchema({
+  contextType: {
+    export: "Context",
+    module: join(__dirname, "../context.ts"),
+  },
   outputs: {
     schema: true,
     typegen: join(genBase, "@types/nexus-typegen/index.d.ts"),
@@ -25,18 +29,13 @@ export const schema = makeSchema({
       },
     }),
   ],
-  typegenAutoConfig: {
-    sources: [
+  sourceTypes: {
+    modules: [
       {
         alias: "prisma",
-        source: join(genBase, "prisma/client/index.d.ts"),
-      },
-      {
-        alias: "ContextModule",
-        source: join(__dirname, "./context.ts"),
+        module: join(genBase, "prisma/client/index.d.ts"),
       },
     ],
-    contextType: "ContextModule.Context",
   },
   types,
 });

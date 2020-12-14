@@ -2,11 +2,12 @@ import { ApolloServer } from "apollo-server-express";
 import createExpress from "express";
 import http from "http";
 
-import { context, schema } from "../nexus";
+import { createContext } from "../context";
+import { schema } from "../schema";
 
 const app = createExpress();
 const apollo = new ApolloServer({
-  context,
+  context: createContext(),
   schema,
   subscriptions: { path: "/" },
 });
