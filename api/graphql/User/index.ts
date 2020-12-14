@@ -1,6 +1,6 @@
-import { extendType, nonNull, objectType, stringArg } from "@nexus/schema";
 import { argon2id, hash, verify } from "argon2";
 import Joi from "joi";
+import { extendType, nonNull, objectType, stringArg } from "nexus";
 
 import { signToken, uniqueDiscriminator } from "./util";
 
