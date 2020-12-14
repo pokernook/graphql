@@ -21,7 +21,6 @@
     "build": "ncc build api/index.ts --quiet --out dist"
   },
   "dependencies": {
-    "@nexus/schema": "^0.19.2",
     "@prisma/client": "2.13.0",
     "@vercel/ncc": "^0.25.1",
     "apollo-server-express": "^2.19.0",
@@ -30,7 +29,8 @@
     "graphql": "^15.4.0",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "nexus-plugin-prisma": "^0.26.0"
+    "nexus": "^1.0.0",
+    "nexus-plugin-prisma": "^0.27.0"
   },
   "devDependencies": {
     "@prisma/cli": "2.13.0",
