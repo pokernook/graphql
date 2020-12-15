@@ -5,9 +5,6 @@
 # Dependencies
 node_modules
 
-# Generated Code
-generated
-
 # GraphQL SDL
 **/*.graphql
 

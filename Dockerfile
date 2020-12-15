@@ -10,8 +10,7 @@ RUN npm run generate
 FROM node AS build
 WORKDIR /build
 COPY --from=develop /develop .
-RUN npm run build \
-  && cp prisma/schema.prisma dist
+RUN npm run build
 
 FROM node AS app
 WORKDIR /app

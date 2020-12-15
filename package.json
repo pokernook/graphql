@@ -9,19 +9,18 @@
     "prisma:migrate:reset": "prisma migrate reset --preview-feature",
     "prisma:migrate:deploy": "prisma migrate deploy --preview-feature",
     "prisma:db:push": "prisma db push --force --preview-feature",
-    "prisma:db:seed": "ts-node prisma/seeds/seed",
-    "nexus:reflect": "ts-node --transpile-only api/nexus/schema",
+    "prisma:db:seed": "ts-node prisma/seed",
+    "nexus:reflect": "ts-node --transpile-only src/schema",
     "generate": "npm run prisma:generate && npm run nexus:reflect",
     "postinstall": "npm run generate",
     "dev:prisma": "nodemon --watch prisma --ext \"*\" --exec \"npm run prisma:db:push && npm run prisma:db:seed\"",
-    "dev:server": "ts-node-dev --transpile-only api",
+    "dev:server": "ts-node-dev --transpile-only src",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "lint": "eslint . --ext .js,.ts",
-    "build": "ncc build api/index.ts --quiet --out dist"
+    "build": "ncc build src/index.ts --quiet --out dist"
   },
   "dependencies": {
-    "@nexus/schema": "^0.19.2",
     "@prisma/client": "2.13.0",
     "@vercel/ncc": "^0.25.1",
     "apollo-server-express": "^2.19.0",
@@ -30,7 +29,8 @@
     "graphql": "^15.4.0",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "nexus-plugin-prisma": "^0.26.0"
+    "nexus": "^1.0.0",
+    "nexus-plugin-prisma": "^0.27.0"
   },
   "devDependencies": {
     "@prisma/cli": "2.13.0",

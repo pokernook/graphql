@@ -1,10 +1,10 @@
-import { plugin } from "@nexus/schema";
+import Joi from "joi";
+import { plugin } from "nexus";
 import {
   NexusPlugin,
   printedGenTyping,
   printedGenTypingImport,
-} from "@nexus/schema/dist/core";
-import Joi from "joi";
+} from "nexus/dist/core";
 
 const ArgSchemaResolverImport = printedGenTypingImport({
   module: "joi",

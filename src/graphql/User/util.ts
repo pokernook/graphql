@@ -1,10 +1,8 @@
+import { PrismaClient } from "@prisma/client";
 import { randomInt } from "crypto";
 import { sign } from "jsonwebtoken";
 
-import { PrismaClient } from "../../../generated/prisma/client";
 import { config } from "../../config";
-
-const MAX_DISCRIMINATOR = 10000;
 
 export const signToken = (userId: string): string =>
   sign({ userId }, config.appSecret);
@@ -12,10 +10,11 @@ export const signToken = (userId: string): string =>
 export const uniqueDiscriminator = async (
   prisma: PrismaClient,
   username: string,
-  uniquenessChecks = 5
+  uniquenessChecks = 5,
+  discriminatorMax = 10000
 ): Promise<number | undefined> => {
   const possibleDiscriminators = Array.from({ length: uniquenessChecks }, () =>
-    randomInt(MAX_DISCRIMINATOR)
+    randomInt(discriminatorMax)
   );
   for (const discriminator of possibleDiscriminators) {
     const existingUser = await prisma.user.findUnique({

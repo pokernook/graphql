@@ -2,9 +2,6 @@
 /.build
 /dist
 
-# Generated Code
-generated
-
 # GraphQL SDL
 **/*.graphql
 

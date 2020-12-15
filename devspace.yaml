@@ -1,13 +1,5 @@
 version: v1beta9
 
-vars:
-  - name: APP_SECRET
-    source: env
-    default: appSecret
-  - name: DATABASE_URL
-    source: env
-    default: postgresql://postgres:password@postgres:5432
-
 images:
   graph:
     image: registry.digitalocean.com/pokernook/graph
@@ -44,7 +36,7 @@ deployments:
               - name: APP_SECRET
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
-                value: $!{DATABASE_URL}
+                value: postgresql://postgres:password@postgres:5432
               - name: NODE_ENV
                 value: development
               - name: PORT
@@ -65,6 +57,9 @@ profiles:
       - op: replace
         path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
         value: production
+      - op: replace
+        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=DATABASE_URL.value
+        value: $!{DATABASE_URL}
 
 dev:
   ports:
@@ -82,7 +77,6 @@ dev:
         - .git/
       uploadExcludePaths:
         - node_modules
-        - generated
         - "**/*.graphql"
         - logs
         - "**/*.log"
