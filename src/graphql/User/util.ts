@@ -1,7 +1,7 @@
+import { PrismaClient } from "@prisma/client";
 import { randomInt } from "crypto";
 import { sign } from "jsonwebtoken";
 
-import { PrismaClient } from "../../../generated/prisma/client";
 import { config } from "../../config";
 
 export const signToken = (userId: string): string =>

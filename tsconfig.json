@@ -11,8 +11,7 @@
     "rootDir": ".",
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2020",
-    "typeRoots": ["node_modules/@types", "generated/@types"]
+    "target": "es2020"
   },
   "exclude": ["dist", "node_modules"]
 }
