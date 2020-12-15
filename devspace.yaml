@@ -77,7 +77,6 @@ dev:
         - .git/
       uploadExcludePaths:
         - node_modules
-        - generated
         - "**/*.graphql"
         - logs
         - "**/*.log"
