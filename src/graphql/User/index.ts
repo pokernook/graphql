@@ -2,12 +2,11 @@ import { argon2id, hash, verify } from "argon2";
 import Joi from "joi";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 
-import { signToken, uniqueDiscriminator } from "./util";
+import { uniqueDiscriminator } from "./util";
 
 export const AuthToken = objectType({
   name: "AuthPayload",
   definition(t) {
-    t.string("token");
     t.field("user", { type: "User" });
   },
 });
@@ -54,10 +53,7 @@ export const UserMutation = extendType({
         const user = await ctx.prisma.user.create({
           data: { discriminator, email, passwordHash, username },
         });
-        return {
-          token: signToken(user.id),
-          user,
-        };
+        return { user };
       },
     });
 
@@ -77,10 +73,7 @@ export const UserMutation = extendType({
         if (!validPassword) {
           throw new Error(errMsg);
         }
-        return {
-          token: signToken(user.id),
-          user,
-        };
+        return { user };
       },
     });
   },
