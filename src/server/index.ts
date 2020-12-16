@@ -30,5 +30,8 @@ const apollo = new ApolloServer({
   schema,
   subscriptions: { path: "/" },
 });
-apollo.applyMiddleware({ app, path: "/" });
+apollo.applyMiddleware({
+  app,
+  path: "/",
+});
 apollo.installSubscriptionHandlers(server);
