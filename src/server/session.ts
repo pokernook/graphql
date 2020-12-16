@@ -8,6 +8,7 @@ declare module "express-session" {
   }
 }
 
+// TODO: Move away from in-memory store
 export const session = createSession({
   cookie: {
     httpOnly: true,
