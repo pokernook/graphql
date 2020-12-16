@@ -7,7 +7,7 @@ import { schema } from "../schema";
 
 const app = createExpress();
 const apollo = new ApolloServer({
-  context: createContext(),
+  context: ({ req }) => createContext(req),
   schema,
   subscriptions: { path: "/" },
 });
