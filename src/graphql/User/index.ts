@@ -53,6 +53,7 @@ export const UserMutation = extendType({
         const user = await ctx.prisma.user.create({
           data: { discriminator, email, passwordHash, username },
         });
+        ctx.req.session.userId = user.id;
         return { user };
       },
     });
@@ -73,6 +74,7 @@ export const UserMutation = extendType({
         if (!validPassword) {
           throw new Error(errMsg);
         }
+        ctx.req.session.userId = user.id;
         return { user };
       },
     });
