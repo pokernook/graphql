@@ -90,6 +90,11 @@ dev:
         app.kubernetes.io/component: postgres
       forward:
         - port: 5432
+    - labelSelector:
+        app.kubernetes.io/name: devspace-app
+        app.kubernetes.io/component: redis
+      forward:
+        - port: 6379
   sync:
     - imageName: graph
       excludePaths:
