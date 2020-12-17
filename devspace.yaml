@@ -26,6 +26,18 @@ deployments:
         service:
           ports:
             - port: 5432
+  - name: redis
+    helm:
+      componentChart: true
+      values:
+        containers:
+          - image: bitnami/redis:6.0
+            env:
+              - name: ALLOW_EMPTY_PASSWORD
+                value: "yes"
+        service:
+          ports:
+            - port: 6379
   - name: pokernook-graph
     helm:
       componentChart: true
@@ -37,6 +49,8 @@ deployments:
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
                 value: postgresql://postgres:password@postgres:5432
+              - name: REDIS_URL
+                value: redis://:@redis:6379
               - name: NODE_ENV
                 value: development
               - name: PORT
@@ -54,12 +68,17 @@ profiles:
         path: images.graph.build.docker.options.target
       - op: remove
         path: deployments.name=postgres
+      - op: remove
+        path: deployments.name=redis
       - op: replace
         path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
         value: production
       - op: replace
         path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=DATABASE_URL.value
         value: $!{DATABASE_URL}
+      - op: replace
+        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=REDIS_URL.value
+        value: $!{REDIS_URL}
 
 dev:
   ports:
