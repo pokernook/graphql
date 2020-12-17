@@ -1,4 +1,6 @@
+import connectRedis from "connect-redis";
 import createSession from "express-session";
+import Redis from "ioredis";
 
 import { config } from "../config";
 
@@ -8,7 +10,9 @@ declare module "express-session" {
   }
 }
 
-// TODO: Move away from in-memory store
+const redis = new Redis(config.redisUrl);
+const RedisStore = connectRedis(createSession);
+
 export const session = createSession({
   cookie: {
     httpOnly: true,
@@ -20,5 +24,6 @@ export const session = createSession({
   resave: false,
   saveUninitialized: false,
   secret: config.appSecret,
+  store: new RedisStore({ client: redis }),
   unset: "destroy",
 });
