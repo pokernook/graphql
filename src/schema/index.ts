@@ -8,7 +8,7 @@ import * as types from "./types";
 export const schema = makeSchema({
   contextType: {
     export: "Context",
-    module: join(__dirname, "../context.ts"),
+    module: join(__dirname, "../context"),
   },
   outputs: {
     schema: true,
