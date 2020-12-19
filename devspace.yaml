@@ -14,26 +14,6 @@ images:
           target: develop
 
 deployments:
-  - name: pokernook-graph
-    helm:
-      componentChart: true
-      values:
-        containers:
-          - image: registry.digitalocean.com/pokernook/graph
-            env:
-              - name: APP_SECRET
-                value: $!{APP_SECRET}
-              - name: DATABASE_URL
-                value: postgresql://postgres:password@postgres:5432
-              - name: REDIS_URL
-                value: redis://:@redis:6379
-              - name: NODE_ENV
-                value: development
-              - name: PORT
-                value: "4000"
-        service:
-          ports:
-            - port: 4000
   - name: postgres
     helm:
       componentChart: true
@@ -58,6 +38,26 @@ deployments:
         service:
           ports:
             - port: 6379
+  - name: pokernook-graph
+    helm:
+      componentChart: true
+      values:
+        containers:
+          - image: registry.digitalocean.com/pokernook/graph
+            env:
+              - name: APP_SECRET
+                value: $!{APP_SECRET}
+              - name: DATABASE_URL
+                value: postgresql://postgres:password@postgres:5432
+              - name: REDIS_URL
+                value: redis://:@redis:6379
+              - name: NODE_ENV
+                value: development
+              - name: PORT
+                value: "4000"
+        service:
+          ports:
+            - port: 4000
 
 profiles:
   - name: production
