@@ -2,8 +2,8 @@ import { makeSchema } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { join } from "path";
 
-import * as types from "../graphql";
 import { argValidation } from "../plugins";
+import * as types from "./types";
 
 export const schema = makeSchema({
   contextType: {
