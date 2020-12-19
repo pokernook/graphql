@@ -14,30 +14,23 @@ images:
           target: develop
 
 deployments:
-  - name: postgres
+  - name: database
     helm:
-      componentChart: true
+      chart:
+        name: postgresql
+        repo: https://charts.bitnami.com/bitnami
       values:
-        containers:
-          - image: postgres:12-alpine
-            env:
-              - name: POSTGRES_PASSWORD
-                value: password
-        service:
-          ports:
-            - port: 5432
-  - name: redis
+        image.repository: postgres
+        image.tag: 12-alpine
+        postgresqlPassword: password
+  - name: cache
     helm:
-      componentChart: true
+      chart:
+        name: redis
+        repo: https://charts.bitnami.com/bitnami
       values:
-        containers:
-          - image: bitnami/redis:6.0
-            env:
-              - name: ALLOW_EMPTY_PASSWORD
-                value: "yes"
-        service:
-          ports:
-            - port: 6379
+        image.tag: "6.0"
+        usePassword: false
   - name: pokernook-graph
     helm:
       componentChart: true
@@ -48,9 +41,9 @@ deployments:
               - name: APP_SECRET
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
-                value: postgresql://postgres:password@postgres:5432
+                value: postgresql://postgres:password@database-postgresql:5432
               - name: REDIS_URL
-                value: redis://:@redis:6379
+                value: redis://:@cache-redis-master:6379
               - name: NODE_ENV
                 value: development
               - name: PORT
@@ -67,9 +60,9 @@ profiles:
       - op: remove
         path: images.graph.build.docker.options.target
       - op: remove
-        path: deployments.name=postgres
+        path: deployments.name=database
       - op: remove
-        path: deployments.name=redis
+        path: deployments.name=cache
       - op: replace
         path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
         value: production
@@ -86,13 +79,13 @@ dev:
       forward:
         - port: 4000
     - labelSelector:
-        app.kubernetes.io/name: devspace-app
-        app.kubernetes.io/component: postgres
+        app.kubernetes.io/instance: database
+        app.kubernetes.io/name: postgresql
       forward:
         - port: 5432
     - labelSelector:
-        app.kubernetes.io/name: devspace-app
-        app.kubernetes.io/component: redis
+        app: redis
+        role: master
       forward:
         - port: 6379
   sync:
