@@ -19,6 +19,7 @@ deployments:
       chart:
         name: postgresql
         repo: https://charts.bitnami.com/bitnami
+      wait: true
       values:
         image.repository: postgres
         image.tag: 12-alpine
@@ -28,6 +29,7 @@ deployments:
       chart:
         name: redis
         repo: https://charts.bitnami.com/bitnami
+      wait: true
       values:
         image.tag: "6.0"
         usePassword: false
