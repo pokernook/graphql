@@ -12,7 +12,6 @@
     "prisma:db:seed": "ts-node prisma/seed",
     "nexus:reflect": "ts-node --transpile-only src/schema",
     "generate": "npm run prisma:generate && npm run nexus:reflect",
-    "postinstall": "npm run generate",
     "dev:prisma": "nodemon --watch prisma --ext \"*\" --exec \"npm run prisma:db:push && npm run prisma:db:seed\"",
     "dev:server": "ts-node-dev --transpile-only src",
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
