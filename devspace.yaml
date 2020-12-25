@@ -11,7 +11,7 @@ images:
       docker:
         useBuildKit: true
         options:
-          target: develop
+          target: build
 
 deployments:
   - name: database
