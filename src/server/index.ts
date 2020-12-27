@@ -16,7 +16,6 @@ const apollo = new ApolloServer({
   subscriptions: { path: "/" },
 });
 apollo.applyMiddleware({
-  // TODO: CORS should be configured in Kubernetes
   app,
   path: "/",
 });
