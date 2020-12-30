@@ -17,7 +17,7 @@ export const session = createSession({
   cookie: {
     httpOnly: true,
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    sameSite: "strict",
+    sameSite: true,
     secure: config.env === "production",
   },
   name: "user_session",
