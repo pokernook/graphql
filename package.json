@@ -17,7 +17,7 @@
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "lint": "eslint . --ext .js,.ts",
-    "build": "ncc build src/index.ts --quiet --out dist"
+    "build": "ncc build src/index.ts --out dist"
   },
   "dependencies": {
     "@prisma/client": "2.13.1",
@@ -28,6 +28,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "graphql": "^15.4.0",
+    "helmet": "^4.3.1",
     "ioredis": "^4.19.4",
     "joi": "^17.3.0",
     "nexus": "^1.0.0",
