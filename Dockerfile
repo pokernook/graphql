@@ -1,9 +1,14 @@
-FROM node:15.5.0 AS build
-WORKDIR /build
+FROM node:15.5.0 AS develop
+WORKDIR /develop
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run generate && npm run build
+RUN npm run generate
+
+FROM node:15.5.0-alpine AS build
+WORKDIR /build
+COPY --from=develop /develop .
+RUN npm run build
 
 FROM node:15.5.0-alpine AS app
 WORKDIR /app
