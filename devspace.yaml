@@ -14,7 +14,7 @@ images:
           target: build
 
 deployments:
-  - name: db # Dev deployment
+  - name: postgresql # Dev deployment
     helm:
       chart:
         name: postgresql
@@ -24,7 +24,7 @@ deployments:
         image.repository: postgres
         image.tag: 12-alpine
         postgresqlPassword: password
-  - name: cache # Dev deployment
+  - name: redis # Dev deployment
     helm:
       chart:
         name: redis
@@ -43,9 +43,9 @@ deployments:
               - name: APP_SECRET
                 value: $!{APP_SECRET}
               - name: DATABASE_URL
-                value: postgresql://postgres:password@db-postgresql:5432
+                value: postgresql://postgres:password@postgresql:5432
               - name: REDIS_URL
-                value: redis://:@cache-redis-master:6379
+                value: redis://:@redis-master:6379
               - name: NODE_ENV
                 value: development
               - name: PORT
@@ -63,9 +63,9 @@ profiles:
       - op: remove
         path: images.graph.build.docker.options.target
       - op: remove
-        path: deployments.name=db
+        path: deployments.name=postgresql
       - op: remove
-        path: deployments.name=cache
+        path: deployments.name=redis
       - op: replace
         path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
         value: production
@@ -82,7 +82,7 @@ dev:
       forward:
         - port: 4000
     - labelSelector:
-        app.kubernetes.io/instance: db
+        app.kubernetes.io/instance: postgresql
         app.kubernetes.io/name: postgresql
       forward:
         - port: 5432
