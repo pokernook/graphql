@@ -52,7 +52,8 @@ deployments:
                 value: "4000"
         service:
           ports:
-            - port: 4000
+            - port: 80
+              containerPort: 4000
 
 profiles:
   - name: production
