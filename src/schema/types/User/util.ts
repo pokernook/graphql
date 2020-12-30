@@ -1,11 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { randomInt } from "crypto";
-import { sign } from "jsonwebtoken";
-
-import { config } from "../../config";
-
-export const signToken = (userId: string): string =>
-  sign({ userId }, config.appSecret);
 
 export const uniqueDiscriminator = async (
   prisma: PrismaClient,
