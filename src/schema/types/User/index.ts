@@ -4,7 +4,7 @@ import { extendType, nonNull, objectType, stringArg } from "nexus";
 
 import { uniqueDiscriminator } from "./util";
 
-export const AuthToken = objectType({
+export const AuthPayload = objectType({
   name: "AuthPayload",
   definition(t) {
     t.field("user", { type: "User" });
