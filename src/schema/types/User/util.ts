@@ -1,5 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { randomInt } from "crypto";
+import { Session } from "express-session";
+
+export const destroySession = (session: Session): Promise<void> => {
+  return new Promise<void>((resolve, reject) => {
+    session.destroy((err) => (err ? reject(err) : resolve()));
+  });
+};
 
 export const uniqueDiscriminator = async (
   prisma: PrismaClient,
