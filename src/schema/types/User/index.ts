@@ -2,12 +2,19 @@ import { argon2id, hash, verify } from "argon2";
 import Joi from "joi";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 
-import { uniqueDiscriminator } from "./util";
+import { destroySession, uniqueDiscriminator } from "./util";
 
 export const AuthPayload = objectType({
   name: "AuthPayload",
   definition(t) {
-    t.field("user", { type: "User" });
+    t.field("user", { type: User });
+  },
+});
+
+export const LogOutPayload = objectType({
+  name: "LogOutPayload",
+  definition(t) {
+    t.string("sessionId");
   },
 });
 
@@ -33,7 +40,7 @@ export const UserMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.field("signUp", {
-      type: "AuthPayload",
+      type: AuthPayload,
       args: {
         email: nonNull(stringArg()),
         username: nonNull(stringArg()),
@@ -59,7 +66,7 @@ export const UserMutation = extendType({
     });
 
     t.field("logIn", {
-      type: "AuthPayload",
+      type: AuthPayload,
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
@@ -76,6 +83,19 @@ export const UserMutation = extendType({
         }
         ctx.req.session.userId = user.id;
         return { user };
+      },
+    });
+
+    t.field("logOut", {
+      type: LogOutPayload,
+      resolve: async (_root, _args, ctx) => {
+        const { session } = ctx.req;
+        try {
+          await destroySession(session);
+        } catch (err) {
+          throw new Error(err);
+        }
+        return { sessionId: session.id };
       },
     });
   },

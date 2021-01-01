@@ -6,8 +6,13 @@ type AuthPayload {
   user: User
 }
 
+type LogOutPayload {
+  sessionId: String
+}
+
 type Mutation {
   logIn(email: String!, password: String!): AuthPayload
+  logOut: LogOutPayload
   signUp(email: String!, password: String!, username: String!): AuthPayload
 }
 
