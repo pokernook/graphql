@@ -33,6 +33,7 @@ export const UserQuery = extendType({
   definition(t) {
     t.crud.user();
     t.crud.users();
+    t.field("me", { type: User, resolve: (_root, _args, ctx) => ctx.user });
   },
 });
 
