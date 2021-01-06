@@ -14,5 +14,5 @@ model User {
   username      String
   discriminator Int
 
-  @@unique([username, discriminator], name: "UserTag")
+  @@unique([username, discriminator], name: "Tag")
 }
