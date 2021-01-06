@@ -19,7 +19,7 @@ export const uniqueDiscriminator = async (
   );
   for (const discriminator of possibleDiscriminators) {
     const existingUser = await prisma.user.findUnique({
-      where: { UserTag: { username, discriminator } },
+      where: { Tag: { username, discriminator } },
     });
     if (!existingUser) {
       return discriminator;
