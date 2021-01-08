@@ -1,0 +1,13 @@
+name: Container Testing
+
+on:
+  push:
+
+jobs:
+  yeet:
+    name: Yeet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: docker/setup-buildx-action@v1
