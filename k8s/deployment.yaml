@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graph
+spec:
+  selector:
+    matchLabels:
+      app: graph
+  template:
+    metadata:
+      labels:
+        app: graph
+    spec:
+      containers:
+        - name: graph
+          image: registry.digitalocean.com/pokernook/graph
+          resources:
+            limits:
+              memory: 128Mi
+              cpu: 500m
+          ports:
+            - name: http
+              containerPort: 4000
