@@ -33,3 +33,4 @@ jobs:
         with:
           push: true
           tags: ${{ steps.container_meta.outputs.tags }}
+          labels: ${{ steps.container_meta.outputs.labels }}
