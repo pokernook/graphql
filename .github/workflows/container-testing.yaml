@@ -9,7 +9,9 @@ jobs:
     name: Yeet
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github }}
+      - run: echo ${{ github.action }}
+
+      - run: echo ${{ github.release }}
 
       - uses: actions/checkout@v2
 
