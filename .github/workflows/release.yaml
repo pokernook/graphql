@@ -1,21 +1,25 @@
-name: Container Testing
+name: Release
 
 on:
   push:
-  release:
+    tags:
+      - v*
 
 jobs:
-  yeet:
-    name: Yeet
+  container:
+    name: Container
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.action }}
-
-      - run: echo ${{ github.release }}
-
-      - run: echo ${{ github.release.tag_name }}
-
       - uses: actions/checkout@v2
+
+      - name: Generate container metadata
+        uses: crazy-max/ghaction-docker-meta@v1
+        id: container_meta
+        with:
+          images: ghcr.io/pokernook/graph
+          tag-latest: false
+          tag-semver: |
+            {{version}}
 
       - uses: docker/setup-buildx-action@v1
 
@@ -28,4 +32,4 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/pokernook/graph:0.0.1
+          tags: ${{ steps.container_meta.outputs.tags }}
