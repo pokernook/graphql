@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: graph
-          image: ghcr.io/pokernook/graph:0.0.1
+          image: ghcr.io/pokernook/graph:0.0.1 # {"$imagepolicy": "flux-system:graph"}
           resources:
             limits:
               memory: 128Mi
