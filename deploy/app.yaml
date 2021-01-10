@@ -46,8 +46,8 @@ spec:
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: node-env
-                  key: graph-config
+                  name: graph-config
+                  key: node-env
             - name: PORT
               value: "4000"
           resources:
