@@ -1,11 +1,11 @@
-name: Generate GraphQL Schema
+name: Generate
 
 on:
   push:
 
 jobs:
-  generate-schema:
-    name: Generate Schema
+  graphql-schema:
+    name: GraphQL Schema
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
