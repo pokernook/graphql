@@ -27,6 +27,24 @@ spec:
       containers:
         - name: graph
           image: ghcr.io/pokernook/graph:0.0.1 # {"$imagepolicy": "flux-system:graph"}
+          env:
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: app-secret
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: postgres-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: redis-url
+            - name: PORT
+              value: "4000"
           resources:
             limits:
               memory: 128Mi
