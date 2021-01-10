@@ -43,6 +43,11 @@ spec:
                 secretKeyRef:
                   name: graph-secrets
                   key: redis-url
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: node-env
+                  key: graph-config
             - name: PORT
               value: "4000"
           resources:
