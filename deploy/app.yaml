@@ -21,6 +21,11 @@ spec:
   selector:
     matchLabels:
       app: graph
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       labels:
