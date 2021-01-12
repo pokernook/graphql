@@ -31,6 +31,21 @@ spec:
       labels:
         app: graph
     spec:
+      initContainers:
+        - name: graph-init-migrate
+          image: ghcr.io/pokernook/graph:0.0.1 # {"$imagepolicy": "flux-system:graph"}
+          command:
+            - npm
+            - run
+            - prisma:migrate:deploy
+            - --
+            - --schema=dist/schema.prisma
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: postgres-url
       containers:
         - name: graph
           image: ghcr.io/pokernook/graph:0.0.1 # {"$imagepolicy": "flux-system:graph"}

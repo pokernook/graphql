@@ -4,4 +4,3 @@ resources:
   - app.yaml
   - sealed-secrets.yaml
   - config-map.yaml
-  # TODO: Add migration job to kustomization
