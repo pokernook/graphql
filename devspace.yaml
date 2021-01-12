@@ -2,7 +2,7 @@ version: v1beta9
 
 images:
   graph:
-    image: registry.digitalocean.com/pokernook/graph
+    image: devspace/pokernook/graph
     tags:
       - sha-${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
     cmd: ["npm", "run", "dev"]
@@ -14,7 +14,7 @@ images:
           target: develop
 
 deployments:
-  - name: postgresql # Dev deployment
+  - name: postgresql
     helm:
       chart:
         name: postgresql
@@ -24,7 +24,7 @@ deployments:
         image.repository: postgres
         image.tag: 12-alpine
         postgresqlPassword: password
-  - name: redis # Dev deployment
+  - name: redis
     helm:
       chart:
         name: redis
@@ -33,15 +33,15 @@ deployments:
       values:
         image.tag: "6.0"
         usePassword: false
-  - name: pokernook-graph
+  - name: graph
     helm:
       componentChart: true
       values:
         containers:
-          - image: registry.digitalocean.com/pokernook/graph
+          - image: devspace/pokernook/graph
             env:
               - name: APP_SECRET
-                value: $!{APP_SECRET}
+                value: appSecret
               - name: DATABASE_URL
                 value: postgresql://postgres:password@postgresql:5432
               - name: REDIS_URL
@@ -54,27 +54,6 @@ deployments:
           ports:
             - port: 80
               containerPort: 4000
-
-profiles:
-  - name: production
-    patches:
-      - op: remove
-        path: images.graph.cmd
-      - op: remove
-        path: images.graph.build.docker.options.target
-      - op: remove
-        path: deployments.name=postgresql
-      - op: remove
-        path: deployments.name=redis
-      - op: replace
-        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=NODE_ENV.value
-        value: production
-      - op: replace
-        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=DATABASE_URL.value
-        value: $!{DATABASE_URL}
-      - op: replace
-        path: deployments.name=pokernook-graph.helm.values.containers[0].env.name=REDIS_URL.value
-        value: $!{REDIS_URL}
 
 dev:
   ports:
