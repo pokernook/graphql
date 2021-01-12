@@ -2,7 +2,7 @@ version: v1beta9
 
 images:
   graph:
-    image: pokernook/graph
+    image: devspace/pokernook/graph
     tags:
       - sha-${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
     cmd: ["npm", "run", "dev"]
@@ -33,15 +33,15 @@ deployments:
       values:
         image.tag: "6.0"
         usePassword: false
-  - name: pokernook-graph
+  - name: graph
     helm:
       componentChart: true
       values:
         containers:
-          - image: pokernook/graph
+          - image: devspace/pokernook/graph
             env:
               - name: APP_SECRET
-                value: $!{APP_SECRET}
+                value: appSecret
               - name: DATABASE_URL
                 value: postgresql://postgres:password@postgresql:5432
               - name: REDIS_URL
