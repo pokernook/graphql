@@ -8,9 +8,9 @@ spec:
   selector:
     app: graph
   ports:
-  - name: http
-    port: 80
-    targetPort: http
+    - name: http
+      port: 80
+      targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -21,7 +21,7 @@ spec:
   selector:
     matchLabels:
       app: graph
-  replicas: 2
+  replicas: 1
   strategy:
     rollingUpdate:
       maxUnavailable: 0
@@ -32,50 +32,50 @@ spec:
         app: graph
     spec:
       initContainers:
-      - name: graph-init-migrate
-        image: ghcr.io/pokernook/graph:0.0.2 # {"$imagepolicy": "flux-system:graph"}
-        command:
-        - npm
-        - run
-        - prisma:migrate:deploy
-        - --
-        - --schema=dist/schema.prisma
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: graph-secrets
-              key: postgres-url
+        - name: graph-init-migrate
+          image: ghcr.io/pokernook/graph:0.0.2 # {"$imagepolicy": "flux-system:graph"}
+          command:
+            - npm
+            - run
+            - prisma:migrate:deploy
+            - --
+            - --schema=dist/schema.prisma
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: postgres-url
       containers:
-      - name: graph
-        image: ghcr.io/pokernook/graph:0.0.2 # {"$imagepolicy": "flux-system:graph"}
-        env:
-        - name: APP_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: graph-secrets
-              key: app-secret
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: graph-secrets
-              key: postgres-url
-        - name: REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              name: graph-secrets
-              key: redis-url
-        - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: graph-config
-              key: node-env
-        - name: PORT
-          value: "4000"
-        resources:
-          limits:
-            memory: 128Mi
-            cpu: 500m
-        ports:
-        - name: http
-          containerPort: 4000
+        - name: graph
+          image: ghcr.io/pokernook/graph:0.0.2 # {"$imagepolicy": "flux-system:graph"}
+          env:
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: app-secret
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: postgres-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: graph-secrets
+                  key: redis-url
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: graph-config
+                  key: node-env
+            - name: PORT
+              value: "4000"
+          resources:
+            limits:
+              memory: 64Mi
+              cpu: 200m
+          ports:
+            - name: http
+              containerPort: 4000
