@@ -5,6 +5,7 @@ on:
 
 jobs:
   eslint:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: ESLint
     runs-on: ubuntu-latest
     steps:
