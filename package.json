@@ -1,7 +1,7 @@
 {
-  "name": "graph",
+  "name": "graphql",
   "description": "GraphQL API built with Nexus and Prisma",
-  "repository": "github:pokernook/graph",
+  "repository": "github:pokernook/graphql",
   "scripts": {
     "prisma:generate": "prisma generate",
     "prisma:migrate:dev": "prisma migrate dev --preview-feature",

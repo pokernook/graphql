@@ -17,7 +17,7 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         id: container_meta
         with:
-          images: ghcr.io/pokernook/graph
+          images: ghcr.io/pokernook/graphql
           tag-latest: false
           tag-semver: |
             {{version}}

@@ -1,8 +1,8 @@
 version: v1beta9
 
 images:
-  graph:
-    image: devspace/pokernook/graph
+  graphql:
+    image: devspace/pokernook/graphql
     tags:
       - sha-${DEVSPACE_GIT_COMMIT}-${DEVSPACE_RANDOM}
     cmd: ["npm", "run", "dev"]
@@ -33,12 +33,12 @@ deployments:
       values:
         image.tag: "6.0"
         usePassword: false
-  - name: graph
+  - name: graphql
     helm:
       componentChart: true
       values:
         containers:
-          - image: devspace/pokernook/graph
+          - image: devspace/pokernook/graphql
             env:
               - name: APP_SECRET
                 value: appSecret
@@ -57,7 +57,7 @@ deployments:
 
 dev:
   ports:
-    - imageName: graph
+    - imageName: graphql
       forward:
         - port: 4000
     - labelSelector:
@@ -71,7 +71,7 @@ dev:
       forward:
         - port: 6379
   sync:
-    - imageName: graph
+    - imageName: graphql
       excludePaths:
         - .git/
       uploadExcludePaths:

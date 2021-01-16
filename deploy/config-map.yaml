@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: graph-config
+  name: graphql-config
   namespace: flux-system
 data:
   node-env: production
