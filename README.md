@@ -5,16 +5,15 @@
 ### Recommended Tools
 
 - Node.js
-- Docker Desktop (or an alternative container runtime and local Kubernetes cluster)
+- Docker Desktop
 - VS Code
-- DevSpace CLI
 
 Clone the repo, then run:
 
 ```bash
 npm install # Install project dependencies
 
-devspace dev # Run the app in a Kubernetes cluster
+docker-compose up # Run the app with Docker
 ```
 
 ### NPM Scripts Overview

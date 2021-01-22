@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_PASSWORD: password
+
+  redis:
+    image: redis:6-alpine
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: develop
+    command: npm run dev
+    depends_on: [postgres, redis]
+    environment:
+      APP_SECRET: appSecret
+      DATABASE_URL: postgresql://postgres:password@postgres:5432
+      REDIS_URL: redis://:@redis:6379
+      NODE_ENV: development
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/develop
+      - /develop/node_modules
+      - ./node_modules/@types:/develop/node_modules/@types
+      - ./node_modules/.prisma:/develop/node_modules/.prisma
+      - ./node_modules/@prisma:/develop/node_modules/@prisma
