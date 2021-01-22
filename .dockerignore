@@ -35,6 +35,3 @@ lerna-debug.log*
 
 # Testing
 /coverage
-
-# Devspace config
-devspace.yaml
