@@ -6,6 +6,8 @@ type AuthPayload {
   user: User
 }
 
+scalar DateTime
+
 type LogOutPayload {
   sessionId: String
 }
@@ -23,6 +25,7 @@ type Query {
 }
 
 type User {
+  createdAt: DateTime!
   discriminator: Int!
   email: String!
   id: String!
