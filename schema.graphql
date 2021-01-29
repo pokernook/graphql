@@ -2,20 +2,14 @@
 ### Do not make changes to this file directly
 
 
-type AuthPayload {
-  user: User
-}
-
 scalar DateTime
 
-type LogOutPayload {
-  sessionId: String
-}
-
 type Mutation {
-  logIn(email: String!, password: String!): AuthPayload
-  logOut: LogOutPayload
-  signUp(email: String!, password: String!, username: String!): AuthPayload
+  userLogIn(email: String!, password: String!): UserPayload
+  userLogOut: UserLogOutPayload
+  userSignUp(email: String!, password: String!, username: String!): UserPayload
+  userUpdatePassword(newPassword: String!): UserPayload
+  userUpdateUsername(newUsername: String!): UserPayload
 }
 
 type Query {
@@ -32,13 +26,21 @@ type User {
   username: String!
 }
 
+type UserLogOutPayload {
+  sessionId: String
+}
+
+type UserPayload {
+  user: User
+}
+
 input UserTagCompoundUniqueInput {
   discriminator: Int!
   username: String!
 }
 
 input UserWhereUniqueInput {
+  Tag: UserTagCompoundUniqueInput
   email: String
   id: String
-  Tag: UserTagCompoundUniqueInput
 }

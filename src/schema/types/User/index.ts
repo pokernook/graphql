@@ -2,21 +2,8 @@ import { argon2id, hash, verify } from "argon2";
 import Joi from "joi";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 
+import { isAuthenticated } from "../../rules";
 import { destroySession, uniqueDiscriminator } from "./util";
-
-export const AuthPayload = objectType({
-  name: "AuthPayload",
-  definition(t) {
-    t.field("user", { type: User });
-  },
-});
-
-export const LogOutPayload = objectType({
-  name: "LogOutPayload",
-  definition(t) {
-    t.string("sessionId");
-  },
-});
 
 export const User = objectType({
   name: "User",
@@ -29,7 +16,21 @@ export const User = objectType({
   },
 });
 
-export const UserQuery = extendType({
+export const UserPayload = objectType({
+  name: "UserPayload",
+  definition(t) {
+    t.field("user", { type: User });
+  },
+});
+
+export const UserLogOutPayload = objectType({
+  name: "UserLogOutPayload",
+  definition(t) {
+    t.string("sessionId");
+  },
+});
+
+export const Query = extendType({
   type: "Query",
   definition(t) {
     t.crud.user();
@@ -38,11 +39,11 @@ export const UserQuery = extendType({
   },
 });
 
-export const UserMutation = extendType({
+export const Mutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("signUp", {
-      type: AuthPayload,
+    t.field("userSignUp", {
+      type: UserPayload,
       args: {
         email: nonNull(stringArg()),
         username: nonNull(stringArg()),
@@ -67,8 +68,8 @@ export const UserMutation = extendType({
       },
     });
 
-    t.field("logIn", {
-      type: AuthPayload,
+    t.field("userLogIn", {
+      type: UserPayload,
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
@@ -88,8 +89,8 @@ export const UserMutation = extendType({
       },
     });
 
-    t.field("logOut", {
-      type: LogOutPayload,
+    t.field("userLogOut", {
+      type: UserLogOutPayload,
       resolve: async (_root, _args, ctx) => {
         const { session } = ctx.req;
         try {
@@ -98,6 +99,58 @@ export const UserMutation = extendType({
           throw new Error(err);
         }
         return { sessionId: session.id };
+      },
+    });
+
+    t.field("userUpdateUsername", {
+      type: UserPayload,
+      shield: isAuthenticated(),
+      args: { newUsername: nonNull(stringArg()) },
+      argSchema: Joi.object({
+        newUsername: Joi.string().min(3).max(20).trim(),
+      }),
+      resolve: async (_root, { newUsername }, ctx) => {
+        if (newUsername === ctx.user?.username) {
+          return { user: ctx.user };
+        }
+
+        let discriminator = ctx.user?.discriminator;
+        const discriminatorTaken = !!(await ctx.prisma.user.findUnique({
+          where: {
+            Tag: { username: newUsername, discriminator: discriminator || 0 },
+          },
+        }));
+
+        if (discriminatorTaken) {
+          discriminator = await uniqueDiscriminator(ctx.prisma, newUsername);
+          if (discriminator === undefined) {
+            throw new Error("Too many users have this username");
+          }
+        }
+
+        const updatedUser = await ctx.prisma.user.update({
+          data: { username: newUsername, discriminator },
+          where: { id: ctx.user?.id },
+        });
+
+        return { user: updatedUser };
+      },
+    });
+
+    t.field("userUpdatePassword", {
+      type: UserPayload,
+      shield: isAuthenticated(),
+      args: { newPassword: nonNull(stringArg()) },
+      argSchema: Joi.object({
+        newPassword: Joi.string().min(8),
+      }),
+      resolve: async (_root, { newPassword }, ctx) => {
+        const newPasswordHash = await hash(newPassword, { type: argon2id });
+        const updatedUser = await ctx.prisma.user.update({
+          data: { passwordHash: newPasswordHash },
+          where: { id: ctx.user?.id },
+        });
+        return { user: updatedUser };
       },
     });
   },

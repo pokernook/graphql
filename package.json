@@ -31,7 +31,8 @@
     "ioredis": "^4.19.4",
     "joi": "^17.3.0",
     "nexus": "^1.0.0",
-    "nexus-plugin-prisma": "^0.28.0"
+    "nexus-plugin-prisma": "^0.28.0",
+    "nexus-shield": "^2.0.0"
   },
   "devDependencies": {
     "@prisma/cli": "2.14.0",
