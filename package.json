@@ -8,7 +8,7 @@
     "prisma:migrate:reset": "prisma migrate reset --preview-feature",
     "prisma:migrate:deploy": "prisma migrate deploy --preview-feature",
     "prisma:db:push": "prisma db push --force --preview-feature",
-    "prisma:db:seed": "ts-node prisma/seed",
+    "prisma:db:seed": "prisma db seed --preview-feature",
     "nexus:reflect": "ts-node --transpile-only src/schema",
     "generate": "npm run prisma:generate && npm run nexus:reflect",
     "dev:prisma": "nodemon --watch prisma --ext \"*\" --exec \"npm run prisma:db:push && npm run prisma:db:seed\"",
