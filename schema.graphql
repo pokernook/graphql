@@ -38,7 +38,7 @@ input UserTagCompoundUniqueInput {
 }
 
 input UserWhereUniqueInput {
+  Tag: UserTagCompoundUniqueInput
   email: String
   id: String
-  Tag: UserTagCompoundUniqueInput
 }
