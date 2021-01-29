@@ -2,6 +2,7 @@ import { argon2id, hash, verify } from "argon2";
 import Joi from "joi";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 
+import { isAuthenticated } from "../../rules";
 import { destroySession, uniqueDiscriminator } from "./util";
 
 export const User = objectType({
@@ -98,6 +99,41 @@ export const Mutation = extendType({
           throw new Error(err);
         }
         return { sessionId: session.id };
+      },
+    });
+
+    t.field("userUpdateUsername", {
+      type: UserPayload,
+      shield: isAuthenticated(),
+      args: { newUsername: nonNull(stringArg()) },
+      argSchema: Joi.object({
+        newUsername: Joi.string().min(3).max(20).trim(),
+      }),
+      resolve: async (_root, { newUsername }, ctx) => {
+        if (newUsername === ctx.user?.username) {
+          return { user: ctx.user };
+        }
+
+        let discriminator = ctx.user?.discriminator;
+        const discriminatorTaken = !!(await ctx.prisma.user.findUnique({
+          where: {
+            Tag: { username: newUsername, discriminator: discriminator || 0 },
+          },
+        }));
+
+        if (discriminatorTaken) {
+          discriminator = await uniqueDiscriminator(ctx.prisma, newUsername);
+          if (discriminator === undefined) {
+            throw new Error("Too many users have this username");
+          }
+        }
+
+        const updatedUser = await ctx.prisma.user.update({
+          data: { username: newUsername, discriminator },
+          where: { id: ctx.user?.id },
+        });
+
+        return { user: updatedUser };
       },
     });
   },
