@@ -136,5 +136,22 @@ export const Mutation = extendType({
         return { user: updatedUser };
       },
     });
+
+    t.field("userUpdatePassword", {
+      type: UserPayload,
+      shield: isAuthenticated(),
+      args: { newPassword: nonNull(stringArg()) },
+      argSchema: Joi.object({
+        newPassword: Joi.string().min(8),
+      }),
+      resolve: async (_root, { newPassword }, ctx) => {
+        const newPasswordHash = await hash(newPassword, { type: argon2id });
+        const updatedUser = await ctx.prisma.user.update({
+          data: { passwordHash: newPasswordHash },
+          where: { id: ctx.user?.id },
+        });
+        return { user: updatedUser };
+      },
+    });
   },
 });
