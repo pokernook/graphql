@@ -1,12 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 
-import { seedUser } from "./fixtures/User";
+import { seedUser } from "./fixtures";
 
 const seed = async () => {
-  const prisma = new PrismaClient();
   console.info("Seeding database...");
+  const prisma = new PrismaClient();
   await seedUser(prisma);
   await prisma.$disconnect();
 };
 
-seed().catch((e) => console.error(e));
+seed().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
