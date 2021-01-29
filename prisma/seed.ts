@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import { seedUser } from "./fixtures/User";
+import { seedUser } from "./fixtures";
 
 const seed = async () => {
   console.info("Seeding database...");
