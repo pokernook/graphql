@@ -4,20 +4,6 @@ import { extendType, nonNull, objectType, stringArg } from "nexus";
 
 import { destroySession, uniqueDiscriminator } from "./util";
 
-export const AuthPayload = objectType({
-  name: "AuthPayload",
-  definition(t) {
-    t.field("user", { type: User });
-  },
-});
-
-export const LogOutPayload = objectType({
-  name: "LogOutPayload",
-  definition(t) {
-    t.string("sessionId");
-  },
-});
-
 export const User = objectType({
   name: "User",
   definition(t) {
@@ -29,7 +15,21 @@ export const User = objectType({
   },
 });
 
-export const UserQuery = extendType({
+export const UserPayload = objectType({
+  name: "UserPayload",
+  definition(t) {
+    t.field("user", { type: User });
+  },
+});
+
+export const UserLogOutPayload = objectType({
+  name: "UserLogOutPayload",
+  definition(t) {
+    t.string("sessionId");
+  },
+});
+
+export const Query = extendType({
   type: "Query",
   definition(t) {
     t.crud.user();
@@ -38,11 +38,11 @@ export const UserQuery = extendType({
   },
 });
 
-export const UserMutation = extendType({
+export const Mutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("signUp", {
-      type: AuthPayload,
+    t.field("userSignUp", {
+      type: UserPayload,
       args: {
         email: nonNull(stringArg()),
         username: nonNull(stringArg()),
@@ -67,8 +67,8 @@ export const UserMutation = extendType({
       },
     });
 
-    t.field("logIn", {
-      type: AuthPayload,
+    t.field("userLogIn", {
+      type: UserPayload,
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
@@ -88,8 +88,8 @@ export const UserMutation = extendType({
       },
     });
 
-    t.field("logOut", {
-      type: LogOutPayload,
+    t.field("userLogOut", {
+      type: UserLogOutPayload,
       resolve: async (_root, _args, ctx) => {
         const { session } = ctx.req;
         try {
