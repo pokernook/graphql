@@ -7,7 +7,7 @@ import { schema } from "./schema";
 const buildApp = async () => {
   const app = Fastify();
 
-  await app.register(mercurius, { schema });
+  await app.register(mercurius, { graphiql: true, schema });
 
   return app;
 };
