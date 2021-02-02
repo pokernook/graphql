@@ -5,7 +5,14 @@ import session from "fastify-session";
 import mercurius from "mercurius";
 
 import { config } from "./config";
+import { buildContext } from "./context";
 import { schema } from "./schema";
+
+declare module "fastify" {
+  interface Session {
+    userId: string;
+  }
+}
 
 const buildApp = async () => {
   const app = Fastify();
@@ -24,6 +31,7 @@ const buildApp = async () => {
     secret: config.appSecret,
   });
   await app.register(mercurius, {
+    context: buildContext,
     graphiql: config.env === "production" ? false : "playground",
     schema,
   });
