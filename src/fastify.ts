@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import cookie from "fastify-cookie";
 import helmet from "fastify-helmet";
 import mercurius from "mercurius";
 
@@ -9,6 +10,7 @@ const buildApp = async () => {
   const app = Fastify();
 
   await app.register(helmet);
+  await app.register(cookie);
   await app.register(mercurius, {
     graphiql: config.env === "production" ? false : "playground",
     schema,
