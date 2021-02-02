@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import helmet from "fastify-helmet";
 import mercurius from "mercurius";
 
 import { config } from "./config";
@@ -7,6 +8,7 @@ import { schema } from "./schema";
 const buildApp = async () => {
   const app = Fastify();
 
+  await app.register(helmet);
   await app.register(mercurius, { graphiql: true, schema });
 
   return app;
