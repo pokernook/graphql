@@ -9,7 +9,10 @@ const buildApp = async () => {
   const app = Fastify();
 
   await app.register(helmet);
-  await app.register(mercurius, { graphiql: true, schema });
+  await app.register(mercurius, {
+    graphiql: config.env === "production" ? false : "playground",
+    schema,
+  });
 
   return app;
 };
