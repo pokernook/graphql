@@ -14,17 +14,21 @@ declare module "fastify" {
   }
 }
 
+const isProduction = () => config.env === "production";
+
 const buildApp = async () => {
   const app = Fastify();
 
-  await app.register(helmet);
+  await app.register(helmet, {
+    contentSecurityPolicy: isProduction() ? undefined : false,
+  });
   await app.register(cookie);
   await app.register(session, {
     cookie: {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       sameSite: true,
-      secure: config.env === "production",
+      secure: isProduction(),
     },
     cookieName: "user_session",
     saveUninitialized: false,
@@ -32,7 +36,7 @@ const buildApp = async () => {
   });
   await app.register(mercurius, {
     context: buildContext,
-    graphiql: config.env === "production" ? false : "playground",
+    graphiql: isProduction() ? false : "playground",
     path: "/",
     schema,
   });
