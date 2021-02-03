@@ -1,6 +1,7 @@
 import Fastify, { FastifyInstance } from "fastify";
 import cookie from "fastify-cookie";
 import helmet from "fastify-helmet";
+import redis from "fastify-redis";
 import session from "fastify-session";
 import mercurius from "mercurius";
 
@@ -23,6 +24,7 @@ const build = async () => {
     contentSecurityPolicy: isProduction() ? undefined : false,
   });
   await app.register(cookie);
+  await app.register(redis, { url: config.redisUrl });
   await app.register(session, {
     cookie: {
       httpOnly: true,
