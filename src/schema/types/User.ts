@@ -113,14 +113,18 @@ export const Mutation = extendType({
     t.field("userLogOut", {
       type: UserLogOutPayload,
       resolve: async (_root, _args, ctx) => {
-        const destroySession = promisify(ctx.req.destroySession.bind(ctx));
-        const { encryptedSessionId } = ctx.req.session;
+        const { req } = ctx;
+        const {
+          session: { sessionId },
+        } = req;
+        const destroySession = promisify(req.destroySession.bind(req));
+
         try {
           await destroySession();
         } catch (err) {
           throw new Error(err);
         }
-        return { sessionId: encryptedSessionId };
+        return { sessionId };
       },
     });
 
