@@ -21,7 +21,6 @@
   "dependencies": {
     "@prisma/client": "2.15.0",
     "@vercel/ncc": "0.26.0",
-    "apollo-server-express": "^2.19.0",
     "argon2": "^0.27.0",
     "connect-redis": "^5.0.0",
     "express-session": "^1.17.1",
