@@ -23,7 +23,6 @@
     "@vercel/ncc": "0.26.0",
     "argon2": "^0.27.0",
     "connect-redis": "^5.0.0",
-    "express-session": "^1.17.1",
     "fastify": "^3.11.0",
     "fastify-cookie": "^5.1.0",
     "fastify-helmet": "^5.2.0",
@@ -39,7 +38,6 @@
   "devDependencies": {
     "@prisma/cli": "2.15.0",
     "@types/connect-redis": "^0.0.16",
-    "@types/express-session": "^1.17.3",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
     "concurrently": "^5.3.0",
