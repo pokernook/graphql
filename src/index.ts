@@ -42,6 +42,8 @@ const buildApp = async () => {
 
 buildApp()
   .then((app) =>
-    app.listen(config.port, (_e, address) => console.info(`🚀 ${address}`))
+    app.listen(config.port, "::", (_e, address) =>
+      console.info(`🚀 ${address}`)
+    )
   )
   .catch((e) => console.error(e));
