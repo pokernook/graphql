@@ -1,9 +1,30 @@
+import { PrismaClient } from "@prisma/client";
 import { argon2id, hash, verify } from "argon2";
+import { randomInt } from "crypto";
 import Joi from "joi";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { promisify } from "util";
 
-import { isAuthenticated } from "../../rules";
-import { destroySession, uniqueDiscriminator } from "./util";
+import { isAuthenticated } from "../rules";
+
+const uniqueDiscriminator = async (
+  prisma: PrismaClient,
+  username: string,
+  uniquenessChecks = 5,
+  discriminatorMax = 10_000
+): Promise<number | undefined> => {
+  const possibleDiscriminators = Array.from({ length: uniquenessChecks }, () =>
+    randomInt(discriminatorMax)
+  );
+  for (const discriminator of possibleDiscriminators) {
+    const existingUser = await prisma.user.findUnique({
+      where: { Tag: { username, discriminator } },
+    });
+    if (!existingUser) {
+      return discriminator;
+    }
+  }
+};
 
 export const User = objectType({
   name: "User",
@@ -92,13 +113,14 @@ export const Mutation = extendType({
     t.field("userLogOut", {
       type: UserLogOutPayload,
       resolve: async (_root, _args, ctx) => {
-        const { session } = ctx.req;
+        const destroySession = promisify(ctx.req.destroySession.bind(ctx));
+        const { encryptedSessionId } = ctx.req.session;
         try {
-          await destroySession(session);
+          await destroySession();
         } catch (err) {
           throw new Error(err);
         }
-        return { sessionId: session.encryptedSessionId };
+        return { sessionId: encryptedSessionId };
       },
     });
 
