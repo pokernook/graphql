@@ -18,7 +18,7 @@ export const session = createSession({
     httpOnly: true,
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     sameSite: true,
-    secure: config.env === "production", // TODO: Should always be secure
+    secure: config.env === "production",
   },
   name: "user_session",
   resave: false,

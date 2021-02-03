@@ -26,7 +26,7 @@ export const schema = makeSchema({
       paginationStrategy: "prisma",
     }),
     nexusShield({
-      defaultError: new ForbiddenError("Not authorized"),
+      defaultError: new ForbiddenError("Not authorized"), // TODO: This shouldn't come from Apollo
       defaultRule: allow,
     }),
   ],
