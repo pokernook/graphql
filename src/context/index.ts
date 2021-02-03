@@ -10,7 +10,7 @@ export type Context = {
 };
 
 export const buildContext = async (req: FastifyRequest): Promise<Context> => {
-  const id = req.session.userId;
+  const id = req.session.userId || "";
   const user = await prisma.user.findUnique({ where: { id } });
   return { prisma, req, user };
 };
