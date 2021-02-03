@@ -1,4 +1,4 @@
-import Fastify from "fastify";
+import Fastify, { FastifyInstance } from "fastify";
 import cookie from "fastify-cookie";
 import helmet from "fastify-helmet";
 import session from "fastify-session";
@@ -44,10 +44,9 @@ const buildApp = async () => {
   return app;
 };
 
+const launch = (app: FastifyInstance, port: number) =>
+  app.listen(port, "::", (_e, address) => console.info(`🚀 ${address}`));
+
 buildApp()
-  .then((app) =>
-    app.listen(config.port, "::", (_e, address) =>
-      console.info(`🚀 ${address}`)
-    )
-  )
+  .then((app) => launch(app, config.port))
   .catch((e) => console.error(e));
