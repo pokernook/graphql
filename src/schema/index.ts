@@ -1,4 +1,3 @@
-import { ForbiddenError } from "apollo-server-express";
 import { makeSchema } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { allow, nexusShield } from "nexus-shield";
@@ -26,7 +25,7 @@ export const schema = makeSchema({
       paginationStrategy: "prisma",
     }),
     nexusShield({
-      defaultError: new ForbiddenError("Not authorized"), // TODO: This shouldn't come from Apollo
+      defaultError: new Error("Not authorized"),
       defaultRule: allow,
     }),
   ],
