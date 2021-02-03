@@ -33,6 +33,7 @@ const buildApp = async () => {
   await app.register(mercurius, {
     context: buildContext,
     graphiql: config.env === "production" ? false : "playground",
+    path: "/",
     schema,
   });
 
