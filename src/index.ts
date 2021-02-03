@@ -16,7 +16,7 @@ declare module "fastify" {
 
 const isProduction = () => config.env === "production";
 
-const buildApp = async () => {
+const build = async () => {
   const app = Fastify();
 
   await app.register(helmet, {
@@ -47,6 +47,6 @@ const buildApp = async () => {
 const launch = (app: FastifyInstance, port: number) =>
   app.listen(port, "::", (_e, address) => console.info(`🚀 ${address}`));
 
-buildApp()
+build()
   .then((app) => launch(app, config.port))
   .catch((e) => console.error(e));
