@@ -98,7 +98,7 @@ export const Mutation = extendType({
         } catch (err) {
           throw new Error(err);
         }
-        return { sessionId: session.id };
+        return { sessionId: session.encryptedSessionId };
       },
     });
 
