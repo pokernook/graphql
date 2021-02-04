@@ -20,7 +20,7 @@ services:
     command: npm run dev
     depends_on: [postgres, redis]
     environment:
-      APP_SECRET: appSecret
+      APP_SECRET: oo6iP6dQRC/qm2WlUn3Tej+LocObV801
       DATABASE_URL: postgresql://postgres:password@postgres:5432
       REDIS_URL: redis://:@redis:6379
       NODE_ENV: development
