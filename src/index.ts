@@ -8,6 +8,7 @@ import mercurius from "mercurius";
 import { config } from "./config";
 import { buildContext } from "./context";
 import { schema } from "./schema";
+import { RedisStore } from "./session/redis-store";
 
 declare module "fastify" {
   interface Session {
@@ -28,13 +29,14 @@ const build = async () => {
   await app.register(session, {
     cookie: {
       httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      maxAge: 30 * 24 * 60 * 60 * 1_000, // 30 days
       sameSite: true,
       secure: isProduction(),
     },
     cookieName: "user_session",
     saveUninitialized: false,
     secret: config.appSecret,
+    store: new RedisStore({ client: app.redis }),
   });
   await app.register(mercurius, {
     context: buildContext,
