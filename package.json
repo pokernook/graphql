@@ -16,7 +16,7 @@
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "lint": "eslint . --ext .js,.ts",
-    "build": "tsc"
+    "build": "npm run generate && tsc"
   },
   "dependencies": {
     "@prisma/client": "2.15.0",
