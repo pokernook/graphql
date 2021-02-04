@@ -5,14 +5,12 @@ const passwordHash = // Translates to 'password'
 
 export const users: Prisma.UserCreateInput[] = [
   {
-    id: "1",
     email: "test@email.com",
     username: "test",
     discriminator: 1234,
     passwordHash,
   },
   {
-    id: "2",
     email: "cowbell@email.com",
     username: "cowbell",
     discriminator: 5678,
