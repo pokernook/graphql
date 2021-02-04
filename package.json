@@ -16,11 +16,10 @@
     "dev:typecheck": "tsc --noEmit --watch --preserveWatchOutput",
     "dev": "dotenv -- concurrently --kill-others npm:dev:*",
     "lint": "eslint . --ext .js,.ts",
-    "build": "ncc build src/index.ts --out dist"
+    "build": "npm run generate && tsc"
   },
   "dependencies": {
     "@prisma/client": "2.15.0",
-    "@vercel/ncc": "0.26.0",
     "argon2": "^0.27.0",
     "fastify": "^3.11.0",
     "fastify-cookie": "^5.1.0",

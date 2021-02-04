@@ -1,9 +1,5 @@
 # Build output
-/.build
 /dist
 
 # GraphQL SDL
 **/*.graphql
-
-# Database migrations
-prisma/migrations
