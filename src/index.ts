@@ -5,7 +5,7 @@ import redis from "fastify-redis";
 import session from "fastify-session";
 import mercurius from "mercurius";
 
-import { config } from "./config";
+import { config, isProduction } from "./config";
 import { buildContext } from "./context";
 import { schema } from "./schema";
 import { RedisStore } from "./session/redis-store";
@@ -16,13 +16,11 @@ declare module "fastify" {
   }
 }
 
-const isProduction = () => config.env === "production";
-
 const build = async () => {
   const app = Fastify();
 
   await app.register(helmet, {
-    contentSecurityPolicy: isProduction() ? undefined : false,
+    contentSecurityPolicy: isProduction ? undefined : false,
   });
   await app.register(cookie);
   await app.register(redis, { url: config.redisUrl });
@@ -31,7 +29,7 @@ const build = async () => {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1_000, // 30 days
       sameSite: true,
-      secure: isProduction(),
+      secure: isProduction,
     },
     cookieName: "user_session",
     saveUninitialized: false,
@@ -40,7 +38,7 @@ const build = async () => {
   });
   await app.register(mercurius, {
     context: buildContext,
-    graphiql: isProduction() ? false : "playground",
+    graphiql: isProduction ? false : "playground",
     path: "/",
     schema,
   });
