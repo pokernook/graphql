@@ -35,7 +35,7 @@ spec:
       - name: regcred
       initContainers:
       - name: graphql-init-migrate
-        image: ghcr.io/pokernook/graphql:0.0.3 # {"$imagepolicy": "flux-system:graphql"}
+        image: ghcr.io/pokernook/graphql:0.0.4 # {"$imagepolicy": "flux-system:graphql"}
         command:
         - npm
         - run
@@ -50,7 +50,7 @@ spec:
               key: postgres-url
       containers:
       - name: graphql
-        image: ghcr.io/pokernook/graphql:0.0.3 # {"$imagepolicy": "flux-system:graphql"}
+        image: ghcr.io/pokernook/graphql:0.0.4 # {"$imagepolicy": "flux-system:graphql"}
         env:
         - name: APP_SECRET
           valueFrom:
