@@ -190,5 +190,16 @@ export const Mutation = extendType({
         return { user: updatedUser };
       },
     });
+
+    t.field("userDeleteAccount", {
+      type: UserPayload,
+      shield: isAuthenticated(),
+      resolve: async (_root, _args, ctx) => {
+        const deletedUser = await ctx.prisma.user.delete({
+          where: { id: ctx.user?.id },
+        });
+        return { user: deletedUser };
+      },
+    });
   },
 });

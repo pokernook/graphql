@@ -5,6 +5,7 @@
 scalar DateTime
 
 type Mutation {
+  userDeleteAccount: UserPayload
   userLogIn(email: String!, password: String!): UserPayload
   userLogOut: UserLogOutPayload
   userSignUp(email: String!, password: String!, username: String!): UserPayload
