@@ -9,7 +9,7 @@ type Mutation {
   userLogIn(email: String!, password: String!): UserPayload
   userLogOut: UserLogOutPayload
   userSignUp(email: String!, password: String!, username: String!): UserPayload
-  userUpdatePassword(newPassword: String!, oldPassword: String!): UserPayload
+  userUpdatePassword(currentPassword: String!, newPassword: String!): UserPayload
   userUpdateUsername(newUsername: String!): UserPayload
 }
 
