@@ -8,7 +8,7 @@ type Mutation {
   userLogIn(email: String!, password: String!): UserPayload
   userLogOut: UserLogOutPayload
   userSignUp(email: String!, password: String!, username: String!): UserPayload
-  userUpdatePassword(newPassword: String!): UserPayload
+  userUpdatePassword(newPassword: String!, oldPassword: String!): UserPayload
   userUpdateUsername(newUsername: String!): UserPayload
 }
 

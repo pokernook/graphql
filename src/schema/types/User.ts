@@ -166,15 +166,26 @@ export const Mutation = extendType({
     t.field("userUpdatePassword", {
       type: UserPayload,
       shield: isAuthenticated(),
-      args: { newPassword: nonNull(stringArg()) },
+      args: {
+        newPassword: nonNull(stringArg()),
+        oldPassword: nonNull(stringArg()),
+      },
       argSchema: Joi.object({
         newPassword: Joi.string().min(8),
+        oldPassword: Joi.string(),
       }),
-      resolve: async (_root, { newPassword }, ctx) => {
+      resolve: async (_root, { newPassword, oldPassword }, ctx) => {
+        if (!ctx.user) {
+          return { user: null };
+        }
+        const validPassword = await verify(ctx.user.passwordHash, oldPassword);
+        if (!validPassword) {
+          throw new Error("Incorrect password");
+        }
         const newPasswordHash = await hash(newPassword, { type: argon2id });
         const updatedUser = await ctx.prisma.user.update({
           data: { passwordHash: newPasswordHash },
-          where: { id: ctx.user?.id },
+          where: { id: ctx.user.id },
         });
         return { user: updatedUser };
       },
