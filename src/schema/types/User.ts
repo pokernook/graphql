@@ -167,18 +167,21 @@ export const Mutation = extendType({
       type: UserPayload,
       shield: isAuthenticated(),
       args: {
+        currentPassword: nonNull(stringArg()),
         newPassword: nonNull(stringArg()),
-        oldPassword: nonNull(stringArg()),
       },
       argSchema: Joi.object({
+        currentPassword: Joi.string(),
         newPassword: Joi.string().min(8),
-        oldPassword: Joi.string(),
       }),
-      resolve: async (_root, { newPassword, oldPassword }, ctx) => {
+      resolve: async (_root, { currentPassword, newPassword }, ctx) => {
         if (!ctx.user) {
           return { user: null };
         }
-        const validPassword = await verify(ctx.user.passwordHash, oldPassword);
+        const validPassword = await verify(
+          ctx.user.passwordHash,
+          currentPassword
+        );
         if (!validPassword) {
           throw new Error("Incorrect password");
         }
