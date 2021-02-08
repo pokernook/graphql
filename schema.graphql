@@ -23,6 +23,7 @@ type User {
   createdAt: DateTime!
   discriminator: Int!
   email: String!
+  emailVerified: Boolean!
   id: String!
   username: String!
 }
