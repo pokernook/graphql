@@ -32,6 +32,7 @@ export const User = objectType({
     t.model.id();
     t.model.createdAt();
     t.model.email();
+    t.model.emailVerified();
     t.model.username();
     t.model.discriminator();
   },
