@@ -195,6 +195,30 @@ export const Mutation = extendType({
       },
     });
 
+    t.field("userUpdateEmail", {
+      type: UserPayload,
+      shield: isAuthenticated(),
+      args: {
+        newEmail: nonNull(stringArg()),
+      },
+      argSchema: Joi.object({
+        newEmail: Joi.string().email(),
+      }),
+      resolve: async (_root, { newEmail }, ctx) => {
+        if (!ctx.user) {
+          return { user: null };
+        }
+        if (ctx.user.email === newEmail) {
+          return { user: ctx.user };
+        }
+        const updatedUser = await ctx.prisma.user.update({
+          data: { email: newEmail, emailVerified: false },
+          where: { id: ctx.user.id },
+        });
+        return { user: updatedUser };
+      },
+    });
+
     t.field("userDeleteAccount", {
       type: UserPayload,
       shield: isAuthenticated(),
