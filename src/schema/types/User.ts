@@ -52,7 +52,7 @@ export const UserLogOutPayload = objectType({
   },
 });
 
-export const Query = extendType({
+export const UserQuery = extendType({
   type: "Query",
   definition(t) {
     t.crud.user();
@@ -61,7 +61,7 @@ export const Query = extendType({
   },
 });
 
-export const Mutation = extendType({
+export const UserMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.field("userSignUp", {
