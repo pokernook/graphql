@@ -26,6 +26,7 @@ type User {
   email: String!
   emailVerified: Boolean!
   id: String!
+  status: UserStatus
   username: String!
 }
 
@@ -35,6 +36,13 @@ type UserAuthPayload {
 
 type UserLogOutPayload {
   sessionId: String
+}
+
+type UserStatus {
+  createdAt: DateTime!
+  id: String!
+  message: String
+  user: User!
 }
 
 input UserTagCompoundUniqueInput {

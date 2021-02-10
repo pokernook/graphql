@@ -34,7 +34,18 @@ export const User = objectType({
     t.model.email();
     t.model.emailVerified();
     t.model.id();
+    t.model.status();
     t.model.username();
+  },
+});
+
+export const UserStatus = objectType({
+  name: "UserStatus",
+  definition(t) {
+    t.model.createdAt();
+    t.model.id();
+    t.model.message();
+    t.model.user();
   },
 });
 
