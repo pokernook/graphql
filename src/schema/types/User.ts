@@ -29,12 +29,12 @@ const uniqueDiscriminator = async (
 export const User = objectType({
   name: "User",
   definition(t) {
-    t.model.id();
     t.model.createdAt();
+    t.model.discriminator();
     t.model.email();
     t.model.emailVerified();
+    t.model.id();
     t.model.username();
-    t.model.discriminator();
   },
 });
 
