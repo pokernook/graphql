@@ -8,6 +8,7 @@ export const UserStatus = objectType({
     t.model.createdAt();
     t.model.id();
     t.model.message();
+    t.model.updatedAt();
     t.model.user();
   },
 });

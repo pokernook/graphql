@@ -43,6 +43,7 @@ type UserStatus {
   createdAt: DateTime!
   id: String!
   message: String
+  updatedAt: DateTime!
   user: User!
 }
 
