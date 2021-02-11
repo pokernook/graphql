@@ -1,3 +1,4 @@
+import Joi from "joi";
 import { extendType, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
@@ -24,6 +25,10 @@ export const UserStatusMutation = extendType({
         emoji: stringArg(),
         message: stringArg(),
       },
+      argSchema: Joi.object({
+        emoji: Joi.string().allow(""),
+        message: Joi.string().allow("").max(80).trim(),
+      }),
       resolve: async (_root, { emoji, message }, ctx) => {
         const { status } = await ctx.prisma.user.update({
           where: { id: ctx.user?.id },
