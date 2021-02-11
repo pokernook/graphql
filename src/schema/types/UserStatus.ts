@@ -1,4 +1,4 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { extendType, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
 
@@ -6,6 +6,7 @@ export const UserStatus = objectType({
   name: "UserStatus",
   definition(t) {
     t.model.createdAt();
+    t.model.emoji();
     t.model.id();
     t.model.message();
     t.model.updatedAt();
@@ -20,17 +21,18 @@ export const UserStatusMutation = extendType({
       type: UserStatus,
       shield: isAuthenticated(),
       args: {
-        message: nonNull(stringArg()),
+        emoji: stringArg(),
+        message: stringArg(),
       },
-      resolve: async (_root, { message }, ctx) => {
+      resolve: async (_root, { emoji, message }, ctx) => {
         const { status } = await ctx.prisma.user.update({
           where: { id: ctx.user?.id },
           select: { status: true },
           data: {
             status: {
               upsert: {
-                create: { message },
-                update: { message },
+                create: { emoji, message },
+                update: { emoji, message },
               },
             },
           },
