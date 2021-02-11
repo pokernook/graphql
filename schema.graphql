@@ -8,6 +8,7 @@ type Mutation {
   userDeleteAccount: User
   userLogIn(email: String!, password: String!): UserAuthPayload
   userLogOut: UserLogOutPayload
+  userSetStatus(message: String!): UserStatus
   userSignUp(email: String!, password: String!, username: String!): UserAuthPayload
   userUpdateEmail(newEmail: String!): User
   userUpdatePassword(currentPassword: String!, newPassword: String!): User

@@ -39,16 +39,6 @@ export const User = objectType({
   },
 });
 
-export const UserStatus = objectType({
-  name: "UserStatus",
-  definition(t) {
-    t.model.createdAt();
-    t.model.id();
-    t.model.message();
-    t.model.user();
-  },
-});
-
 export const UserAuthPayload = objectType({
   name: "UserAuthPayload",
   definition(t) {
