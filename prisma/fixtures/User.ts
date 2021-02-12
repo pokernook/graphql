@@ -9,6 +9,12 @@ const users: Prisma.UserCreateInput[] = [
     username: "test",
     discriminator: 1234,
     passwordHash,
+    status: {
+      create: {
+        emoji: "🐶",
+        message: "Big Dog Run energy",
+      },
+    },
   },
   {
     email: "cowbell@email.com",
@@ -24,7 +30,7 @@ export const seedUser = async (prisma: PrismaClient): Promise<void> => {
       users.map((user) =>
         prisma.user.upsert({
           create: user,
-          update: user,
+          update: {},
           where: { email: user.email },
         })
       )
