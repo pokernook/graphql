@@ -6,25 +6,6 @@ import { promisify } from "util";
 
 import { isAuthenticated } from "../rules";
 
-const uniqueDiscriminator = async (
-  prisma: PrismaClient,
-  username: string,
-  uniquenessChecks = 5,
-  discriminatorMax = 10_000
-): Promise<number | undefined> => {
-  const possibleDiscriminators = Array.from({ length: uniquenessChecks }, () =>
-    randomInt(discriminatorMax)
-  );
-  for (const discriminator of possibleDiscriminators) {
-    const existingUser = await prisma.user.findUnique({
-      where: { Tag: { username, discriminator } },
-    });
-    if (!existingUser) {
-      return discriminator;
-    }
-  }
-};
-
 export const User = objectType({
   name: "User",
   definition(t) {
@@ -38,25 +19,9 @@ export const User = objectType({
   },
 });
 
-export const UserAuthPayload = objectType({
-  name: "UserAuthPayload",
-  definition(t) {
-    t.field("user", { type: User });
-  },
-});
-
-export const UserLogOutPayload = objectType({
-  name: "UserLogOutPayload",
-  definition(t) {
-    t.string("sessionId");
-  },
-});
-
 export const UserQuery = extendType({
   type: "Query",
   definition(t) {
-    t.crud.user();
-    t.crud.users();
     t.field("me", { type: User, resolve: (_root, _args, ctx) => ctx.user });
   },
 });
@@ -97,14 +62,14 @@ export const UserMutation = extendType({
         password: nonNull(stringArg()),
       },
       resolve: async (_root, { email, password }, ctx) => {
-        const errMsg = "Incorrect email or password";
+        const e = "Incorrect email or password";
         const user = await ctx.prisma.user.findUnique({ where: { email } });
         if (!user) {
-          throw new Error(errMsg);
+          throw new Error(e);
         }
         const validPassword = await verify(user.passwordHash, password);
         if (!validPassword) {
-          throw new Error(errMsg);
+          throw new Error(e);
         }
         ctx.req.session.userId = user.id;
         return { user };
@@ -119,7 +84,6 @@ export const UserMutation = extendType({
           session: { sessionId },
         } = req;
         const destroySession = promisify(req.destroySession.bind(req));
-
         try {
           await destroySession();
         } catch (err) {
@@ -137,29 +101,25 @@ export const UserMutation = extendType({
         newUsername: string().min(3).max(20).trim(),
       }),
       resolve: async (_root, { newUsername }, ctx) => {
-        if (newUsername === ctx.user?.username) {
+        if (!ctx.user || newUsername === ctx.user?.username) {
           return ctx.user;
         }
-
-        let discriminator = ctx.user?.discriminator;
+        let discriminator: number | undefined = ctx.user.discriminator;
         const discriminatorTaken = !!(await ctx.prisma.user.findUnique({
           where: {
-            Tag: { username: newUsername, discriminator: discriminator || 0 },
+            Tag: { username: newUsername, discriminator },
           },
         }));
-
         if (discriminatorTaken) {
           discriminator = await uniqueDiscriminator(ctx.prisma, newUsername);
           if (discriminator === undefined) {
             throw new Error("Too many users have this username");
           }
         }
-
         const updatedUser = await ctx.prisma.user.update({
-          data: { username: newUsername, discriminator },
           where: { id: ctx.user?.id },
+          data: { username: newUsername, discriminator },
         });
-
         return updatedUser;
       },
     });
@@ -188,8 +148,8 @@ export const UserMutation = extendType({
         }
         const newPasswordHash = await hash(newPassword, { type: argon2id });
         const updatedUser = await ctx.prisma.user.update({
-          data: { passwordHash: newPasswordHash },
           where: { id: ctx.user.id },
+          data: { passwordHash: newPasswordHash },
         });
         return updatedUser;
       },
@@ -212,8 +172,8 @@ export const UserMutation = extendType({
           return ctx.user;
         }
         const updatedUser = await ctx.prisma.user.update({
-          data: { email: newEmail, emailVerified: false },
           where: { id: ctx.user.id },
+          data: { email: newEmail, emailVerified: false },
         });
         return updatedUser;
       },
@@ -231,3 +191,36 @@ export const UserMutation = extendType({
     });
   },
 });
+
+export const UserAuthPayload = objectType({
+  name: "UserAuthPayload",
+  definition(t) {
+    t.field("user", { type: User });
+  },
+});
+
+export const UserLogOutPayload = objectType({
+  name: "UserLogOutPayload",
+  definition(t) {
+    t.string("sessionId");
+  },
+});
+
+const uniqueDiscriminator = async (
+  prisma: PrismaClient,
+  username: string,
+  uniquenessChecks = 5,
+  discriminatorMax = 10_000
+): Promise<number | undefined> => {
+  const possibleDiscriminators = Array.from({ length: uniquenessChecks }, () =>
+    randomInt(discriminatorMax)
+  );
+  for (const discriminator of possibleDiscriminators) {
+    const existingUser = await prisma.user.findUnique({
+      where: { Tag: { username, discriminator } },
+    });
+    if (!existingUser) {
+      return discriminator;
+    }
+  }
+};

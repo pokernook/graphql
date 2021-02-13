@@ -53,11 +53,12 @@ export const UserStatusMutation = extendType({
           where: { id: ctx.user?.id },
           include: { status: true },
         });
-        const status = userWithStatus?.status;
-        if (!status) {
+        if (!userWithStatus?.status) {
           return null;
         }
-        return await ctx.prisma.userStatus.delete({ where: { id: status.id } });
+        return await ctx.prisma.userStatus.delete({
+          where: { id: userWithStatus.status.id },
+        });
       },
     });
   },

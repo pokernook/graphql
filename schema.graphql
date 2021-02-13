@@ -18,8 +18,6 @@ type Mutation {
 
 type Query {
   me: User
-  user(where: UserWhereUniqueInput!): User
-  users(cursor: UserWhereUniqueInput, skip: Int, take: Int): [User!]!
 }
 
 type User {
@@ -47,15 +45,4 @@ type UserStatus {
   message: String
   updatedAt: DateTime!
   user: User!
-}
-
-input UserTagCompoundUniqueInput {
-  discriminator: Int!
-  username: String!
-}
-
-input UserWhereUniqueInput {
-  Tag: UserTagCompoundUniqueInput
-  email: String
-  id: String
 }
