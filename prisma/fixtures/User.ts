@@ -3,12 +3,18 @@ import { Prisma, PrismaClient } from "@prisma/client";
 const passwordHash = // Translates to 'password'
   "$argon2id$v=19$m=4096,t=3,p=1$awIn+BOIcEF8KhDWVuUBPQ$f6VLaW4X0AmAnBMvdsnFssUjERdPAbpUC4UmrU2AoSk";
 
-export const users: Prisma.UserCreateInput[] = [
+const users: Prisma.UserCreateInput[] = [
   {
     email: "test@email.com",
     username: "test",
     discriminator: 1234,
     passwordHash,
+    status: {
+      create: {
+        emoji: "🐶",
+        message: "Big Dog Run energy",
+      },
+    },
   },
   {
     email: "cowbell@email.com",
@@ -24,7 +30,7 @@ export const seedUser = async (prisma: PrismaClient): Promise<void> => {
       users.map((user) =>
         prisma.user.upsert({
           create: user,
-          update: user,
+          update: {},
           where: { email: user.email },
         })
       )

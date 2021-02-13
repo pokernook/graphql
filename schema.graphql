@@ -5,13 +5,15 @@
 scalar DateTime
 
 type Mutation {
-  userDeleteAccount: UserPayload
-  userLogIn(email: String!, password: String!): UserPayload
+  userClearStatus: UserStatus
+  userDeleteAccount: User
+  userLogIn(email: String!, password: String!): UserAuthPayload
   userLogOut: UserLogOutPayload
-  userSignUp(email: String!, password: String!, username: String!): UserPayload
-  userUpdateEmail(newEmail: String!): UserPayload
-  userUpdatePassword(currentPassword: String!, newPassword: String!): UserPayload
-  userUpdateUsername(newUsername: String!): UserPayload
+  userSetStatus(emoji: String, message: String): UserStatus
+  userSignUp(email: String!, password: String!, username: String!): UserAuthPayload
+  userUpdateEmail(newEmail: String!): User
+  userUpdatePassword(currentPassword: String!, newPassword: String!): User
+  userUpdateUsername(newUsername: String!): User
 }
 
 type Query {
@@ -26,15 +28,25 @@ type User {
   email: String!
   emailVerified: Boolean!
   id: String!
+  status: UserStatus
   username: String!
+}
+
+type UserAuthPayload {
+  user: User
 }
 
 type UserLogOutPayload {
   sessionId: String
 }
 
-type UserPayload {
-  user: User
+type UserStatus {
+  createdAt: DateTime!
+  emoji: String
+  id: String!
+  message: String
+  updatedAt: DateTime!
+  user: User!
 }
 
 input UserTagCompoundUniqueInput {

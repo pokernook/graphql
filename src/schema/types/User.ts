@@ -29,17 +29,18 @@ const uniqueDiscriminator = async (
 export const User = objectType({
   name: "User",
   definition(t) {
-    t.model.id();
     t.model.createdAt();
+    t.model.discriminator();
     t.model.email();
     t.model.emailVerified();
+    t.model.id();
+    t.model.status();
     t.model.username();
-    t.model.discriminator();
   },
 });
 
-export const UserPayload = objectType({
-  name: "UserPayload",
+export const UserAuthPayload = objectType({
+  name: "UserAuthPayload",
   definition(t) {
     t.field("user", { type: User });
   },
@@ -52,7 +53,7 @@ export const UserLogOutPayload = objectType({
   },
 });
 
-export const Query = extendType({
+export const UserQuery = extendType({
   type: "Query",
   definition(t) {
     t.crud.user();
@@ -61,11 +62,11 @@ export const Query = extendType({
   },
 });
 
-export const Mutation = extendType({
+export const UserMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.field("userSignUp", {
-      type: UserPayload,
+      type: UserAuthPayload,
       args: {
         email: nonNull(stringArg()),
         username: nonNull(stringArg()),
@@ -91,7 +92,7 @@ export const Mutation = extendType({
     });
 
     t.field("userLogIn", {
-      type: UserPayload,
+      type: UserAuthPayload,
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
@@ -130,7 +131,7 @@ export const Mutation = extendType({
     });
 
     t.field("userUpdateUsername", {
-      type: UserPayload,
+      type: User,
       shield: isAuthenticated(),
       args: { newUsername: nonNull(stringArg()) },
       argSchema: Joi.object({
@@ -138,7 +139,7 @@ export const Mutation = extendType({
       }),
       resolve: async (_root, { newUsername }, ctx) => {
         if (newUsername === ctx.user?.username) {
-          return { user: ctx.user };
+          return ctx.user;
         }
 
         let discriminator = ctx.user?.discriminator;
@@ -160,12 +161,12 @@ export const Mutation = extendType({
           where: { id: ctx.user?.id },
         });
 
-        return { user: updatedUser };
+        return updatedUser;
       },
     });
 
     t.field("userUpdatePassword", {
-      type: UserPayload,
+      type: User,
       shield: isAuthenticated(),
       args: {
         currentPassword: nonNull(stringArg()),
@@ -177,7 +178,7 @@ export const Mutation = extendType({
       }),
       resolve: async (_root, { currentPassword, newPassword }, ctx) => {
         if (!ctx.user) {
-          return { user: null };
+          return null;
         }
         const validPassword = await verify(
           ctx.user.passwordHash,
@@ -191,12 +192,12 @@ export const Mutation = extendType({
           data: { passwordHash: newPasswordHash },
           where: { id: ctx.user.id },
         });
-        return { user: updatedUser };
+        return updatedUser;
       },
     });
 
     t.field("userUpdateEmail", {
-      type: UserPayload,
+      type: User,
       shield: isAuthenticated(),
       args: {
         newEmail: nonNull(stringArg()),
@@ -206,27 +207,27 @@ export const Mutation = extendType({
       }),
       resolve: async (_root, { newEmail }, ctx) => {
         if (!ctx.user) {
-          return { user: null };
+          return null;
         }
         if (ctx.user.email === newEmail) {
-          return { user: ctx.user };
+          return ctx.user;
         }
         const updatedUser = await ctx.prisma.user.update({
           data: { email: newEmail, emailVerified: false },
           where: { id: ctx.user.id },
         });
-        return { user: updatedUser };
+        return updatedUser;
       },
     });
 
     t.field("userDeleteAccount", {
-      type: UserPayload,
+      type: User,
       shield: isAuthenticated(),
       resolve: async (_root, _args, ctx) => {
         const deletedUser = await ctx.prisma.user.delete({
           where: { id: ctx.user?.id },
         });
-        return { user: deletedUser };
+        return deletedUser;
       },
     });
   },
