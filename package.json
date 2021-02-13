@@ -27,7 +27,6 @@
     "fastify-redis": "^4.1.0",
     "fastify-session": "^5.2.1",
     "graphql": "^15.4.0",
-    "joi": "^17.3.0",
     "mercurius": "^7.0.0",
     "nexus": "^1.0.0",
     "nexus-plugin-prisma": "^0.30.0",
