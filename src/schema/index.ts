@@ -1,6 +1,7 @@
 import { makeSchema } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import { allow, nexusShield } from "nexus-shield";
+import { validatePlugin } from "nexus-validate";
 import { join } from "path";
 
 import { argValidation } from "./plugins";
@@ -28,6 +29,7 @@ export const schema = makeSchema({
       defaultError: new Error("Not authorized"),
       defaultRule: allow,
     }),
+    validatePlugin(),
   ],
   sourceTypes: {
     modules: [
