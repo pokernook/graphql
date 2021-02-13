@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { argon2id, hash, verify } from "argon2";
 import { randomInt } from "crypto";
-import Joi from "joi";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { promisify } from "util";
 
@@ -72,10 +71,10 @@ export const UserMutation = extendType({
         username: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
-      argSchema: Joi.object({
-        email: Joi.string().email(),
-        username: Joi.string().min(3).max(20).trim(),
-        password: Joi.string().min(8),
+      validate: ({ string }) => ({
+        email: string().email(),
+        username: string().min(3).max(20).trim(),
+        password: string().min(8),
       }),
       resolve: async (_root, { email, username, password }, ctx) => {
         const discriminator = await uniqueDiscriminator(ctx.prisma, username);
@@ -134,8 +133,8 @@ export const UserMutation = extendType({
       type: User,
       shield: isAuthenticated(),
       args: { newUsername: nonNull(stringArg()) },
-      argSchema: Joi.object({
-        newUsername: Joi.string().min(3).max(20).trim(),
+      validate: ({ string }) => ({
+        newUsername: string().min(3).max(20).trim(),
       }),
       resolve: async (_root, { newUsername }, ctx) => {
         if (newUsername === ctx.user?.username) {
@@ -172,9 +171,9 @@ export const UserMutation = extendType({
         currentPassword: nonNull(stringArg()),
         newPassword: nonNull(stringArg()),
       },
-      argSchema: Joi.object({
-        currentPassword: Joi.string(),
-        newPassword: Joi.string().min(8),
+      validate: ({ string }) => ({
+        currentPassword: string(),
+        newPassword: string().min(8),
       }),
       resolve: async (_root, { currentPassword, newPassword }, ctx) => {
         if (!ctx.user) {
@@ -202,8 +201,8 @@ export const UserMutation = extendType({
       args: {
         newEmail: nonNull(stringArg()),
       },
-      argSchema: Joi.object({
-        newEmail: Joi.string().email(),
+      validate: ({ string }) => ({
+        newEmail: string().email(),
       }),
       resolve: async (_root, { newEmail }, ctx) => {
         if (!ctx.user) {
