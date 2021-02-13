@@ -45,5 +45,21 @@ export const UserStatusMutation = extendType({
         return status;
       },
     });
+
+    t.field("userClearStatus", {
+      type: UserStatus,
+      shield: isAuthenticated(),
+      resolve: async (_root, _args, ctx) => {
+        const userWithStatus = await ctx.prisma.user.findUnique({
+          where: { id: ctx.user?.id },
+          include: { status: true },
+        });
+        const status = userWithStatus?.status;
+        if (!status) {
+          return null;
+        }
+        return await ctx.prisma.userStatus.delete({ where: { id: status.id } });
+      },
+    });
   },
 });
