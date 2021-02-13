@@ -4,7 +4,6 @@ import { allow, nexusShield } from "nexus-shield";
 import { validatePlugin } from "nexus-validate";
 import { join } from "path";
 
-import { argValidation } from "./plugins";
 import * as types from "./types";
 
 export const schema = makeSchema({
@@ -20,7 +19,6 @@ export const schema = makeSchema({
     ),
   },
   plugins: [
-    argValidation(),
     nexusPrisma({
       experimentalCRUD: true,
       paginationStrategy: "prisma",
