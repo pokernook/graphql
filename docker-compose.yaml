@@ -18,7 +18,9 @@ services:
       dockerfile: Dockerfile
       target: develop
     command: npm run dev
-    depends_on: [postgres, redis]
+    depends_on:
+      - postgres
+      - redis
     environment:
       APP_SECRET: oo6iP6dQRC/qm2WlUn3Tej+LocObV801
       DATABASE_URL: postgresql://postgres:password@postgres:5432
