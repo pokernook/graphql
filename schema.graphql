@@ -36,6 +36,7 @@ type UserAuthPayload {
 
 type UserLogOutPayload {
   sessionId: String
+  user: User
 }
 
 type UserStatus {

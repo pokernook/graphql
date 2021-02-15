@@ -79,7 +79,7 @@ export const UserMutation = extendType({
     t.field("userLogOut", {
       type: UserLogOutPayload,
       resolve: async (_root, _args, ctx) => {
-        const { req } = ctx;
+        const { req, user } = ctx;
         const {
           session: { sessionId },
         } = req;
@@ -89,7 +89,7 @@ export const UserMutation = extendType({
         } catch (err) {
           throw new Error(err);
         }
-        return { sessionId };
+        return { sessionId, user };
       },
     });
 
@@ -203,6 +203,7 @@ export const UserLogOutPayload = objectType({
   name: "UserLogOutPayload",
   definition(t) {
     t.string("sessionId");
+    t.field("user", { type: User });
   },
 });
 
