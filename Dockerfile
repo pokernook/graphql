@@ -1,4 +1,4 @@
-FROM node:15.9.0-alpine AS node
+FROM node:15.10.0-alpine AS node
 
 FROM node AS develop
 WORKDIR /develop
