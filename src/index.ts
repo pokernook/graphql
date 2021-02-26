@@ -4,6 +4,7 @@ import helmet from "fastify-helmet";
 import redis from "fastify-redis";
 import session from "fastify-session";
 import mercurius from "mercurius";
+import mqemitterRedis from "mqemitter-redis";
 
 import { config, isProduction } from "./config";
 import { buildContext } from "./context";
@@ -41,6 +42,7 @@ const build = async () => {
     graphiql: isProduction ? false : "playground",
     path: "/",
     schema,
+    subscription: { emitter: mqemitterRedis(app.redis.options) },
   });
 
   return app;
