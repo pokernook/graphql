@@ -41,6 +41,7 @@ const build = async () => {
     graphiql: isProduction ? false : "playground",
     path: "/",
     schema,
+    subscription: true,
   });
 
   return app;
