@@ -6,6 +6,7 @@ export const UserStatusEmoji = scalarType({
   name: "UserStatusEmoji",
   asNexusMethod: "userStatusEmoji",
   description: "An emoji summarizing the user's status",
+  sourceType: "string",
   parseValue: (value: string) => value,
   serialize: (value: string) => value,
   parseLiteral: (ast) => {
