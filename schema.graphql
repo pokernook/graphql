@@ -47,3 +47,6 @@ type UserStatus {
   updatedAt: DateTime!
   user: User
 }
+
+"""An emoji summarizing the user's status"""
+scalar UserStatusEmoji
