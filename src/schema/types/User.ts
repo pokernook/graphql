@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { argon2id, hash, verify } from "argon2";
 import { randomInt } from "crypto";
-import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { arg, extendType, nonNull, objectType, stringArg } from "nexus";
 import { promisify } from "util";
 
 import { isAuthenticated } from "../rules";
+import { EmailAddress } from "./Scalars";
 
 export const User = objectType({
   name: "User",
@@ -32,12 +33,11 @@ export const UserMutation = extendType({
     t.field("userSignUp", {
       type: UserAuthPayload,
       args: {
-        email: nonNull(stringArg()),
+        email: nonNull(arg({ type: EmailAddress })),
         username: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
       validate: ({ string }) => ({
-        email: string().email(),
         username: string().min(3).max(20).trim(),
         password: string().min(8),
       }),
@@ -58,7 +58,7 @@ export const UserMutation = extendType({
     t.field("userLogIn", {
       type: UserAuthPayload,
       args: {
-        email: nonNull(stringArg()),
+        email: nonNull(arg({ type: EmailAddress })),
         password: nonNull(stringArg()),
       },
       resolve: async (_root, { email, password }, ctx) => {
@@ -159,11 +159,8 @@ export const UserMutation = extendType({
       type: User,
       shield: isAuthenticated(),
       args: {
-        newEmail: nonNull(stringArg()),
+        newEmail: nonNull(arg({ type: EmailAddress })),
       },
-      validate: ({ string }) => ({
-        newEmail: string().email(),
-      }),
       resolve: async (_root, { newEmail }, ctx) => {
         if (!ctx.user) {
           return null;

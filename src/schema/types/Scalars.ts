@@ -1,6 +1,13 @@
 import emojiRegexRGI from "emoji-regex/RGI_Emoji";
 import { Kind } from "graphql";
-import { scalarType } from "nexus";
+import { EmailAddressResolver } from "graphql-scalars";
+import { asNexusMethod, scalarType } from "nexus";
+
+export const EmailAddress = asNexusMethod(
+  EmailAddressResolver,
+  "emailAddress",
+  "string"
+);
 
 export const UserStatusEmoji = scalarType({
   name: "UserStatusEmoji",
