@@ -1,6 +1,7 @@
-import { extendType, objectType, stringArg } from "nexus";
+import { arg, extendType, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
+import { UserStatusEmoji } from "./Scalars";
 
 export const UserStatus = objectType({
   name: "UserStatus",
@@ -21,11 +22,10 @@ export const UserStatusMutation = extendType({
       type: UserStatus,
       shield: isAuthenticated(),
       args: {
-        emoji: stringArg(),
+        emoji: arg({ type: UserStatusEmoji }),
         message: stringArg(),
       },
       validate: ({ string }) => ({
-        emoji: string(),
         message: string().max(80),
       }),
       resolve: async (_root, { emoji, message }, ctx) => {

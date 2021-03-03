@@ -9,7 +9,7 @@ type Mutation {
   userDeleteAccount: User
   userLogIn(email: String!, password: String!): UserAuthPayload
   userLogOut: UserLogOutPayload
-  userSetStatus(emoji: String, message: String): UserStatus
+  userSetStatus(emoji: UserStatusEmoji, message: String): UserStatus
   userSignUp(email: String!, password: String!, username: String!): UserAuthPayload
   userUpdateEmail(newEmail: String!): User
   userUpdatePassword(currentPassword: String!, newPassword: String!): User
