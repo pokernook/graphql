@@ -9,10 +9,10 @@ export const EmailAddress = asNexusMethod(
   "string"
 );
 
-export const UserStatusEmoji = scalarType({
-  name: "UserStatusEmoji",
-  asNexusMethod: "userStatusEmoji",
-  description: "An emoji summarizing the user's status",
+export const EmojiSingular = scalarType({
+  name: "EmojiSingular",
+  asNexusMethod: "emojiSingular",
+  description: "One emoji character",
   sourceType: "string",
   parseValue: (value: string) => value,
   serialize: (value: string) => value,
@@ -23,7 +23,7 @@ export const UserStatusEmoji = scalarType({
     const emojiRegex = emojiRegexRGI();
     const firstMatch = emojiRegex.exec(ast.value)?.[0];
     if (firstMatch !== ast.value) {
-      throw new Error("Invalid status emoji");
+      throw new Error("Invalid emoji");
     }
     return ast.value;
   },

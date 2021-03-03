@@ -1,7 +1,7 @@
 import { arg, extendType, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
-import { UserStatusEmoji } from "./Scalars";
+import { EmojiSingular } from "./Scalars";
 
 export const UserStatus = objectType({
   name: "UserStatus",
@@ -22,7 +22,7 @@ export const UserStatusMutation = extendType({
       type: UserStatus,
       shield: isAuthenticated(),
       args: {
-        emoji: arg({ type: UserStatusEmoji }),
+        emoji: arg({ type: EmojiSingular }),
         message: stringArg(),
       },
       validate: ({ string }) => ({

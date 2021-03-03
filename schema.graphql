@@ -9,12 +9,15 @@ A field whose value conforms to the standard internet email address format as sp
 """
 scalar EmailAddress
 
+"""One emoji character"""
+scalar EmojiSingular
+
 type Mutation {
   userClearStatus: UserStatus
   userDeleteAccount: User
   userLogIn(email: EmailAddress!, password: String!): UserAuthPayload
   userLogOut: UserLogOutPayload
-  userSetStatus(emoji: UserStatusEmoji, message: String): UserStatus
+  userSetStatus(emoji: EmojiSingular, message: String): UserStatus
   userSignUp(email: EmailAddress!, password: String!, username: String!): UserAuthPayload
   userUpdateEmail(newEmail: EmailAddress!): User
   userUpdatePassword(currentPassword: String!, newPassword: String!): User
@@ -52,6 +55,3 @@ type UserStatus {
   updatedAt: DateTime!
   user: User
 }
-
-"""An emoji summarizing the user's status"""
-scalar UserStatusEmoji
