@@ -159,11 +159,16 @@ export const UserMutation = extendType({
       type: User,
       shield: isAuthenticated(),
       args: {
+        password: nonNull(stringArg()),
         newEmail: nonNull(arg({ type: EmailAddress })),
       },
-      resolve: async (_root, { newEmail }, ctx) => {
+      resolve: async (_root, { password, newEmail }, ctx) => {
         if (!ctx.user) {
           return null;
+        }
+        const validPassword = await verify(ctx.user.passwordHash, password);
+        if (!validPassword) {
+          throw new Error("Incorrect password");
         }
         if (ctx.user.email === newEmail) {
           return ctx.user;

@@ -19,7 +19,7 @@ type Mutation {
   userLogOut: UserLogOutPayload
   userSetStatus(emoji: EmojiSingular, message: String): UserStatus
   userSignUp(email: EmailAddress!, password: String!, username: String!): UserAuthPayload
-  userUpdateEmail(newEmail: EmailAddress!): User
+  userUpdateEmail(newEmail: EmailAddress!, password: String!): User
   userUpdatePassword(currentPassword: String!, newPassword: String!): User
   userUpdateUsername(newUsername: String!): User
 }
