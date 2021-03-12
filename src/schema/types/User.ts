@@ -14,6 +14,8 @@ export const User = objectType({
     t.model.discriminator();
     t.model.email();
     t.model.emailVerified();
+    t.model.friendRequestsReceived();
+    t.model.friendRequestsSent();
     t.model.id();
     t.model.status();
     t.model.username();
