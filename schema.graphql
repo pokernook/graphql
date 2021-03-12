@@ -33,6 +33,8 @@ type User {
   discriminator: Int!
   email: String!
   emailVerified: Boolean!
+  friendRequestsReceived(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
+  friendRequestsSent(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
   id: String!
   status: UserStatus
   username: String!
