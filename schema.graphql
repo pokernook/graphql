@@ -37,6 +37,8 @@ input FriendRequestWhereUniqueInput {
 }
 
 type Mutation {
+  friendRequestAccept(friendRequestId: String!): FriendRequest
+  friendRequestReject(friendRequestId: String!): FriendRequest
   friendRequestSend(discriminator: Int!, username: String!): FriendRequest
   userDeleteAccount: User
   userLogIn(email: EmailAddress!, password: String!): UserAuthPayload

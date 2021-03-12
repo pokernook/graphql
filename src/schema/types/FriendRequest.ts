@@ -29,10 +29,9 @@ export const FriendRequestMutation = extendType({
         }
         const to = await ctx.prisma.user.findUnique({
           where: { Tag: { username, discriminator } },
+          rejectOnNotFound: true,
         });
-        if (!to) {
-          throw new Error("User not found");
-        } else if (ctx.user.id === to.id) {
+        if (ctx.user.id === to.id) {
           throw new Error("You can't friend yourself");
         }
         const friendRequest = await ctx.prisma.friendRequest.create({
@@ -46,6 +45,52 @@ export const FriendRequestMutation = extendType({
           },
         });
         return friendRequest;
+      },
+    });
+
+    t.field("friendRequestAccept", {
+      type: FriendRequest,
+      shield: isAuthenticated(),
+      args: { friendRequestId: nonNull(stringArg()) },
+      resolve: async (_root, { friendRequestId }, ctx) => {
+        if (!ctx.user) {
+          return null;
+        }
+        const friendRequest = await ctx.prisma.friendRequest.findUnique({
+          where: { id: friendRequestId },
+          rejectOnNotFound: true,
+        });
+        if (friendRequest.toId !== ctx.user.id) {
+          throw new Error("Could not accept friend request");
+        }
+        const acceptedFriendRequest = ctx.prisma.friendRequest.update({
+          where: { id: friendRequestId },
+          data: { status: "ACCEPTED" },
+        });
+        return acceptedFriendRequest;
+      },
+    });
+
+    t.field("friendRequestReject", {
+      type: FriendRequest,
+      shield: isAuthenticated(),
+      args: { friendRequestId: nonNull(stringArg()) },
+      resolve: async (_root, { friendRequestId }, ctx) => {
+        if (!ctx.user) {
+          return null;
+        }
+        const friendRequest = await ctx.prisma.friendRequest.findUnique({
+          where: { id: friendRequestId },
+          rejectOnNotFound: true,
+        });
+        if (friendRequest.toId !== ctx.user.id) {
+          throw new Error("Could not reject friend request");
+        }
+        const rejectedFriendRequest = ctx.prisma.friendRequest.update({
+          where: { id: friendRequestId },
+          data: { status: "REJECTED" },
+        });
+        return rejectedFriendRequest;
       },
     });
   },
