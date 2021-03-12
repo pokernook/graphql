@@ -12,7 +12,19 @@ scalar EmailAddress
 """One emoji character"""
 scalar EmojiSingular
 
+type FriendRequest {
+  createdAt: DateTime!
+  from: User!
+  id: String!
+  to: User!
+}
+
+input FriendRequestWhereUniqueInput {
+  id: String
+}
+
 type Mutation {
+  friendSendRequest(discriminator: Int!, username: String!): FriendRequest
   userClearStatus: UserStatus
   userDeleteAccount: User
   userLogIn(email: EmailAddress!, password: String!): UserAuthPayload
