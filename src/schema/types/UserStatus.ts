@@ -18,7 +18,7 @@ export const UserStatus = objectType({
 export const UserStatusMutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("userSetStatus", {
+    t.field("userStatusSet", {
       type: UserStatus,
       shield: isAuthenticated(),
       args: {
@@ -45,7 +45,7 @@ export const UserStatusMutation = extendType({
       },
     });
 
-    t.field("userClearStatus", {
+    t.field("userStatusClear", {
       type: UserStatus,
       shield: isAuthenticated(),
       resolve: async (_root, _args, ctx) => {

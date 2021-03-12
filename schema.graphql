@@ -24,13 +24,13 @@ input FriendRequestWhereUniqueInput {
 }
 
 type Mutation {
-  friendSendRequest(discriminator: Int!, username: String!): FriendRequest
-  userClearStatus: UserStatus
+  friendRequestSend(discriminator: Int!, username: String!): FriendRequest
   userDeleteAccount: User
   userLogIn(email: EmailAddress!, password: String!): UserAuthPayload
   userLogOut: UserLogOutPayload
-  userSetStatus(emoji: EmojiSingular, message: String): UserStatus
   userSignUp(email: EmailAddress!, password: String!, username: String!): UserAuthPayload
+  userStatusClear: UserStatus
+  userStatusSet(emoji: EmojiSingular, message: String): UserStatus
   userUpdateEmail(newEmail: EmailAddress!, password: String!): User
   userUpdatePassword(currentPassword: String!, newPassword: String!): User
   userUpdateUsername(newUsername: String!): User

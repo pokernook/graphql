@@ -15,7 +15,7 @@ export const FriendRequest = objectType({
 export const FriendMutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("friendSendRequest", {
+    t.field("friendRequestSend", {
       type: FriendRequest,
       shield: isAuthenticated(),
       args: {
