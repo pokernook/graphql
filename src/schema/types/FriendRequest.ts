@@ -12,7 +12,7 @@ export const FriendRequest = objectType({
   },
 });
 
-export const FriendMutation = extendType({
+export const FriendRequestMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.field("friendRequestSend", {
