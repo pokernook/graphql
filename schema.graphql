@@ -16,10 +16,23 @@ type FriendRequest {
   createdAt: DateTime!
   from: User!
   id: String!
+  status: FriendRequestStatus!
   to: User!
 }
 
+input FriendRequestFromIdToIdCompoundUniqueInput {
+  fromId: String!
+  toId: String!
+}
+
+enum FriendRequestStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
+}
+
 input FriendRequestWhereUniqueInput {
+  fromId_toId: FriendRequestFromIdToIdCompoundUniqueInput
   id: String
 }
 

@@ -8,6 +8,7 @@ export const FriendRequest = objectType({
     t.model.createdAt();
     t.model.from();
     t.model.id();
+    t.model.status();
     t.model.to();
   },
 });
