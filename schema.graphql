@@ -18,6 +18,7 @@ type FriendRequest {
   id: String!
   status: FriendRequestStatus!
   to: User!
+  updatedAt: DateTime!
 }
 
 input FriendRequestFromIdToIdCompoundUniqueInput {

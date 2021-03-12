@@ -40,6 +40,7 @@ model FriendRequest {
   status    FriendRequestStatus @default(PENDING)
   to        User                @relation("to", fields: [toId], references: [id])
   toId      String
+  updatedAt DateTime            @updatedAt
 
   @@unique([fromId, toId])
 }

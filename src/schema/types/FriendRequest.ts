@@ -10,6 +10,7 @@ export const FriendRequest = objectType({
     t.model.id();
     t.model.status();
     t.model.to();
+    t.model.updatedAt();
   },
 });
 

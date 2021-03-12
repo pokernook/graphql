@@ -8,6 +8,7 @@ CREATE TABLE "FriendRequest" (
     "id" TEXT NOT NULL,
     "status" "FriendRequestStatus" NOT NULL DEFAULT E'PENDING',
     "toId" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     PRIMARY KEY ("id")
 );
