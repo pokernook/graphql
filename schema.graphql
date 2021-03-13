@@ -37,6 +37,16 @@ input FriendRequestWhereUniqueInput {
   id: String
 }
 
+type Friendship {
+  createdAt: DateTime!
+  id: String!
+  users(cursor: UserWhereUniqueInput, skip: Int, take: Int): [User!]!
+}
+
+input FriendshipWhereUniqueInput {
+  id: String
+}
+
 type Mutation {
   friendRequestAccept(friendRequestId: String!): FriendRequest
   friendRequestReject(friendRequestId: String!): FriendRequest
@@ -63,6 +73,7 @@ type User {
   emailVerified: Boolean!
   friendRequestsReceived(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
   friendRequestsSent(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
+  friendships(cursor: FriendshipWhereUniqueInput, skip: Int, take: Int): [Friendship!]!
   id: String!
   status: UserStatus
   username: String!
@@ -84,4 +95,15 @@ type UserStatus {
   message: String
   updatedAt: DateTime!
   user: User
+}
+
+input UserTagCompoundUniqueInput {
+  discriminator: Int!
+  username: String!
+}
+
+input UserWhereUniqueInput {
+  Tag: UserTagCompoundUniqueInput
+  email: String
+  id: String
 }
