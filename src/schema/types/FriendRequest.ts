@@ -63,6 +63,8 @@ export const FriendRequestMutation = extendType({
         });
         if (friendRequest.toId !== ctx.user.id) {
           throw new Error("Could not accept friend request");
+        } else if (friendRequest.status === "ACCEPTED") {
+          return friendRequest;
         }
         const [acceptedFriendRequest] = await ctx.prisma.$transaction([
           ctx.prisma.friendRequest.update({
