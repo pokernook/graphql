@@ -52,8 +52,9 @@ export const UserStatusMutation = extendType({
         const userWithStatus = await ctx.prisma.user.findUnique({
           where: { id: ctx.user?.id },
           include: { status: true },
+          rejectOnNotFound: true,
         });
-        if (!userWithStatus?.status) {
+        if (!userWithStatus.status) {
           return null;
         }
         return await ctx.prisma.userStatus.delete({

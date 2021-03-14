@@ -120,7 +120,7 @@ export const UserMutation = extendType({
           }
         }
         const updatedUser = await ctx.prisma.user.update({
-          where: { id: ctx.user?.id },
+          where: { id: ctx.user.id },
           data: { username: newUsername, discriminator },
         });
         return updatedUser;
