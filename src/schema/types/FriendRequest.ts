@@ -100,6 +100,8 @@ export const FriendRequestMutation = extendType({
         });
         if (friendRequest.toId !== ctx.user.id) {
           throw new Error("Could not reject friend request");
+        } else if (friendRequest.status === "ACCEPTED") {
+          throw new Error("Cannot reject an accepted friend request");
         }
         const rejectedFriendRequest = ctx.prisma.friendRequest.update({
           where: { id: friendRequestId },
