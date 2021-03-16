@@ -42,7 +42,10 @@ const build = async () => {
     graphiql: isProduction ? false : "playground",
     path: "/",
     schema,
-    subscription: { emitter: mqemitterRedis(app.redis.options) },
+    subscription: {
+      context: (_conn, req) => buildContext(req),
+      emitter: mqemitterRedis(app.redis.options),
+    },
   });
 
   return app;
