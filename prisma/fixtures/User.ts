@@ -5,22 +5,25 @@ const passwordHash = // Translates to 'password'
 
 const users: Prisma.UserCreateInput[] = [
   {
-    email: "test@email.com",
-    username: "test",
+    email: "dog@a.a",
+    username: "dog",
     discriminator: 1234,
     passwordHash,
-    status: {
-      create: {
-        emoji: "🐶",
-        message: "Big Dog Run energy",
-      },
-    },
+    status: { create: { emoji: "🐶", message: "Big Dog Run energy" } },
   },
   {
-    email: "cowbell@email.com",
-    username: "cowbell",
+    email: "cow@a.a",
+    username: "cow",
     discriminator: 5678,
     passwordHash,
+    status: { create: { emoji: "🐮", message: "Cows go moo" } },
+  },
+  {
+    email: "fox@a.a",
+    username: "fox",
+    discriminator: 12,
+    passwordHash,
+    status: { create: { emoji: "🦊", message: "Can't keep a good fox down" } },
   },
 ];
 
