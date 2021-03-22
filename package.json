@@ -38,7 +38,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
-    "@types/ioredis": "^4.19.4",
+    "@types/ioredis": "^4.22.1",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
     "concurrently": "^6.0.0",
