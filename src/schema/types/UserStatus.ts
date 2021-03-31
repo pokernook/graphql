@@ -1,9 +1,8 @@
 import { arg, mutationField, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
-import { EmojiSingular } from "./Scalars";
 
-export const UserStatus = objectType({
+export const UserStatusObject = objectType({
   name: "UserStatus",
   definition(t) {
     t.model.createdAt();
@@ -16,10 +15,10 @@ export const UserStatus = objectType({
 });
 
 export const userStatusSet = mutationField("userStatusSet", {
-  type: UserStatus,
+  type: "UserStatus",
   shield: isAuthenticated(),
   args: {
-    emoji: arg({ type: EmojiSingular }),
+    emoji: arg({ type: "EmojiSingular" }),
     message: stringArg(),
   },
   validate: ({ string }) => ({
@@ -43,7 +42,7 @@ export const userStatusSet = mutationField("userStatusSet", {
 });
 
 export const userStatusClear = mutationField("userStatusClear", {
-  type: UserStatus,
+  type: "UserStatus",
   shield: isAuthenticated(),
   resolve: async (_root, _args, ctx) => {
     const userWithStatus = await ctx.prisma.user.findUnique({

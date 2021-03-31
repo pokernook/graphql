@@ -12,6 +12,13 @@ scalar EmailAddress
 """One emoji character"""
 scalar EmojiSingular
 
+input EnumFriendRequestStatusFilter {
+  equals: FriendRequestStatus
+  in: [FriendRequestStatus!]
+  not: NestedEnumFriendRequestStatusFilter
+  notIn: [FriendRequestStatus!]
+}
+
 type FriendRequest {
   createdAt: DateTime!
   from: User!
@@ -21,21 +28,11 @@ type FriendRequest {
   updatedAt: DateTime!
 }
 
-input FriendRequestFromIdToIdCompoundUniqueInput {
-  fromId: String!
-  toId: String!
-}
-
 enum FriendRequestStatus {
   ACCEPTED
   CANCELLED
   PENDING
   REJECTED
-}
-
-input FriendRequestWhereUniqueInput {
-  fromId_toId: FriendRequestFromIdToIdCompoundUniqueInput
-  id: String
 }
 
 type Friendship {
@@ -50,8 +47,10 @@ input FriendshipWhereUniqueInput {
 
 type Mutation {
   friendRequestAccept(friendRequestId: String!): FriendRequest
+  friendRequestCancel(friendRequestId: String!): FriendRequest
   friendRequestReject(friendRequestId: String!): FriendRequest
   friendRequestSend(discriminator: Int!, username: String!): FriendRequest
+  friendshipDelete(friendshipId: String!): Friendship
   userDeleteAccount: User
   userLogIn(email: EmailAddress!, password: String!): UserAuthPayload
   userLogOut: UserLogOutPayload
@@ -63,6 +62,13 @@ type Mutation {
   userUpdateUsername(newUsername: String!): User
 }
 
+input NestedEnumFriendRequestStatusFilter {
+  equals: FriendRequestStatus
+  in: [FriendRequestStatus!]
+  not: NestedEnumFriendRequestStatusFilter
+  notIn: [FriendRequestStatus!]
+}
+
 type Query {
   me: User
 }
@@ -72,8 +78,8 @@ type User {
   discriminator: Int!
   email: String!
   emailVerified: DateTime
-  friendRequestsReceived(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
-  friendRequestsSent(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
+  friendRequestsReceived(where: UserFriendRequestsReceivedWhereInput): [FriendRequest!]!
+  friendRequestsSent(where: UserFriendRequestsSentWhereInput): [FriendRequest!]!
   friendships(cursor: FriendshipWhereUniqueInput, skip: Int, take: Int): [Friendship!]!
   id: String!
   status: UserStatus
@@ -82,6 +88,14 @@ type User {
 
 type UserAuthPayload {
   user: User
+}
+
+input UserFriendRequestsReceivedWhereInput {
+  status: EnumFriendRequestStatusFilter
+}
+
+input UserFriendRequestsSentWhereInput {
+  status: EnumFriendRequestStatusFilter
 }
 
 type UserLogOutPayload {

@@ -12,9 +12,8 @@ import {
 import { promisify } from "util";
 
 import { isAuthenticated } from "../rules";
-import { EmailAddress } from "./Scalars";
 
-export const User = objectType({
+export const UserObject = objectType({
   name: "User",
   definition(t) {
     t.model.createdAt();
@@ -22,8 +21,14 @@ export const User = objectType({
     t.model.email();
     t.model.emailVerified();
     t.model.friendships();
-    t.model.friendRequestsReceived();
-    t.model.friendRequestsSent();
+    t.model.friendRequestsReceived({
+      filtering: { status: true },
+      pagination: false,
+    });
+    t.model.friendRequestsSent({
+      filtering: { status: true },
+      pagination: false,
+    });
     t.model.id();
     t.model.status();
     t.model.username();
@@ -33,7 +38,7 @@ export const User = objectType({
 export const UserAuthPayload = objectType({
   name: "UserAuthPayload",
   definition(t) {
-    t.field("user", { type: User });
+    t.field("user", { type: "User" });
   },
 });
 
@@ -41,19 +46,19 @@ export const UserLogOutPayload = objectType({
   name: "UserLogOutPayload",
   definition(t) {
     t.string("sessionId");
-    t.field("user", { type: User });
+    t.field("user", { type: "User" });
   },
 });
 
 export const me = queryField("me", {
-  type: User,
+  type: "User",
   resolve: (_root, _args, ctx) => ctx.user,
 });
 
 export const userSignUp = mutationField("userSignUp", {
   type: UserAuthPayload,
   args: {
-    email: nonNull(arg({ type: EmailAddress })),
+    email: nonNull(arg({ type: "EmailAddress" })),
     username: nonNull(stringArg()),
     password: nonNull(stringArg()),
   },
@@ -78,7 +83,7 @@ export const userSignUp = mutationField("userSignUp", {
 export const userLogIn = mutationField("userLogIn", {
   type: UserAuthPayload,
   args: {
-    email: nonNull(arg({ type: EmailAddress })),
+    email: nonNull(arg({ type: "EmailAddress" })),
     password: nonNull(stringArg()),
   },
   resolve: async (_root, { email, password }, ctx) => {
@@ -114,7 +119,7 @@ export const userLogOut = mutationField("userLogOut", {
 });
 
 export const userUpdateUsername = mutationField("userUpdateUsername", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   args: { newUsername: nonNull(stringArg()) },
   validate: ({ string }) => ({
@@ -145,7 +150,7 @@ export const userUpdateUsername = mutationField("userUpdateUsername", {
 });
 
 export const userUpdatePassword = mutationField("userUpdatePassword", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   args: {
     currentPassword: nonNull(stringArg()),
@@ -173,11 +178,11 @@ export const userUpdatePassword = mutationField("userUpdatePassword", {
 });
 
 export const userUpdateEmail = mutationField("userUpdateEmail", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   args: {
     password: nonNull(stringArg()),
-    newEmail: nonNull(arg({ type: EmailAddress })),
+    newEmail: nonNull(arg({ type: "EmailAddress" })),
   },
   resolve: async (_root, { password, newEmail }, ctx) => {
     if (!ctx.user) {
@@ -192,14 +197,14 @@ export const userUpdateEmail = mutationField("userUpdateEmail", {
     }
     const updatedUser = await ctx.prisma.user.update({
       where: { id: ctx.user.id },
-      data: { email: newEmail, emailVerified: false },
+      data: { email: newEmail, emailVerified: null },
     });
     return updatedUser;
   },
 });
 
 export const userDeleteAccount = mutationField("userDeleteAccount", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   resolve: async (_root, _args, ctx) => {
     const deletedUser = await ctx.prisma.user.delete({
