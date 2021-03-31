@@ -11,26 +11,3 @@ services:
     image: redis:6-alpine
     ports:
       - 6379:6379
-
-  server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: develop
-    command: npm run dev
-    depends_on:
-      - postgres
-      - redis
-    environment:
-      APP_SECRET: oo6iP6dQRC/qm2WlUn3Tej+LocObV801
-      DATABASE_URL: postgresql://postgres:password@postgres:5432
-      REDIS_URL: redis://:@redis:6379
-      NODE_ENV: development
-    ports:
-      - 4000:4000
-    volumes:
-      - .:/develop
-      - /develop/node_modules
-      - ./node_modules/@types:/develop/node_modules/@types
-      - ./node_modules/.prisma:/develop/node_modules/.prisma
-      - ./node_modules/@prisma:/develop/node_modules/@prisma
