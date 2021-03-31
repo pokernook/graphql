@@ -2,7 +2,7 @@
 /dist/
 
 # Dependencies
-node_modules
+/node_modules
 
 # Logs
 logs
@@ -17,8 +17,7 @@ lerna-debug.log*
 *.pem
 
 # Environment
-*.env
-*.env.*
+*.env*
 
 # IDE - VSCode
 .vscode
