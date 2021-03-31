@@ -17,7 +17,7 @@ declare module "fastify" {
 }
 
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const SECRET = process.env.SESSION_SECRET || "";
+const SECRET = process.env.SECRET || "";
 const PORT = process.env.PORT || "4000";
 const REDIS_URL = process.env.REDIS_URL || "";
 
