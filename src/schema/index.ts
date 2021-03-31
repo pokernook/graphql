@@ -9,33 +9,22 @@ import * as types from "./types";
 export const schema = makeSchema({
   contextType: {
     export: "Context",
-    module: join(__dirname, "../context"),
+    module: join(process.cwd(), "src/context"),
   },
   outputs: {
     schema: true,
     typegen: join(
-      __dirname,
-      "../../node_modules/@types/nexus-typegen/index.d.ts"
+      process.cwd(),
+      "node_modules/@types/nexus-typegen/index.d.ts"
     ),
   },
   plugins: [
-    nexusPrisma({
-      experimentalCRUD: true,
-      paginationStrategy: "prisma",
-    }),
+    nexusPrisma({ paginationStrategy: "prisma" }),
     nexusShield({
       defaultError: new Error("Not authorized"),
       defaultRule: allow,
     }),
     validatePlugin(),
   ],
-  sourceTypes: {
-    modules: [
-      {
-        alias: "prisma",
-        module: require.resolve(".prisma/client/index.d.ts"),
-      },
-    ],
-  },
   types,
 });
