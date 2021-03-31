@@ -1,4 +1,4 @@
-import Fastify, { FastifyInstance } from "fastify";
+import Fastify from "fastify";
 import cookie from "fastify-cookie";
 import helmet from "fastify-helmet";
 import redis from "fastify-redis";
@@ -56,9 +56,8 @@ const build = async () => {
   return app;
 };
 
-const launch = (app: FastifyInstance, port: number | string) =>
-  app.listen(port, "::", (_e, address) => console.info(`🚀 ${address}`));
-
 build()
-  .then((app) => launch(app, PORT))
+  .then((app) =>
+    app.listen(PORT, "::", (_e, address) => console.info(`🚀 ${address}`))
+  )
   .catch((e) => console.error(e));
