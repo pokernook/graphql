@@ -7,6 +7,12 @@ const friendships: Prisma.FriendshipCreateInput[] = [
       connect: [{ email: "dog@a.a" }, { email: "cow@a.a" }],
     },
   },
+  {
+    id: "2",
+    users: {
+      connect: [{ email: "dog@a.a" }, { email: "fox@a.a" }],
+    },
+  },
 ];
 
 export const seedFriendship = async (prisma: PrismaClient): Promise<void> => {

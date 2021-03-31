@@ -11,7 +11,7 @@ model User {
   createdAt              DateTime        @default(now())
   discriminator          Int
   email                  String          @unique
-  emailVerified          Boolean         @default(false)
+  emailVerified          DateTime?
   friendships            Friendship[]
   friendRequestsReceived FriendRequest[] @relation("to")
   friendRequestsSent     FriendRequest[] @relation("from")
@@ -50,6 +50,7 @@ enum FriendRequestStatus {
   PENDING
   ACCEPTED
   REJECTED
+  CANCELLED
 }
 
 model Friendship {
