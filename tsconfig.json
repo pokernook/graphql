@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -13,5 +14,6 @@
     "strict": true,
     "target": "es2020"
   },
-  "include": ["prisma", "src"]
+  "include": ["prisma", "src"],
+  "exclude": ["node_modules"]
 }
