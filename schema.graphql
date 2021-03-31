@@ -28,6 +28,7 @@ input FriendRequestFromIdToIdCompoundUniqueInput {
 
 enum FriendRequestStatus {
   ACCEPTED
+  CANCELLED
   PENDING
   REJECTED
 }
@@ -70,7 +71,7 @@ type User {
   createdAt: DateTime!
   discriminator: Int!
   email: String!
-  emailVerified: Boolean!
+  emailVerified: DateTime
   friendRequestsReceived(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
   friendRequestsSent(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
   friendships(cursor: FriendshipWhereUniqueInput, skip: Int, take: Int): [Friendship!]!
