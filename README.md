@@ -13,7 +13,9 @@ Clone the repo, then run:
 ```bash
 npm install # Install project dependencies
 
-docker-compose up # Run the app with Docker
+docker-compose up --detach # Run the database(s) with Docker
+
+npm run dev # Run the app
 ```
 
 ### NPM Scripts Overview
@@ -21,9 +23,9 @@ docker-compose up # Run the app with Docker
 ```bash
 npm run dev # Create a hot-reloading GraphQL server
 
-npm run lint # ESLint the project
+npm run lint # Lint the project
 
-npm run generate # Generate Prisma client and schema types
+npm run typecheck # Type-check the project
 
 npm run build # Build application for deployment
 ```
