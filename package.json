@@ -1,6 +1,6 @@
 {
   "name": "graphql",
-  "description": "GraphQL API built with Nexus and Prisma",
+  "description": "PokerNook GraphQL API",
   "repository": "github:pokernook/graphql",
   "scripts": {
     "postinstall": "npm run generate:prisma && npm run generate:nexus",
