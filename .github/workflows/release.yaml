@@ -8,7 +8,6 @@ on:
 
 jobs:
   container:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Container
     runs-on: ubuntu-latest
     steps:
