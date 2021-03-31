@@ -2,11 +2,8 @@ FROM node:15.12.0-alpine AS node
 
 FROM node AS build
 WORKDIR /build
-COPY package*.json ./
-COPY prisma/ ./prisma
-RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm ci && npm run build
 
 FROM node AS app
 WORKDIR /app
