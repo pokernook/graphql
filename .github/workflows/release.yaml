@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Generate container metadata
-        uses: crazy-max/ghaction-docker-meta@v2.1.0
+        uses: crazy-max/ghaction-docker-meta@v2.1.1
         id: container_meta
         with:
           images: ghcr.io/pokernook/graphql
