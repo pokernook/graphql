@@ -2,6 +2,9 @@
   "name": "graphql",
   "description": "PokerNook GraphQL API",
   "repository": "github:pokernook/graphql",
+  "engines": {
+    "node": "15.x"
+  },
   "scripts": {
     "postinstall": "npm run generate:prisma && npm run generate:nexus",
     "generate:prisma": "prisma generate",
