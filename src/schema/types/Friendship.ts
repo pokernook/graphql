@@ -15,18 +15,18 @@ export const friendshipDelete = mutationField("friendshipDelete", {
   type: "Friendship",
   shield: isAuthenticated(),
   args: { friendshipId: nonNull(stringArg()) },
-  resolve: async (_root, { friendshipId }, ctx) => {
-    if (!ctx.user) {
+  resolve: async (_root, { friendshipId }, { prisma, user }) => {
+    if (!user) {
       return null;
     }
-    await ctx.prisma.friendship.findFirst({
+    await prisma.friendship.findFirst({
       where: {
         id: friendshipId,
-        users: { some: { id: ctx.user.id } },
+        users: { some: { id: user.id } },
       },
       rejectOnNotFound: true,
     });
-    const deletedFriendship = await ctx.prisma.friendship.delete({
+    const deletedFriendship = await prisma.friendship.delete({
       where: { id: friendshipId },
     });
     return deletedFriendship;

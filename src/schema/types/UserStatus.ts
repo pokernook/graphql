@@ -24,9 +24,9 @@ export const userStatusSet = mutationField("userStatusSet", {
   validate: ({ string }) => ({
     message: string().max(80),
   }),
-  resolve: async (_root, { emoji, message }, ctx) => {
-    const { status } = await ctx.prisma.user.update({
-      where: { id: ctx.user?.id },
+  resolve: async (_root, { emoji, message }, { prisma, user }) => {
+    const { status } = await prisma.user.update({
+      where: { id: user?.id },
       select: { status: true },
       data: {
         status: {
@@ -44,16 +44,16 @@ export const userStatusSet = mutationField("userStatusSet", {
 export const userStatusClear = mutationField("userStatusClear", {
   type: "UserStatus",
   shield: isAuthenticated(),
-  resolve: async (_root, _args, ctx) => {
-    const userWithStatus = await ctx.prisma.user.findUnique({
-      where: { id: ctx.user?.id },
+  resolve: async (_root, _args, { prisma, user }) => {
+    const userWithStatus = await prisma.user.findUnique({
+      where: { id: user?.id },
       include: { status: true },
       rejectOnNotFound: true,
     });
     if (!userWithStatus.status) {
       return null;
     }
-    return await ctx.prisma.userStatus.delete({
+    return await prisma.userStatus.delete({
       where: { id: userWithStatus.status.id },
     });
   },

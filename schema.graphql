@@ -109,7 +109,7 @@ type UserStatus {
   id: String!
   message: String
   updatedAt: DateTime!
-  user: User
+  user: User!
 }
 
 input UserTagCompoundUniqueInput {

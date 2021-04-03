@@ -21,7 +21,7 @@ CREATE TABLE "UserStatus" (
     "id" TEXT NOT NULL,
     "message" TEXT,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT,
+    "userId" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -71,7 +71,7 @@ CREATE UNIQUE INDEX "_FriendshipToUser_AB_unique" ON "_FriendshipToUser"("A", "B
 CREATE INDEX "_FriendshipToUser_B_index" ON "_FriendshipToUser"("B");
 
 -- AddForeignKey
-ALTER TABLE "UserStatus" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "UserStatus" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FriendRequest" ADD FOREIGN KEY ("fromId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
