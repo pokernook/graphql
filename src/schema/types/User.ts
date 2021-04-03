@@ -206,11 +206,13 @@ export const userUpdateEmail = mutationField("userUpdateEmail", {
 export const userDeleteAccount = mutationField("userDeleteAccount", {
   type: "User",
   shield: isAuthenticated(),
-  resolve: async (_root, _args, ctx) => {
-    const deletedUser = await ctx.prisma.user.delete({
-      where: { id: ctx.user?.id },
-    });
-    return deletedUser;
+  resolve: async (_root, _args, { prisma, user }) => {
+    if (!user) {
+      return null;
+    }
+    // Use raw SQL until Prisma supports cascade deletes
+    const affected = await prisma.$executeRaw`DELETE FROM "User" WHERE id = ${user.id};`;
+    return affected === 1 ? user : null;
   },
 });
 
