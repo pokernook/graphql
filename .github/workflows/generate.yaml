@@ -18,7 +18,7 @@ jobs:
         run: npm ci
 
       - name: Commit Schema
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
           commit_message: Generate GraphQL schema
           file_pattern: schema.graphql
