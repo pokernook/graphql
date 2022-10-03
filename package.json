@@ -28,7 +28,7 @@
     "fastify-session": "^5.2.1",
     "graphql": "^15.4.0",
     "graphql-scalars": "^1.8.0",
-    "mercurius": "^7.0.0",
+    "mercurius": "^11.0.1",
     "mqemitter-redis": "^4.1.0",
     "nexus": "^1.0.0",
     "nexus-plugin-prisma": "^0.33.0",
